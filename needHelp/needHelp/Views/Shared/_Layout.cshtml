@@ -1,0 +1,82 @@
+﻿
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Need Help?</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.css" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
+    <script src="~/Scripts/script.js"></script>
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/angular")
+</head>
+<body >
+
+    <div dir="rtl" class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Need Help?", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+
+
+            <div class="navbar-collapse collapse navbar-right">
+                <ul class="nav navbar-nav">
+                    @Html.Partial("_LoginPartial")
+                </ul>
+                <ul class="nav navbar-nav">
+                    <li ><i class="fa fa-comment"></i>@Html.ActionLink("סוגים", "Index", "HelpTypeModels")</li>
+                    <li ><i class="fa fa-shield"></i>@Html.ActionLink("ערים", "Index", "CityModels")</li>
+
+                    <li ><i class="fa fa-university"></i>@Html.ActionLink("אירגונים", "Index", "OrganizationModels")</li>
+                    <li ><i class="fa fa-search"></i>@Html.ActionLink("פעילויות", "Index", "ActivityModels")</li>
+                    <li ><i class="fa fa-home"></i>@Html.ActionLink("דף הבית", "Index", "Home")</listyle>
+                    @if (!User.Identity.Name.IsEmpty())
+                    {
+                        <li ><i class="glyphicon-arrow-down"></i>@Html.ActionLink(@User.Identity.Name, "Profile", "ProfileModels")</li>
+                    }
+
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+
+    <div id="main">
+        {{ message }}
+        <!-- angular templating -->
+        <!-- this is where content will be injected -->
+        <div ng-view></div>
+    </div>
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/angular")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script type="text/javascript">
+        window.MyApp = {};
+    </script>
+    @RenderSection("scripts", required: false)
+    <script type="text/javascript">
+        MyApp.rootPath = '@Url.Content("~")';
+        @RenderSection("jsCode", required: false)
+    </script>
+</body>
+</html>
