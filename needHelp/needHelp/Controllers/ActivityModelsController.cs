@@ -20,6 +20,10 @@ namespace needHelp.Controllers
         public ActionResult Index()
         {
             var activities = db.activities.Include(a => a.city);
+
+            ViewBag.cityId = new SelectList(db.cities, "id", "name");
+            ViewBag.organizationId = new SelectList(db.organizations, "id", "name");
+            ViewBag.typeId = new SelectList(db.help_types, "id", "typeName");
             return View(activities.ToList());
         }
 
@@ -138,12 +142,55 @@ namespace needHelp.Controllers
         public ActionResult SearchActivities()
         {
             string activityName = Request["txtActivityName"].ToString();
+            int organizationID = 0;
+            int typeID = 0;
+            DateTime defaultDate = new DateTime(1777,1,1);
+            DateTime startDate = defaultDate;
+            DateTime endDate = defaultDate;
 
+            string req = Request["organizationId"];
+            if (req != null && req != String.Empty)
+            {
+               organizationID = Int32.Parse(req.ToString());
+            }
+            req = Request["typeId"];
+            if (req != null && req != String.Empty)
+            {
+               typeID = Int32.Parse(req.ToString());
+            }
+
+            req = Request["txtStartDate"];
+            if (req != null && req != String.Empty)
+            {
+                DateTime temp = new DateTime();
+                if (DateTime.TryParse(req.ToString(), out temp))
+                {
+                    startDate = temp;
+                }
+            }
+
+            req = Request["txtEndDate"];
+            if (req != null && req != String.Empty)
+            {
+                DateTime temp = new DateTime();
+                if (DateTime.TryParse(req.ToString(),out temp))
+                {
+                    endDate = temp;
+                }
+            }
+           
             var result = from s in db.activities
-                         where s.name.Contains(activityName)
+                         where s.name.Contains(activityName) &&
+                         (organizationID == 0 || s.organizationId == organizationID) &&
+                         (typeID == 0 || s.typeId == typeID) &&
+                         (startDate.Equals(defaultDate) || startDate <= s.date) &&
+                         (endDate.Equals(defaultDate) || endDate >= s.date)
                          select s;
 
             //return RedirectToAction("Index","Series");
+            ViewBag.cityId = new SelectList(db.cities, "id", "name");
+            ViewBag.organizationId = new SelectList(db.organizations, "id", "name");
+            ViewBag.typeId = new SelectList(db.help_types, "id", "typeName");
             return View("Index", result.ToList());
         }
 
