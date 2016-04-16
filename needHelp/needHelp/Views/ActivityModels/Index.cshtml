@@ -73,13 +73,19 @@
         <!-- Search series -->
         @using (Html.BeginForm("SearchActivities", "ActivityModels"))
         {
-            <ol>
-                @Html.Label("חיפוש פעילויות")
-                <li>
-                    @Html.Label("שם פעילות:", "שם פעילות:", new { style = "width:150px; display:inline-block; " })
+            <div class="row">
+                <div class="col-md-1 text-right pull-right">
+                    @Html.Label("שם פעילות:", "שם פעילות:", new { style = "width:150px; height:30px; display:inline-block; " }) <br />
+                    @Html.Label("שם ארגון:", "שם ארגון:", new { style = "width:150px; height:30px; display:inline-block; " }) <br />
+                    @Html.Label("סוג פעילות:", "סוג פעילות:", new { style = "width:150px; height:30px; display:inline-block; " })
+                </div>
+                <div class="col-md-6 text-right pull-right">
                     @Html.TextBox("txtActivityName", "", new { style = "width:100px;" })
-                </li>
-            </ol>
+                    @Html.DropDownList("organizationId", null, "--None--", htmlAttributes: new { @class = "form-control" })
+                    @Html.DropDownList("typeId", null, "--None--", htmlAttributes: new { @class = "form-control" })
+                </div>
+                
+            </div>
             <button>חפש</button>
         }
     </div>
@@ -108,21 +114,21 @@
     <div class="container marketing">
 
         <div dir="rtl" class="row">
-            @foreach (var item in Model)
-            {
-                <div class="col-xs-6 col-lg-4" style="border:solid; border-radius:10px; margin:10px; width:30%">
-                    <p>
-                        @if (!item.type.imagePath.IsEmpty())
+                        @foreach (var item in Model)
                         {
-                            <img class="img-circle" style="width:60px; height:60px; margin:2px" src="~/Images/Types/@Html.DisplayFor(modelItem => item.type.imagePath)" />
-                        }
-                        <label style="font-size:30px">@Html.DisplayFor(modelItem => item.name)</label>
-                    </p>
-                    <p>מארגן: @Html.DisplayFor(modelItem => item.org.name)</p>
-                    <p>מיקום: @Html.DisplayFor(modelItem => item.city.name) @Html.DisplayFor(modelItem => item.address)</p>
-                    <p>תאריך: @Html.DisplayFor(modelItem => item.date)</p>
-                    <p>@Html.ActionLink("פרטים", "Details", new { id = item.id })</p>
-                </div><!--/span-->
+                            <div class="col-xs-6 col-lg-4 pull-right" style="border:solid; border-radius:10px; margin:10px; width:30%">
+                                <p>
+                                    @if (!item.type.imagePath.IsEmpty())
+                                    {
+                                        <img class="img-circle" style="width:60px; height:60px; margin:2px" src="~/Images/Types/@Html.DisplayFor(modelItem => item.type.imagePath)" />
+                                    }
+                                    <label style="font-size:30px">@Html.DisplayFor(modelItem => item.name)</label>
+                                </p>
+                                <p>מארגן: @Html.DisplayFor(modelItem => item.org.name)</p>
+                                <p>מיקום: @Html.DisplayFor(modelItem => item.city.name) @Html.DisplayFor(modelItem => item.address)</p>
+                                <p>תאריך: @Html.DisplayFor(modelItem => item.date)</p>
+                                <p>@Html.ActionLink("פרטים", "Details", new { id = item.id })</p>
+                            </div><!--/span-->
             }
 
         </div><!--/row-->

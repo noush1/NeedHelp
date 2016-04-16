@@ -22,3 +22,26 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.my_wrapper {
+    display: grid;
+    grid-gap: 10px;
+        grid-template-columns: 300px 300px 300px;
+        background-color: #fff;
+        color: #b6ff00;
+    }
+.my_box {
+        background-color: #ff0000;
+        color: #000000;
+        border-radius: 5px;
+        padding: 20px;
+        font-size: 150%;
+    }
+.columnA {
+        grid-column: 1 ;
+        grid-row: 1 ;
+    }
+.columnB {
+        grid-column: 2;
+        grid-row: 1;
+    }
