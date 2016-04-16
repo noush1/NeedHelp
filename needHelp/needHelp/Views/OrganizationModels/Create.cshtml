@@ -4,26 +4,27 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
+<div dir="rtl">
+    <h2>יצירת ארגון</h2>
 
-@using (Html.BeginForm()) 
+    @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>OrganizationModels</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
+       @* <div class="form-group">
             @Html.LabelFor(model => model.userId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.userId, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.userId, "", new { @class = "text-danger" })
             </div>
-        </div>
+        </div>*@
 
         <div class="form-group">
-            @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("שם ארגון:", "שם ארגון:", new { style = "width:150px; height:30px; display:inline-block; " })
+            @*@Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })*@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
@@ -31,7 +32,8 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.contactName, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("איש קשר:", "איש קשר:", new { style = "width:150px; height:30px; display:inline-block; " })
+            @*@Html.LabelFor(model => model.contactName, htmlAttributes: new { @class = "control-label col-md-2" })*@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.contactName, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.contactName, "", new { @class = "text-danger" })
@@ -39,7 +41,8 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.contactPhone, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("טלפון:", "טלפון:", new { style = "width:150px; height:30px; display:inline-block; " })
+            @*@Html.LabelFor(model => model.contactPhone, htmlAttributes: new { @class = "control-label col-md-2" })*@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.contactPhone, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.contactPhone, "", new { @class = "text-danger" })
@@ -47,7 +50,8 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.email, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("דואר אלקטרוני:", "דואר אלקטרוני:", new { style = "width:150px; height:30px; display:inline-block; " })
+            @*@Html.LabelFor(model => model.email, htmlAttributes: new { @class = "control-label col-md-2" })*@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
@@ -55,7 +59,8 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.website, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("אתר אינטרנט:", "אתר אינטרנט:", new { style = "width:150px; height:30px; display:inline-block; " })
+            @*@Html.LabelFor(model => model.website, htmlAttributes: new { @class = "control-label col-md-2" })*@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.website, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.website, "", new { @class = "text-danger" })
@@ -63,13 +68,14 @@
         </div>
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+            <div>
+                <input type="submit" value="צור" class="btn btn-default" />
             </div>
         </div>
     </div>
-}
+    }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+    <div dir="ltr">
+        @Html.ActionLink("חזרה לרשימה", "Index")
+    </div>
 </div>
