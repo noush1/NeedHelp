@@ -33,6 +33,7 @@ namespace needHelp.Models
 
         [Required]
         [DisplayName("Date and time of the event")]
+        [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy HH:mm}")]
         public DateTime date { get; set; }
 

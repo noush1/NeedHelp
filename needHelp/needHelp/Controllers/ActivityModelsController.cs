@@ -144,6 +144,9 @@ namespace needHelp.Controllers
             string activityName = Request["txtActivityName"].ToString();
             int organizationID = 0;
             int typeID = 0;
+            DateTime defaultDate = new DateTime(1777,1,1);
+            DateTime startDate = defaultDate;
+            DateTime endDate = defaultDate;
 
             string req = Request["organizationId"];
             if (req != null && req != String.Empty)
@@ -155,11 +158,33 @@ namespace needHelp.Controllers
             {
                typeID = Int32.Parse(req.ToString());
             }
+
+            req = Request["txtStartDate"];
+            if (req != null && req != String.Empty)
+            {
+                DateTime temp = new DateTime();
+                if (DateTime.TryParse(req.ToString(), out temp))
+                {
+                    startDate = temp;
+                }
+            }
+
+            req = Request["txtEndDate"];
+            if (req != null && req != String.Empty)
+            {
+                DateTime temp = new DateTime();
+                if (DateTime.TryParse(req.ToString(),out temp))
+                {
+                    endDate = temp;
+                }
+            }
            
             var result = from s in db.activities
                          where s.name.Contains(activityName) &&
                          (organizationID == 0 || s.organizationId == organizationID) &&
-                         (typeID == 0 || s.typeId == typeID)
+                         (typeID == 0 || s.typeId == typeID) &&
+                         (startDate.Equals(defaultDate) || startDate <= s.date) &&
+                         (endDate.Equals(defaultDate) || endDate >= s.date)
                          select s;
 
             //return RedirectToAction("Index","Series");
