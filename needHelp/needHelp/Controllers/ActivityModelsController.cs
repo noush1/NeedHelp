@@ -142,8 +142,7 @@ namespace needHelp.Controllers
         public ActionResult SearchActivities()
         {
             string activityName = Request["txtActivityName"].ToString();
-            int organizationID = 0;
-            int typeID = 0;
+            int organizationID = 0, typeID = 0, cityID = 0;
             DateTime defaultDate = new DateTime(1777,1,1);
             DateTime startDate = defaultDate;
             DateTime endDate = defaultDate;
@@ -157,6 +156,11 @@ namespace needHelp.Controllers
             if (req != null && req != String.Empty)
             {
                typeID = Int32.Parse(req.ToString());
+            }
+            req = Request["cityId"];
+            if (req != null && req != String.Empty)
+            {
+                cityID = Int32.Parse(req.ToString());
             }
 
             req = Request["txtStartDate"];
@@ -181,8 +185,9 @@ namespace needHelp.Controllers
            
             var result = from s in db.activities
                          where s.name.Contains(activityName) &&
-                         (organizationID == 0 || s.organizationId == organizationID) &&
+                         (cityID == 0 || s.cityId == cityID) &&
                          (typeID == 0 || s.typeId == typeID) &&
+                         (organizationID == 0 || s.organizationId == organizationID) &&
                          (startDate.Equals(defaultDate) || startDate <= s.date) &&
                          (endDate.Equals(defaultDate) || endDate >= s.date)
                          select s;
