@@ -3,64 +3,31 @@
 @{
     ViewBag.Title = "Details";
 }
+<div dir="rtl">
 
-<h2>Details</h2>
+    <h1>פרטי פעילות</h1>
+    
+    <br />
 
-<div>
-    <h4>ActivityModels</h4>
-    <hr />
-    <dl dir="rtl" class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.city.name)
-        </dt>
+    <div >
+        <p>
+            @if (!Model.type.imagePath.IsEmpty())
+            {
+                <img class="img-circle" style="width:60px; height:60px; margin:2px" src="~/Images/Types/@Html.DisplayFor(modelItem => Model.type.imagePath)" />
+            }
+            <label style="font-size:30px">@Html.DisplayFor(modelItem => Model.name)</label>
+        </p>
+        <p>מארגן: @Html.DisplayFor(modelItem => Model.org.name)</p>
+        <p>מיקום: @Html.DisplayFor(modelItem => Model.city.name) - @Html.DisplayFor(modelItem => Model.address)</p>
+        <p>תאריך: @Html.DisplayFor(modelItem => Model.date)</p>
+        <p>סוג פעילות: @Html.DisplayFor(modelItem => Model.type.typeName)</p>
+        <p>תיאור הפעילות: @Html.DisplayFor(model => Model.description)</p>
 
-        <dd>
-            @Html.DisplayFor(model => model.city.name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.organizationId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.organizationId)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.address)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.address)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.date)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.date)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.description)
-        </dd>
-
-    </dl>
+        <p dir="ltr">
+            <!--TODO: redirect to "sing in activity" page -->
+            @Html.ActionLink("הרשמה לפעילות", "Index") |
+            @Html.ActionLink("עריכה", "Edit", new { id = Model.id }) |
+            @Html.ActionLink("חזרה לרשימה", "Index")
+        </p>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("עריכה", "Edit", new { id = Model.id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
