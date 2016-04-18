@@ -1,0 +1,33 @@
+﻿@model needHelp.Models.ActivityModels
+
+@{
+    ViewBag.Title = "Details";
+}
+<div dir="rtl">
+
+    <h1>פרטי פעילות</h1>
+    
+    <br />
+
+    <div >
+        <p>
+            @if (!Model.type.imagePath.IsEmpty())
+            {
+                <img class="img-circle" style="width:60px; height:60px; margin:2px" src="~/Images/Types/@Html.DisplayFor(modelItem => Model.type.imagePath)" />
+            }
+            <label style="font-size:30px">@Html.DisplayFor(modelItem => Model.name)</label>
+        </p>
+        <p>מארגן: @Html.DisplayFor(modelItem => Model.org.name)</p>
+        <p>מיקום: @Html.DisplayFor(modelItem => Model.city.name) - @Html.DisplayFor(modelItem => Model.address)</p>
+        <p>תאריך: @Html.DisplayFor(modelItem => Model.date)</p>
+        <p>סוג פעילות: @Html.DisplayFor(modelItem => Model.type.typeName)</p>
+        <p>תיאור הפעילות: @Html.DisplayFor(model => Model.description)</p>
+
+        <p dir="ltr">
+            <!--TODO: redirect to "sing in activity" page -->
+            @Html.ActionLink("הרשמה לפעילות", "Index") |
+            @Html.ActionLink("עריכה", "Edit", new { id = Model.id }) |
+            @Html.ActionLink("חזרה לרשימה", "Index")
+        </p>
+    </div>
+</div>
