@@ -16,6 +16,8 @@ namespace needHelp.Models
             : base("DefaultConnection")
         {
         }
+
+        // all tables
         public DbSet<ActivityModels> activities { get; set; }
         public DbSet<CityModels> cities { get; set; }
         public DbSet<VolunteerModels> volunteers { get; set; }
