@@ -21,25 +21,25 @@ namespace needHelp.Models
 
         // TODO: this field is foreignKey - supposed to link between volunteer and user data like username and password
         [Required]
-        [DisplayName("User")]
+        [DisplayName("קוד משתמש")]
         public string userId { get; set; }
 
         [Required]
-        [DisplayName("Organization name")]
+        [DisplayName("שם ארגון")]
         public string name { get; set; }
 
         [Required]
-        [DisplayName("Contact name")]
+        [DisplayName("איש קשר")]
         public string contactName { get; set; }
 
         [Required]
-        [DisplayName("Phone")]
+        [DisplayName("טלפון")]
         public string contactPhone { get; set; }
 
-        [DisplayName("E-mail")]
+        [DisplayName("אימייל")]
         public string email { get; set; }
 
-        [DisplayName("Website")]
+        [DisplayName("אתר")]
         public string website { get; set; }
 
         public List<TrustedUserModels> trustedUsers { get; set; }

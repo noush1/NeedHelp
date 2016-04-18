@@ -247,10 +247,13 @@
     <Compile Include="Migrations\201604091910213_addingType1.Designer.cs">
       <DependentUpon>201604091910213_addingType1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201604181356360_deleteBullshit.cs" />
+    <Compile Include="Migrations\201604181356360_deleteBullshit.Designer.cs">
+      <DependentUpon>201604181356360_deleteBullshit.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ActivityModels.cs" />
-    <Compile Include="Models\BullshitModel.cs" />
     <Compile Include="Models\CityModels.cs" />
     <Compile Include="Models\GeneralModel.cs" />
     <Compile Include="Models\HelpTypeModels.cs" />
@@ -1311,6 +1314,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201604091910213_addingType1.resx">
       <DependentUpon>201604091910213_addingType1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604181356360_deleteBullshit.resx">
+      <DependentUpon>201604181356360_deleteBullshit.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -18,18 +18,18 @@ namespace needHelp.Models
         public string userId { get; set; }
 
         [Required]
-        [DisplayName("First name")]
+        [DisplayName("שם פרטי")]
         public string firstName { get; set; }
 
         [Required]
-        [DisplayName("Last name")]
+        [DisplayName("שם משפחה")]
         public string lastName { get; set; }
 
         [Required]
-        [DisplayName("E-mail")]
+        [DisplayName("אימייל")]
         public string email { get; set; }
 
-        [DisplayName("Phone")]
+        [DisplayName("טלפון")]
         public string phone { get; set; }
 
         public virtual ICollection<ActivityModels> registered_activities { get; set; }

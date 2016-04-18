@@ -15,7 +15,7 @@ namespace needHelp.Models
         public int id { get; set; }
 
         [Required]
-        [DisplayName("City name")]
+        [DisplayName("עיר")]
         public string name { get; set; }
     }
 }

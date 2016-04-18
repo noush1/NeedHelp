@@ -17,12 +17,12 @@ namespace needHelp.Models
         [Required]
         public int VolunteerId { get; set; }
 
-        [DisplayName("City")]
+        [DisplayName("עיר")]
         public int cityId { get; set; }
 
-        [DisplayName("Date and time")]
+        [DisplayName("תאריך ושעה")]
         public DateTime date { get; set; }
 
-
+        // TODO: add all the fileds of the search - organization name, type...
     }
 }

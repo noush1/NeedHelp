@@ -15,11 +15,11 @@ namespace needHelp.Models
         public int id { get; set; }
 
         [Required]
-        [DisplayName("Type name")]
+        [DisplayName("שם סוג")]
         public string typeName { get; set; }
 
         [Required]
-        [DisplayName("Image path")]
+        [DisplayName("נתיב לתמונה")]
         public string imagePath { get; set; }
     }
 }

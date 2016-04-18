@@ -15,34 +15,34 @@ namespace needHelp.Models
         public int id { get; set; }
 
         [Required]
-        [DisplayName("Activity name")]
+        [DisplayName("שם ארגון")]
         public string name { get; set; }
 
         // TODO: this field is foreignKey - supposed to link between organization and activity
         [Required]
-        [DisplayName("Organization")]
+        [DisplayName("ארגון")]
         public int organizationId { get; set; }
 
         [Required]
-        [DisplayName("Address")]
+        [DisplayName("כתובת")]
         public string address { get; set; }
 
         [Required]
-        [DisplayName("City")]
+        [DisplayName("עיר")]
         public int cityId { get; set; }
 
         [Required]
-        [DisplayName("Date and time of the event")]
+        [DisplayName("תאריך ושעה")]
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy HH:mm}")]
         public DateTime date { get; set; }
 
         [Required]
-        [DisplayName("Type")]
+        [DisplayName("סוג")]
         public int typeId { get; set; }
 
         [Required]
-        [DisplayName("Description")]
+        [DisplayName("תיאור")]
         public string description { get; set; }
 
         public virtual OrganizationModels org { get; set; }

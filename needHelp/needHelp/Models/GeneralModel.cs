@@ -24,6 +24,5 @@ namespace needHelp.Models
         public DbSet<OrganizationModels> organizations { get; set; }
         public DbSet<UserSearchDataModels> search_data { get; set; }
         public DbSet<HelpTypeModels> help_types { get; set; }
-        public DbSet<BullshitModel> bullshit { get; set; }
     }
 }
