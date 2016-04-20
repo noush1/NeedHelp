@@ -26,6 +26,7 @@
     <p>
         @Html.ActionLink("Create New", "Create")
     </p>
+    @if(User.IsInRole("admin")){
     <table class="table">
         <tr>
             <th>
@@ -79,6 +80,7 @@
         }
 
     </table>
+    }
 
     <div class="SearchColumn">
         <!-- Search series -->

@@ -1,56 +1,161 @@
-﻿@model needHelp.Models.RegisterViewModel
+﻿
+@model needHelp.Models.RegisterTypesViewModel
 @{
     ViewBag.Title = "Register";
 }
 
+@section scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/JavaScript">
+
+        $('input[type=radio]').click(function () {
+            $('.area').hide();
+            $('#' + $(this).val()).show();
+        });
+
+        $('input[type=radio]').init(function () {
+            $('.area').hide();
+            $('#Volunteer').show();
+        });
+
+    </script>
+
+}
+
 <h2>@ViewBag.Title.</h2>
 
-@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("RegisterVolunteer", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
-    @Html.AntiForgeryToken()
-    <h4>Create a new account.</h4>
-    <hr />
-    @Html.ValidationSummary("", new { @class = "text-danger" })
-
     <div class="form-group">
-        @Html.LabelFor(m => m.Type, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            Organization: @Html.RadioButtonFor(m => m.Type, "Organization")
-            Volunteer: @Html.RadioButtonFor(m => m.Type, "Volunteer")
+        @Html.LabelFor(m => m.vol.Name, new { @class = "col-md-2 control-label" })
+
+        <div class="col-md-10" id="radioButton">
+            Organization: @Html.RadioButtonFor(m => m.vol.Name, "Organization", new { @val = "org" })
+            Volunteer: @Html.RadioButtonFor(m => m.vol.Name, "Volunteer", new { Checked = "checked", @val = "vol" })
         </div>
     </div>
 
+ 
+}
+<div class='area' id="Volunteer">
+    @using (Html.BeginForm("RegisterVolunteer", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <h4>Create a new account.</h4>
+        <hr />
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+
+        @*<div class='area' id="Volunteer">jersey</div>
+            <div class='area' id="Organization">shorts</div>*@
+
+        //if (Model.Type == "Volunteer")
+        //{
+
         <div class="form-group">
-            @Html.LabelFor(m => m.Name, new { @class = "col-md-2 control-label" })
+            @Html.LabelFor(m => m.vol.Name, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
-                @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                @Html.TextBoxFor(m => m.vol.Name, new { @class = "form-control" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+            @Html.LabelFor(m => m.vol.LastName, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
-                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                @Html.TextBoxFor(m => m.vol.LastName, new { @class = "form-control" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+            @Html.LabelFor(m => m.vol.StandartRegInfo.Email, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
-                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
-            <div class="col-md-10">
-                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                @Html.TextBoxFor(m => m.vol.StandartRegInfo.Email, new { @class = "form-control" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(m => m.Phone, new { @class = "col-md-2 control-label" })
+            @Html.LabelFor(m => m.vol.StandartRegInfo.Password, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
-                @Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
+                @Html.PasswordFor(m => m.vol.StandartRegInfo.Password, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.vol.StandartRegInfo.ConfirmPassword, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.PasswordFor(m => m.vol.StandartRegInfo.ConfirmPassword, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.vol.Phone, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.vol.Phone, new { @class = "form-control" })
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" class="btn btn-default" value="Register" />
+            </div>
+        </div>
+
+
+    }
+</div>
+<div class='area' id="Organization">
+    @using (Html.BeginForm("RegisterOrganization", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <h4>Create a new account.</h4>
+        <hr />
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.org.Name, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.org.Name, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.org.StandartRegInfo.Email, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.org.StandartRegInfo.Email, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.org.StandartRegInfo.Password, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.PasswordFor(m => m.org.StandartRegInfo.Password, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.org.StandartRegInfo.ConfirmPassword, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.PasswordFor(m => m.org.StandartRegInfo.ConfirmPassword, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.org.ContactName, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.org.ContactName, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.org.Phone, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.org.Phone, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.org.Website, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.org.Website, new { @class = "form-control" })
             </div>
         </div>
 
@@ -59,8 +164,7 @@
                 <input type="submit" class="btn btn-default" value="Register" />
             </div>
         </div>
-        }
 
-        @section Scripts {
-            @Scripts.Render("~/bundles/jqueryval")
-        }
+
+    }
+</div>
