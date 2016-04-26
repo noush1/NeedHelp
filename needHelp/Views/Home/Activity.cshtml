@@ -1,0 +1,21 @@
+﻿@{
+    ViewBag.Title = "Activities";
+}
+@section scripts {
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
+    <script src="script.js"></script>
+}
+@section jsCode {
+    angular.bootstrap(document.getElementById("activity"), ['activity']);
+}
+
+<div ng-non-bindable>
+    <div id="customer" data-ng-controller="rootViewModel">
+        <div>
+            Currently on Activity Page.
+        </div>
+        <hr />
+        <div ng-view></div>
+    </div>
+</div>

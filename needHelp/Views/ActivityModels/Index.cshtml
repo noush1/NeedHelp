@@ -1,0 +1,176 @@
+﻿@model IEnumerable<needHelp.Models.ActivityModels>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>פעילויות</h2>
+
+@section scripts{
+    <script src="~/Scripts/angular.js">
+</script>
+    <script src="~/Scripts/bootstrap-datepicker.js">
+
+    </script>
+<script type="text/JavaScript">
+
+    $(document).ready(function () {
+        $('.datepicker').datepicker({ orientation: 'auto bottom' }); //Initialise any date pickers
+    });
+
+</script>
+
+}
+
+<div dir="rtl">
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    @if(User.IsInRole("admin")){
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.city.name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.organizationId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.description)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.city.name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.org.name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.description)
+                </td>
+                <td>
+                    @Html.ActionLink("עריכה", "Edit", new { id = item.id }) |
+                    @Html.ActionLink("פרטים", "Details", new { id = item.id }) |
+                    @Html.ActionLink("מחיקה", "Delete", new { id = item.id })
+                </td>
+            </tr>
+        }
+
+    </table>
+    }
+
+    <div class="SearchColumn">
+        <!-- Search series -->
+        @using (Html.BeginForm("SearchActivities", "ActivityModels"))
+        {
+            <div class="row">
+                <div class="col-md-1 text-right pull-right">
+                    @Html.Label("שם פעילות:", "שם פעילות:", new { style = "width:150px; height:30px; display:inline-block; " }) <br />
+                    @Html.Label("מיקום:", "מיקום:", new { style = "width:150px; height:30px; display:inline-block; " }) <br />
+                    @Html.Label("סוג פעילות:", "סוג פעילות:", new { style = "width:150px; height:30px; display:inline-block; " })
+                </div>
+                <div class="col-md-3 text-right pull-right">
+                    @Html.TextBox("txtActivityName", "", new { style = "width:100px;" })
+                    @Html.DropDownList("cityId", null, "--None--", htmlAttributes: new { @class = "form-control" })
+                    @Html.DropDownList("typeId", null, "--None--", htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-md-1 text-right pull-right">
+                    @Html.Label("שם ארגון:", "שם ארגון:", new { style = "width:150px; height:30px; display:inline-block; " }) <br />
+                    @Html.Label("מתאריך:", "מתאריך:", new { style = "width:150px; height:30px; display:inline-block; " }) <br />
+                    @Html.Label("עד תאריך:", "עד תאריך:", new { style = "width:150px; height:30px; display:inline-block; " }) <br />
+                </div>
+                <div class="col-md-3 text-right pull-right">
+                    @Html.DropDownList("organizationId", null, "--None--", htmlAttributes: new { @class = "form-control" })
+                    @Html.TextBox("txtStartDate",null,DateTime.Today.ToString(), new { @class = "form-control datepicker", placeholder = "בחר תאריך התחלה" })
+                    @Html.TextBox("txtEndDate",null,DateTime.Today.ToString(), new { @class = "form-control datepicker", placeholder = "בחר תאריך סיום" })
+                </div>
+            </div>
+            <button>חפש</button>
+        }
+    </div>
+
+
+
+    @*<table>
+        <tr>
+            <td>שם פעילות:</td>
+            <td><input type="text" placeholder="הכנס שם אירוע"/></td>
+        </tr>
+        <tr>
+            <td>סוג:</td>
+            <td><input type="text" placeholder="הכנס שם אירוע" /></td>
+        </tr>
+        <tr>
+            <td>עיר:</td>
+            <td><input type="text" placeholder="הכנס שם אירוע" /></td>
+        </tr>
+    </table>*@
+
+    <!-- Marketing messaging and featurettes
+       ================================================== -->
+    <!-- Wrap the rest of the page in another container to center all the content. -->
+
+    <div class="container marketing">
+
+        <div dir="rtl" class="row">
+                        @foreach (var item in Model)
+                        {
+                            <div class="col-xs-6 col-lg-4 pull-right" style="border:solid; border-radius:10px; margin:10px; width:30%">
+                                <p>
+                                    @if (!item.type.imagePath.IsEmpty())
+                                    {
+                                        <img class="img-circle" style="width:60px; height:60px; margin:2px" src="~/Images/Types/@Html.DisplayFor(modelItem => item.type.imagePath)" />
+                                    }
+                                    <label style="font-size:30px">@Html.DisplayFor(modelItem => item.name)</label>
+                                </p>
+                                <p>מארגן: @Html.DisplayFor(modelItem => item.org.name)</p>
+                                <p>מיקום: @Html.DisplayFor(modelItem => item.city.name) @Html.DisplayFor(modelItem => item.address)</p>
+                                <p>תאריך: @Html.DisplayFor(modelItem => item.date)</p>
+                                <p>@Html.ActionLink("פרטים", "Details", new { id = item.id })</p>
+                            </div><!--/span-->
+            }
+
+        </div><!--/row-->
+
+    </div>
+
+    <!--
+    <table class="table table-striped">
+        <tr ng-repeat="activity in activityList">
+            
+        </tr>
+    </table>
+        -->
+
+</div>
+@Scripts.Render("~/Scripts/angular.js")
+@Scripts.Render("~/Scripts/angular-route.js")
+@Scripts.Render("~/Scripts/angular-resource.js")
+@Scripts.Render("~/Scripts/script.js")
+
+
+
+

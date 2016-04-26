@@ -1,0 +1,73 @@
+﻿@model needHelp.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Register";
+}
+
+@section scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/JavaScript">
+
+        $('input[type=radio]').click(function () {
+            $('.area').hide();
+            $('#' + $(this).val()).show();
+        });
+
+        $('input[type=radio]').init(function () {
+            $('.area').hide();
+            $('#Volunteer').show();
+        });
+
+    </script>
+
+}
+
+<h2>@ViewBag.Title.</h2>
+
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <h4>Create a new account.</h4>
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Type, new { @class = "col-md-2 control-label" })
+
+        <div class="col-md-10" id="radioButton">
+            Organization: @Html.RadioButtonFor(m => m.Type, "Organization", new { @val = "org" })
+            Volunteer: @Html.RadioButtonFor(m => m.Type, "Volunteer", new { Checked = "checked", @val = "vol" })
+        </div>
+    </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" class="btn btn-default" value="Register" />
+            </div>
+        </div>
+    
+    <section id="adminmain">
+        
+        @RenderBody()
+    </section>
+
+}
+
+<script type="text/javascript">
+    $(function() {
+        $('#someButton').click( function() {
+            $.ajax({
+                url: '/controller/action',
+                dataType: 'html',
+            success: function(data) {
+                $('#partial').html(data);
+            }
+        });
+    });
+    });
+</script>
+
+
+
+
+
