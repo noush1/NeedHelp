@@ -8,6 +8,13 @@ using System.Web.Routing;
 
 namespace needHelp
 {
+    public enum roleType
+    {
+        admin = 1,
+        organization = 2,
+        volunteer = 3
+
+    };
     public class MvcApplication : System.Web.HttpApplication
     {
         protected void Application_Start()

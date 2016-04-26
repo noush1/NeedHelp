@@ -1268,6 +1268,8 @@
     <Content Include="Views\HelpTypeModels\Edit.cshtml" />
     <Content Include="Views\HelpTypeModels\Index.cshtml" />
     <Content Include="Scripts\version.json" />
+    <Content Include="Views\Account\RegisterVolunteer.cshtml" />
+    <Content Include="Views\Account\RegisterOrganization.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App\Activity\ViewModels\" />

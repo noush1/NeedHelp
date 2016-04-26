@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using needHelp.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace needHelp.Controllers
 {
@@ -22,6 +23,17 @@ namespace needHelp.Controllers
 
         public AccountController()
         {
+        }
+         [AllowAnonymous]
+        public ActionResult RegVolunteer()
+        {
+            return PartialView("~/Views/Account/RegisterVolunteer.cshtml");
+
+        }
+         [AllowAnonymous]
+        public ActionResult RegOrganization()
+        {
+            return PartialView("~/Views/Account/RegisterOrganization.cshtml");
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
@@ -154,7 +166,22 @@ namespace needHelp.Controllers
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                //User.Identity.GetUserName();
+                // initiate the roles of the new user
+                IdentityUserRole userRole = new IdentityUserRole();
+                userRole.UserId = user.Id;
+
+                ApplicationDbContext appDbContex = new ApplicationDbContext();
+                roleType chosen_role = (roleType)Enum.Parse(typeof(roleType), model.Type.ToLower(), true);
+                // assigns a role of either a volunteer or organization.
+                IdentityRole role = appDbContex.Roles.Find(((int)chosen_role).ToString());
+
+                userRole.RoleId = role.Id;
+                user.Roles.Add(userRole);
+
+
                 var result = await UserManager.CreateAsync(user, model.Password);
+               
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
@@ -169,7 +196,7 @@ namespace needHelp.Controllers
                     {
                         VolunteerModels volunteer = new VolunteerModels();
                         volunteer.firstName = model.Name;
-                        volunteer.lastName = string.Empty;
+                        volunteer.lastName = model.LastName;
                         volunteer.phone = model.Phone;
                         volunteer.email = model.Email;
                         volunteer.userId = user.Id;
@@ -182,12 +209,21 @@ namespace needHelp.Controllers
                         organization.name = model.Name;
                         organization.userId = user.Id;
                         organization.email = model.Email;
+                        organization.contactName = model.ContactName;
                         organization.contactPhone = model.Phone;
+                        organization.website = model.Website;
 
                         _db.organizations.Add(organization);
                     }
                     
-                    _db.SaveChanges();
+                    try
+                    { 
+                      _db.SaveChanges();
+                    }
+                    catch(Exception e)
+                    {
+                        string msg = e.Message;
+                    }
 
 
                     return RedirectToAction("Index", "Home");

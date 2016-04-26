@@ -66,8 +66,13 @@ namespace needHelp.Models
     {
         [Required]
         [DataType(DataType.Text)]
-        [Display(Name = "שם מלא")]
+        [Display(Name = "שם פרטי")]
         public string Name { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "שם משפחה")]
+        public string LastName { get; set; }
 
         [Required]
         [EmailAddress]
@@ -84,6 +89,14 @@ namespace needHelp.Models
         [Display(Name = "אימות סיסמה")]
         [Compare("Password", ErrorMessage = "סיסמה ואימות הסיסמה אינם זהים.")]
         public string ConfirmPassword { get; set; }
+
+        [DataType(DataType.Text)]
+        [Display(Name = "איש קשר")]
+        public string ContactName { get; set; }
+
+        [DataType(DataType.Text)]
+        [Display(Name = "אתר")]
+        public string Website { get; set; }
 
         [Required]
         [DataType(DataType.PhoneNumber)]

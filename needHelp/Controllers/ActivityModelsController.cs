@@ -19,6 +19,35 @@ namespace needHelp.Controllers
         // GET: ActivityModels
         public ActionResult Index()
         {
+            try
+            {
+                bool role = User.IsInRole("admin");
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+            /*
+            string user_name = User.Identity.Name;
+            if (user_name != String.Empty)
+            {
+                var result = from s in db.Users
+                             where s.UserName.Contains(user_name)
+                             select s;
+                List<Microsoft.AspNet.Identity.EntityFramework.IdentityUser> users =  result.ToList();
+                
+                if (users != null && users.Count > 0)
+                {
+                    string id = users.First().Id;
+                    var result = from s in db.
+                             where s.UserName.Contains(user_name)
+                             select s;
+                }
+            }
+            db.Users
+                */
             var activities = db.activities.Include(a => a.city);
 
             ViewBag.cityId = new SelectList(db.cities, "id", "name");
