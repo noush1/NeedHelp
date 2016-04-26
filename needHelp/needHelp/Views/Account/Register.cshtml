@@ -1,0 +1,175 @@
+﻿
+@model needHelp.Models.RegisterTypesViewModel
+@{
+    ViewBag.Title = "Register";
+}
+
+@section scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/JavaScript">
+
+        $('input[type=radio]').click(function () {
+            $('.area').hide();
+            $('#' + $(this).val()).show();
+        });
+
+        $('input[type=radio]').init(function () {
+            $('.area').hide();
+            $('#Volunteer').show();
+        });
+
+    </script>
+}
+<div dir="rtl" class="form-horizontal text-right pull-right">
+
+    @using (Html.BeginForm("RegisterVolunteer", "Account", FormMethod.Post, new { role = "form" }))
+    {
+        <div dir ="rtl" class="form-group text-right pull-right">
+            <div class="col-md-2">
+                ארגון
+                <br />
+                מתנדב
+            </div>
+            <div class="col-md-3" id="radioButton">
+                @Html.RadioButtonFor(m => m.vol.Name, "Organization", new { @val = "org", style = "width:20px; display:inline; " })
+                @Html.RadioButtonFor(m => m.vol.Name, "Volunteer", new { Checked = "checked", @val = "vol", style = "width:20px; display:inline; " })
+                
+            </div>
+        </div>
+
+
+    }
+    <br />
+    <br />
+    <div class='area form-horizontal' dir="rtl" id="Volunteer">
+        @using (Html.BeginForm("RegisterVolunteer", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <h4>יצירת פרופיל מתנדב</h4>
+            <hr />
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+
+            @*<div class='area' id="Volunteer">jersey</div>
+                <div class='area' id="Organization">shorts</div>*@
+
+            //if (Model.Type == "Volunteer")
+            //{
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.vol.Name, new {  style = "width:120px; height:30px; display:inline; "})
+                <div class="col-md-8">
+                    @Html.TextBoxFor(m => m.vol.Name, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.vol.LastName, new {  style = "width:120px; height:30px; display:inline; " })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(m => m.vol.LastName, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.vol.StandartRegInfo.Email, new {  style = "width:120px; height:30px; display:inline; " })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(m => m.vol.StandartRegInfo.Email, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.vol.StandartRegInfo.Password, new {  style = "width:120px; height:30px; display:inline; " })
+                <div class="col-md-8">
+                    @Html.PasswordFor(m => m.vol.StandartRegInfo.Password, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.vol.StandartRegInfo.ConfirmPassword, new {  style = "width:120px; height:30px; display:inline; " })
+                <div class="col-md-8">
+                    @Html.PasswordFor(m => m.vol.StandartRegInfo.ConfirmPassword, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.vol.Phone, new {  style = "width:120px; height:30px; display:inline; " })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(m => m.vol.Phone, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-8">
+                    <input type="submit" class="btn btn-default" value="הרשם" />
+                </div>
+            </div>
+
+
+        }
+    </div>
+    <div class='area form-horizontal' dir="rtl" id="Organization">
+        @using (Html.BeginForm("RegisterOrganization", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <h4>יצירת פרופיל ארגון</h4>
+            <hr />
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.org.Name, new {  style = "width:120px; height:30px; display:inline; " })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(m => m.org.Name, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.org.StandartRegInfo.Email, new {  style = "width:120px; height:30px; display:inline; " })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(m => m.org.StandartRegInfo.Email, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.org.StandartRegInfo.Password, new {  style = "width:120px; height:30px; display:inline; " })
+                <div class="col-md-8">
+                    @Html.PasswordFor(m => m.org.StandartRegInfo.Password, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.org.StandartRegInfo.ConfirmPassword, new {  style = "width:120px; height:30px; display:inline; " })
+                <div class="col-md-8">
+                    @Html.PasswordFor(m => m.org.StandartRegInfo.ConfirmPassword, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.org.ContactName, new {  style = "width:120px; height:30px; display:inline; " })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(m => m.org.ContactName, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.org.Phone, new {  style = "width:120px; height:30px; display:inline; " })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(m => m.org.Phone, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.org.Website, new {  style = "width:120px; height:30px; display:inline; " })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(m => m.org.Website, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-8">
+                    <input type="submit" class="btn btn-default" value="הרשם" />
+                </div>
+            </div>
+
+
+        }
+    </div>
+</div>
