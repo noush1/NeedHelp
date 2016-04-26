@@ -46,7 +46,7 @@
                     <li ><i class="fa fa-home"></i>@Html.ActionLink("דף הבית", "Index", "Home")</listyle>
                     @if (!User.Identity.Name.IsEmpty())
                     {
-                        <li ><i class="glyphicon-arrow-down"></i>@Html.ActionLink(@User.Identity.Name, "Profile", "ProfileModels")</li>
+                        <li ><i class="glyphicon-arrow-down"></i>@Html.ActionLink(@User.Identity.Name, "Index", "ProfileModels")</li>
                     }
 
                 </ul>

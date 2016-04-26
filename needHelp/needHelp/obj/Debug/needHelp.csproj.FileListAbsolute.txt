@@ -524,3 +524,4 @@ C:\AntonCollege\NeedHelp\NotGit\new\NeedHelpGit\needHelp\needHelp\bin\WebGrease.
 C:\AntonCollege\NeedHelp\NotGit\new\NeedHelpGit\needHelp\needHelp\obj\Debug\needHelp.dll
 C:\AntonCollege\NeedHelp\NotGit\new\NeedHelpGit\needHelp\needHelp\obj\Debug\needHelp.pdb
 C:\AntonCollege\NeedHelp\NotGit\new\NeedHelpGit\needHelp\needHelp\obj\Debug\needHelp.csprojResolveAssemblyReference.cache
+C:\Users\Nuphar\Documents\לימודים\סימסטר א\פרוייקט סיום\finalProject\NeedHelp\needHelp\needHelp\obj\Debug\needHelp.Migrations.deleteBullshit.resources
