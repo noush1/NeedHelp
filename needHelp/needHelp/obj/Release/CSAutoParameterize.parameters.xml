@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<parameters>
-  <parameter name="ConnectionString-Web.config Connection String" description="ConnectionString Connection String used in web.config by the application to access the database." defaultValue="Server=tcp:need-help.database.windows.net,1433;Database=needHelp;User ID=needHelpAdmin@need-help;Password=neeDs123;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;" tags="SqlConnectionString">
-    <parameterEntry kind="XmlFile" scope="C:\\Users\\noaev\\documents\\visual\ studio\ 2013\\Projects\\NeedHelp\\needHelp\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='ConnectionString']/@connectionString" />
-  </parameter>
-  <parameter name="needHelp.Models.ApplicationDbContext-Web.config Connection String" description="needHelp.Models.ApplicationDbContext Connection String used in web.config by the application to access the database." defaultValue="needHelp.Models.ApplicationDbContext_ConnectionString" tags="SqlConnectionString">
-    <parameterEntry kind="XmlFile" scope="C:\\Users\\noaev\\documents\\visual\ studio\ 2013\\Projects\\NeedHelp\\needHelp\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='needHelp.Models.ApplicationDbContext']/@connectionString" />
-  </parameter>
-</parameters>
