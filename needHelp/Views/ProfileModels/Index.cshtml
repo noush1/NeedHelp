@@ -1,0 +1,64 @@
+﻿@model needHelp.Models.VolunteerModels
+
+@{
+    ViewBag.Title = "User Profile";
+}
+
+<div dir="rtl">
+    <h1>שלום @Html.DisplayFor(modelItem => Model.firstName) @Html.DisplayFor(modelItem => Model.lastName)</h1>
+
+    <div>
+        <h3>פרטים אישיים:</h3>
+        <p>שם פרטי: @Html.DisplayFor(modelItem => Model.firstName)</p>
+        <p>שם משפחה:  @Html.DisplayFor(modelItem => Model.lastName)</p>
+        <p>דואר אלקטרוני: @Html.DisplayFor(modelItem => Model.email)</p>
+        <p>טלפון: @Html.DisplayFor(modelItem => Model.phone)</p>
+
+        @Html.ActionLink("עריכה", "Edit", new { id = Model.id })
+    </div>
+    <br />
+
+    <div dir="rtl" class="row">
+        <h3>הפעילויות אליהן את/ה רשום/ה:</h3>
+        @foreach (var item in Model.registered_activities)
+        {
+            <div class="col-xs-6 col-lg-4 pull-right" style="border: solid; border-radius: 10px; margin: 10px; width: 30%">
+                <p>
+                    @if (!item.type.imagePath.IsEmpty())
+                    {
+                        <img class="img-circle" style="width: 60px; height: 60px; margin: 2px" src="~/Images/Types/@Html.DisplayFor(modelItem => item.type.imagePath)" />
+                    }
+                    <label style="font-size: 30px">@Html.DisplayFor(modelItem => item.name)</label>
+                </p>
+                <p>מארגן: @Html.DisplayFor(modelItem => item.org.name)</p>
+                <p>מיקום: @Html.DisplayFor(modelItem => item.city.name) @Html.DisplayFor(modelItem => item.address)</p>
+                <p>תאריך: @Html.DisplayFor(modelItem => item.date)</p>
+            </div>
+        }
+        @if(Model.registered_activities.Count == 0)
+        {
+            <p>לא קיימות פעילויות עבורך</p>
+        }
+    </div>
+
+    <div dir="rtl" class="row">
+        <h3>פעילויות מומלצות:</h3>
+        @foreach (var activity in ViewBag.sugestedActivities)
+        {
+            <div class="col-xs-6 col-lg-4 pull-right" style="border: solid; border-radius: 10px; margin: 10px; width: 30%">
+                <p>
+                    @if (activity.type.imagePath!=String.Empty)
+                    {
+                        <img class="img-circle" style="width: 60px; height: 60px; margin: 2px" src="~/Images/Types/@activity.type.imagePath" />
+                    }
+                    <label style="font-size: 30px">@activity.name</label>
+                </p>
+                @*<p>מארגן: @activity.org.name</p>*@
+                <p>מיקום: @activity.city.name @activity.address</p>
+                <p>תאריך: @activity.date</p>
+                <p>@Html.ActionLink("פרטים", "../ActivityModels/Details", new { id = activity.id })</p>
+            </div>
+        }
+    </div>
+    
+</div>

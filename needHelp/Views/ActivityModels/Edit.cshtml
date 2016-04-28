@@ -5,81 +5,88 @@
 }
 
 <div dir="rtl">
-    <h1>עריכת פעילות</h1>
+    @if (User.IsInRole("admin") || (User.IsInRole("organization") && User.Identity.Name.Equals(Model.org.email)))
+    {
+        <h1>עריכת פעילות</h1>
 
-    @using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-    <div dir="rtl" class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.id)
+        using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
 
-        <div class="form-group">
-            @Html.Label("שם פעילות:", "שם פעילות:", new { style = "width:150px; height:30px; display:inline-block; " })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+            <div dir="rtl" class="form-horizontal">
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.id)
+
+                <div class="form-group">
+                    @Html.Label("שם פעילות:", "שם פעילות:", new { style = "width:150px; height:30px; display:inline-block; " })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("מארגן:", "מארגן:", new { style = "width:150px; height:30px; display:inline-block; " })
+                    <div class="col-md-10">
+                        @Html.DropDownList("organizationId", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.organizationId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("כתובת:", "כתובת:", new { style = "width:150px; height:30px; display:inline-block; " })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.address, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.address, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("עיר:", "עיר:", new { style = "width:150px; height:30px; display:inline-block; " })
+                    <div class="col-md-10">
+                        @Html.DropDownList("cityId", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.cityId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("תאריך:", "תאריך:", new { style = "width:150px; height:30px; display:inline-block; " })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.date, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.date, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("סוג פעילות:", "סוג פעילות:", new { style = "width:150px; height:30px; display:inline-block; " })
+                    <div class="col-md-10">
+                        @Html.DropDownList("typeId", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.typeId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("תיאור הפעילות:", "תיאור הפעילות:", new { style = "width:150px; height:30px; display:inline-block; " })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div>
+                        <input type="submit" value="שמור" class="btn btn-default" />
+                    </div>
+                </div>
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.Label("מארגן:", "מארגן:", new { style = "width:150px; height:30px; display:inline-block; " })
-            <div class="col-md-10">
-                @Html.DropDownList("organizationId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.organizationId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.Label("כתובת:", "כתובת:", new { style = "width:150px; height:30px; display:inline-block; " })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.address, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.address, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.Label("עיר:", "עיר:", new { style = "width:150px; height:30px; display:inline-block; " })
-            <div class="col-md-10">
-                @Html.DropDownList("cityId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.cityId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.Label("תאריך:", "תאריך:", new { style = "width:150px; height:30px; display:inline-block; " })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.date, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.date, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.Label("סוג פעילות:", "סוג פעילות:", new { style = "width:150px; height:30px; display:inline-block; " })
-            <div class="col-md-10">
-                @Html.DropDownList("typeId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.typeId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.Label("תיאור הפעילות:", "תיאור הפעילות:", new { style = "width:150px; height:30px; display:inline-block; " })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group"> 
-            <div >
-                <input type="submit" value="שמור" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
+        }
     }
-
+    else
+    {
+        <br /><br />
+        <p><h3>אין ברשותך הרשאות מתאימות לצפייה בעמוד זה</h3></p>
+    }
     <div dir="ltr">
         @Html.ActionLink("חזרה לרשימה", "Index")
     </div>

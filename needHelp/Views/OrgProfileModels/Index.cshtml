@@ -1,0 +1,44 @@
+﻿@model needHelp.Models.OrganizationModels
+
+@{
+    ViewBag.Title = "Index";
+}
+<div dir="rtl">
+    <h1>שלום @Html.DisplayFor(modelItem => Model.name)</h1>
+
+    <div>
+        <h3>פרטי הארגון:</h3>
+        <p>שם: @Html.DisplayFor(modelItem => Model.name)</p>
+        <p>איש קשר:  @Html.DisplayFor(modelItem => Model.contactName)</p>
+        <p>טלפון: @Html.DisplayFor(modelItem => Model.contactPhone)</p>
+        <p>דואר אלקטרוני: @Html.DisplayFor(modelItem => Model.email)</p>
+        <p>אתר: @Html.DisplayFor(modelItem => Model.website)</p>
+
+        @Html.ActionLink("עריכה", "Edit", new { id = Model.id })
+    </div>
+
+    <div dir="rtl" class="row">
+        <h3>הפעילויות אשר ארגונך מציע:</h3>
+        @foreach (var activity in ViewBag.organizationActivities)
+        {
+            <div class="col-xs-6 col-lg-4 pull-right" style="border: solid; border-radius: 10px; margin: 10px; width: 30%">
+                <p>
+                    @if (activity.type.imagePath != String.Empty)
+                    {
+                        <img class="img-circle" style="width: 60px; height: 60px; margin: 2px" src="~/Images/Types/@activity.type.imagePath" />
+                    }
+                    <label style="font-size: 30px">@activity.name</label>
+                </p>
+                @*<p>מארגן: @activity.org.name</p>*@
+                <p>מיקום: @activity.city.name @activity.address</p>
+                <p>תאריך: @activity.date</p>
+                <p>@Html.ActionLink("פרטים", "../ActivityModels/Details", new { id = activity.id })</p>
+            </div>
+        }
+        @if (ViewBag.organizationActivities.Count == 0)
+        {
+            <p>ארגונך אינו מציע פעילויות</p>
+        }
+    </div>
+</div>
+

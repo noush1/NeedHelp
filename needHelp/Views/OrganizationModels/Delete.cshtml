@@ -4,31 +4,41 @@
     ViewBag.Title = "Delete";
 }
 <div dir="rtl">
-    <h2>מחיקת ארגון</h2>
+    @if (User.IsInRole("admin") || (User.IsInRole("organization") && User.Identity.Name.Equals(Model.email)))
+    {
+        <h2>מחיקת ארגון</h2>
 
-    <h3>האם אתה בטוח כי ברצונך למחוק ארגון זה?</h3>
+        <h3>האם אתה בטוח כי ברצונך למחוק ארגון זה?</h3>
+        <div>
+            <hr />
+
+            <div>
+
+                <p>שם ארגון: @Html.DisplayFor(model => Model.name)</p>
+                <p>איש קשר: @Html.DisplayFor(model => Model.contactName)</p>
+                <p>טלפון: @Html.DisplayFor(model => Model.contactPhone)</p>
+                <p>דואר אלקטרוני: @Html.DisplayFor(model => Model.email)</p>
+                <p>אתר אינטרנט: @Html.DisplayFor(model => Model.website)</p>
+            </div>
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-actions no-color">
+                    <input type="submit" value="מחק" class="btn btn-default" />
+
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <br /><br />
+        <p><h3>אין ברשותך הרשאות מתאימות לצפייה בעמוד זה</h3></p>
+    }
     <div>
-        <hr />
-        
-        <div >
-                            
-            <p>שם ארגון: @Html.DisplayFor(model => Model.name)</p>
-            <p>איש קשר: @Html.DisplayFor(model => Model.contactName)</p>
-            <p>טלפון: @Html.DisplayFor(model => Model.contactPhone)</p>
-            <p>דואר אלקטרוני: @Html.DisplayFor(model => Model.email)</p>
-            <p>אתר אינטרנט: @Html.DisplayFor(model => Model.website)</p>
-        </div>
-
-        @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="מחק" class="btn btn-default" />
-           
-        </div>
-        <div dir="ltr">
-             @Html.ActionLink("חזרה לרשימה", "Index")
-        </div>
-        }
+        @Html.ActionLink("חזרה לרשימה", "Index")
     </div>
+
 </div>
