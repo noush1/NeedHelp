@@ -1,0 +1,80 @@
+﻿@model needHelp.Models.OrganizationModels
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<div dir="rtl">
+    @if (User.IsInRole("admin") || (User.IsInRole("organization") && User.Identity.Name.Equals(Model.email)))
+    {
+        <h2>עריכת פרטי ארגון</h2>
+
+        using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+    <div dir="rtl" class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.id)
+
+        <div class="form-group">
+            @Html.Label("שם הארגון", "שם הארגון", new { style = "width:150px; height:30px; display:inline-block; " })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("איש קשר", "איש קשר", new { style = "width:150px; height:30px; display:inline-block; " })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.contactName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.contactName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("טלפון", "טלפון", new { style = "width:150px; height:30px; display:inline-block; " })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.contactPhone, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.contactPhone, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("דואר אלקטרוני", "דואר אלקטרוני", new { style = "width:150px; height:30px; display:inline-block; " })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("אתר", "אתר", new { style = "width:150px; height:30px; display:inline-block; " })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.website, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.website, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+        }
+
+
+    }
+    else
+    {
+    <br /><br />
+    <p><h3>אין ברשותך הרשאות מתאימות לצפייה בעמוד זה</h3></p>
+    }
+
+    <div dir="ltr">
+        @Html.ActionLink("חזרה", "Index")
+    </div>
+</div>

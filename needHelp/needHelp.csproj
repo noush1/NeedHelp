@@ -200,6 +200,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OrganizationModelsController.cs" />
+    <Compile Include="Controllers\OrgProfileModelsController.cs" />
     <Compile Include="Controllers\ProfileModelsController.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -2257,6 +2258,8 @@
     <Content Include="Views\Account\RegisterVolunteer.cshtml" />
     <Content Include="Views\Account\RegisterOrganization.cshtml" />
     <Content Include="Views\ProfileModels\Edit.cshtml" />
+    <Content Include="Views\OrgProfileModels\Edit.cshtml" />
+    <Content Include="Views\OrgProfileModels\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App\Activity\ViewModels\" />

@@ -45,7 +45,14 @@
                     <li ><i class="fa fa-home"></i>@Html.ActionLink("דף הבית", "Index", "Home")</listyle>
                     @if (!User.Identity.Name.IsEmpty())
                     {
+                        if (User.IsInRole("organization"))
+                        {
+                            <li ><i class="glyphicon-arrow-down"></i>@Html.ActionLink(@User.Identity.Name, "Index", "OrgProfileModels")</li>
+                        }
+                        else if (User.IsInRole("volunteer"))
+                        {
                         <li ><i class="glyphicon-arrow-down"></i>@Html.ActionLink(@User.Identity.Name, "Index", "ProfileModels")</li>
+                        }
                     }
 
                 </ul>

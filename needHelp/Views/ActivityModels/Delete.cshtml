@@ -4,69 +4,79 @@
     ViewBag.Title = "Delete";
 }
 
-<h2>מחיקת פעילות</h2>
+<div dir="rtl">
 
-<h3>האם אתה בטוח כי ברצונך למחוק פעילות זו?</h3>
-<div  dir="rtl">
-    <h4>ActivityModels</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.city.name)
-        </dt>
+    @if (User.IsInRole("admin") || (User.IsInRole("organization") && User.Identity.Name.Equals(Model.org.email)))
+    {
+        <h2>מחיקת פעילות</h2>
 
-        <dd>
-            @Html.DisplayFor(model => model.city.name)
-        </dd>
+        <h3>האם אתה בטוח כי ברצונך למחוק פעילות זו?</h3>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.name)
-        </dt>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.city.name)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.name)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.city.name)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.organizationId)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.name)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.organizationId)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.name)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.address)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.organizationId)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.address)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.organizationId)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.date)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.address)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.date)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.address)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.description)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.date)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.description)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.date)
+            </dd>
 
-    </dl>
+            <dt>
+                @Html.DisplayNameFor(model => model.description)
+            </dt>
 
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
+            <dd>
+                @Html.DisplayFor(model => model.description)
+            </dd>
 
-        <div class="form-actions no-color">
-            <input type="submit" value="מחק" class="btn btn-default" /> |
-            @Html.ActionLink("חזרה לרשימה", "Index")
-        </div>
+        </dl>
+
+        using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="מחק" class="btn btn-default" /> |
+                @Html.ActionLink("חזרה לרשימה", "Index")
+            </div>
+        }
+    }
+    else
+    {
+        <br /><br />
+        <p><h3>אין ברשותך הרשאות מתאימות לצפייה בעמוד זה</h3></p>
     }
 </div>

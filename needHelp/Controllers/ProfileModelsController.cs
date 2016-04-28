@@ -16,7 +16,7 @@ namespace needHelp.Controllers
 
         public ActionResult Index()
         {
-            VolunteerModels volunteer = db.volunteers.First(user => user.email == User.Identity.Name);
+            VolunteerModels volunteer = db.volunteers.First(user => user.email.Equals(User.Identity.Name));
             ViewBag.sugestedActivities = db.activities.ToList();
 
             return View(volunteer);

@@ -5,6 +5,8 @@
 }
 
 <div dir="rtl">
+@if (User.IsInRole("admin") || (User.IsInRole("volunteer") && User.Identity.Name.Equals(Model.email)))
+{
     <h1>עריכת פרטים אישיים:</h1>
     @using (Html.BeginForm())
     {
@@ -54,6 +56,12 @@
             </div>
     </div>
     }
+}
+else
+{
+    <br /><br />
+    <p><h3>אין ברשותך הרשאות מתאימות לצפייה בעמוד זה</h3></p>
+}
 
     <div dir="ltr">
         @Html.ActionLink("חזרה", "Index")
