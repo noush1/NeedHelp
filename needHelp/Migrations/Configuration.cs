@@ -78,6 +78,7 @@ namespace needHelp.Migrations
                         name = "אילת"
                     });
 
+            /*
             context.organizations.AddOrUpdate(x => x.id,
                     new OrganizationModels()
                     {
@@ -119,6 +120,7 @@ namespace needHelp.Migrations
                         contactPhone = "0545222101",
                         email = "kulanu@gmail.com"
                     });
+             * */
 
             context.help_types.AddOrUpdate(x => x.id,
                     new HelpTypeModels()
@@ -140,6 +142,7 @@ namespace needHelp.Migrations
                         imagePath = "learning.png"
                     });
 
+            /*
             context.activities.AddOrUpdate(x => x.id,
                     new ActivityModels()
                     {
@@ -185,7 +188,7 @@ namespace needHelp.Migrations
                         typeId = 3,
                         address = "בן גוריון 35"
                     });
-            
+            */
         }
     }
 }

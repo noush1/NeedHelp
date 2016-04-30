@@ -62,8 +62,16 @@ namespace needHelp.Models
         public bool RememberMe { get; set; }
     }
 
-    public class RegisterViewModel
+    public class RegisterTypesViewModel
     {
+        public RegisterVolunteerViewModel vol { get; set; }
+        public RegisterOrganizationViewModel org { get; set; }
+    }
+
+    public class RegisterVolunteerViewModel
+    {
+        public RegisterViewModel StandartRegInfo { get; set; }
+
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "שם פרטי")]
@@ -74,6 +82,38 @@ namespace needHelp.Models
         [Display(Name = "שם משפחה")]
         public string LastName { get; set; }
 
+        [Required]
+        [DataType(DataType.PhoneNumber)]
+        [Display(Name = "טלפון")]
+        public string Phone { get; set; }
+    }
+
+    public class RegisterOrganizationViewModel
+    {
+        public RegisterViewModel StandartRegInfo { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "שם ארגון")]
+        public string Name { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "שם איש קשר")]
+        public string ContactName { get; set; }
+
+        [Required]
+        [DataType(DataType.PhoneNumber)]
+        [Display(Name = "טלפון")]
+        public string Phone { get; set; }
+
+        [DataType(DataType.Text)]
+        [Display(Name = "אתר")]
+        public string Website { get; set; }
+    }
+
+    public class RegisterViewModel
+    {
         [Required]
         [EmailAddress]
         [Display(Name = "אימייל")]
@@ -89,24 +129,6 @@ namespace needHelp.Models
         [Display(Name = "אימות סיסמה")]
         [Compare("Password", ErrorMessage = "סיסמה ואימות הסיסמה אינם זהים.")]
         public string ConfirmPassword { get; set; }
-
-        [DataType(DataType.Text)]
-        [Display(Name = "איש קשר")]
-        public string ContactName { get; set; }
-
-        [DataType(DataType.Text)]
-        [Display(Name = "אתר")]
-        public string Website { get; set; }
-
-        [Required]
-        [DataType(DataType.PhoneNumber)]
-        [Display(Name = "טלפון")]
-        public string Phone { get; set; }
-
-        [Required]
-        [DataType(DataType.Text)]
-        [Display(Name = "סוג")]
-        public string Type { get; set; }
     }
 
     public class ResetPasswordViewModel

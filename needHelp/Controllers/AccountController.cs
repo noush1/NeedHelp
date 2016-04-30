@@ -24,19 +24,123 @@ namespace needHelp.Controllers
         public AccountController()
         {
         }
-         [AllowAnonymous]
-        public ActionResult RegVolunteer()
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> RegisterVolunteer(RegisterTypesViewModel full_model)
         {
-            return PartialView("~/Views/Account/RegisterVolunteer.cshtml");
+            RegisterVolunteerViewModel model = full_model.vol;
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser { UserName = model.StandartRegInfo.Email, Email = model.StandartRegInfo.Email };
+                //User.Identity.GetUserName();
+                // initiate the roles of the new user
+                IdentityUserRole userRole = new IdentityUserRole();
+                userRole.UserId = user.Id;
+
+                ApplicationDbContext appDbContex = new ApplicationDbContext();
+                // assigns a role of either a volunteer or organization.
+                IdentityRole role = appDbContex.Roles.Find(((int)roleType.volunteer).ToString());
+
+                userRole.RoleId = role.Id;
+                user.Roles.Add(userRole);
+
+
+                var result = await UserManager.CreateAsync(user, model.StandartRegInfo.Password);
+
+                if (result.Succeeded)
+                {
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                    VolunteerModels volunteer = new VolunteerModels();
+                    volunteer.firstName = model.Name;
+                    volunteer.lastName = model.LastName;
+                    volunteer.phone = model.Phone;
+                    volunteer.email = model.StandartRegInfo.Email;
+                    volunteer.userId = user.Id;
+
+                    _db.volunteers.Add(volunteer);
+
+
+                    try
+                    {
+                        _db.SaveChanges();
+                    }
+                    catch (Exception e)
+                    {
+                        string msg = e.Message;
+                    }
+
+
+                    return RedirectToAction("Index", "Home");
+                }
+                AddErrors(result);
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model.StandartRegInfo);
 
         }
-         [AllowAnonymous]
-        public ActionResult RegOrganization()
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> RegisterOrganization(RegisterTypesViewModel full_model)
         {
-            return PartialView("~/Views/Account/RegisterOrganization.cshtml");
+            RegisterOrganizationViewModel model = full_model.org;
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser { UserName = model.StandartRegInfo.Email, Email = model.StandartRegInfo.Email };
+                //User.Identity.GetUserName();
+                // initiate the roles of the new user
+                IdentityUserRole userRole = new IdentityUserRole();
+                userRole.UserId = user.Id;
+
+                ApplicationDbContext appDbContex = new ApplicationDbContext();
+                // assigns a role of either a volunteer or organization.
+                IdentityRole role = appDbContex.Roles.Find(((int)roleType.organization).ToString());
+
+                userRole.RoleId = role.Id;
+                user.Roles.Add(userRole);
+
+
+                var result = await UserManager.CreateAsync(user, model.StandartRegInfo.Password);
+
+                if (result.Succeeded)
+                {
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                    OrganizationModels organization = new OrganizationModels();
+                    organization.name = model.Name;
+                    organization.userId = user.Id;
+                    organization.email = model.StandartRegInfo.Email;
+                    organization.contactName = model.ContactName;
+                    organization.contactPhone = model.Phone;
+                    organization.website = model.Website;
+
+                    _db.organizations.Add(organization);
+
+                    try
+                    {
+                        _db.SaveChanges();
+                    }
+                    catch (Exception e)
+                    {
+                        string msg = e.Message;
+                    }
+
+
+                    return RedirectToAction("Index", "Home");
+                }
+                AddErrors(result);
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model.StandartRegInfo);
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -48,9 +152,9 @@ namespace needHelp.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -134,7 +238,7 @@ namespace needHelp.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -172,55 +276,25 @@ namespace needHelp.Controllers
                 userRole.UserId = user.Id;
 
                 ApplicationDbContext appDbContex = new ApplicationDbContext();
-                roleType chosen_role = (roleType)Enum.Parse(typeof(roleType), model.Type.ToLower(), true);
+
                 // assigns a role of either a volunteer or organization.
-                IdentityRole role = appDbContex.Roles.Find(((int)chosen_role).ToString());
+                IdentityRole role = appDbContex.Roles.Find(((int)roleType.volunteer).ToString());
 
                 userRole.RoleId = role.Id;
                 user.Roles.Add(userRole);
 
 
                 var result = await UserManager.CreateAsync(user, model.Password);
-               
+
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
-                    if (model.Type == "Volunteer")
-                    {
-                        VolunteerModels volunteer = new VolunteerModels();
-                        volunteer.firstName = model.Name;
-                        volunteer.lastName = model.LastName;
-                        volunteer.phone = model.Phone;
-                        volunteer.email = model.Email;
-                        volunteer.userId = user.Id;
-
-                        _db.volunteers.Add(volunteer);
-                    }
-                    else
-                    {
-                        OrganizationModels organization = new OrganizationModels();
-                        organization.name = model.Name;
-                        organization.userId = user.Id;
-                        organization.email = model.Email;
-                        organization.contactName = model.ContactName;
-                        organization.contactPhone = model.Phone;
-                        organization.website = model.Website;
-
-                        _db.organizations.Add(organization);
-                    }
-                    
                     try
-                    { 
-                      _db.SaveChanges();
+                    {
+                        _db.SaveChanges();
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
                         string msg = e.Message;
                     }
