@@ -22,39 +22,58 @@
 
     <div dir="rtl" class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Need Help?", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-
-
-            <div class="navbar-collapse collapse navbar-right">
-                <ul class="nav navbar-nav">
+            <button class="navbar-toggle" data-toggle="collapse" data-target=".myOwnCollapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <div class="navbar-collapse collapse myOwnCollapse">
+                <ul class="nav navbar-nav navbar-left">
                     @Html.Partial("_LoginPartial")
                 </ul>
-                <ul class="nav navbar-nav">
-                    <li ><i class="fa fa-comment"></i>@Html.ActionLink("סוגים", "Index", "HelpTypeModels")</li>
-                    <li ><i class="fa fa-shield"></i>@Html.ActionLink("ערים", "Index", "CityModels")</li>
+                <!-- Shown only when the window is large -->
+                <ul class="nav navbar-nav navbar-right hidden-xs">
+                    <li>@Html.ActionLink("סוגים", "Index", "HelpTypeModels")</li>
+                    <li>@Html.ActionLink("ערים", "Index", "CityModels")</li>
 
-                    <li ><i class="fa fa-university"></i>@Html.ActionLink("אירגונים", "Index", "OrganizationModels")</li>
-                    <li ><i class="fa fa-search"></i>@Html.ActionLink("פעילויות", "Index", "ActivityModels")</li>
-                    <li ><i class="fa fa-home"></i>@Html.ActionLink("דף הבית", "Index", "Home")</listyle>
+                    <li>@Html.ActionLink("אירגונים", "Index", "OrganizationModels")</li>
+                    <li>@Html.ActionLink("פעילויות", "Index", "ActivityModels")</li>
+                    <li>@Html.ActionLink("דף הבית", "Index", "Home")</li>
                     @if (!User.Identity.Name.IsEmpty())
                     {
                         if (User.IsInRole("organization"))
                         {
-                            <li ><i class="glyphicon-arrow-down"></i>@Html.ActionLink(@User.Identity.Name, "Index", "OrgProfileModels")</li>
+                            <li>@Html.ActionLink(@User.Identity.Name, "Index", "OrgProfileModels")</li>
                         }
                         else if (User.IsInRole("volunteer"))
                         {
-                        <li ><i class="glyphicon-arrow-down"></i>@Html.ActionLink(@User.Identity.Name, "Index", "ProfileModels")</li>
+                            <li>@Html.ActionLink(@User.Identity.Name, "Index", "ProfileModels")</li>
                         }
                     }
 
+                </ul>
+
+                <!-- Shown only when the window is small (or mobile)-->
+                <ul class="nav navbar-nav navbar-right visible-xs">
+
+                    @if (!User.Identity.Name.IsEmpty())
+                    {
+                        if (User.IsInRole("organization"))
+                        {
+                            <li>@Html.ActionLink(@User.Identity.Name, "Index", "OrgProfileModels")</li>
+                        }
+                        else if (User.IsInRole("volunteer"))
+                        {
+                            <li>@Html.ActionLink(@User.Identity.Name, "Index", "ProfileModels")</li>
+                        }
+                    }
+                    
+                    <li>@Html.ActionLink("דף הבית", "Index", "Home")</li>
+                    <li>@Html.ActionLink("פעילויות", "Index", "ActivityModels")</li>
+                    <li>@Html.ActionLink("אירגונים", "Index", "OrganizationModels")</li>
+                    <li>@Html.ActionLink("ערים", "Index", "CityModels")</li>
+                    <li>@Html.ActionLink("סוגים", "Index", "HelpTypeModels")</li>
+                    
                 </ul>
                 
             </div>
@@ -62,7 +81,6 @@
     </div>
 
     <div id="main">
-        {{ message }}
         <!-- angular templating -->
         <!-- this is where content will be injected -->
         <div ng-view></div>

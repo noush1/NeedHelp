@@ -548,8 +548,8 @@ C:\AntonCollege\NeedHelp\NotGit\NeedHelp30_4\needHelp\bin\System.Web.WebPages.De
 C:\AntonCollege\NeedHelp\NotGit\NeedHelp30_4\needHelp\bin\System.Web.WebPages.dll
 C:\AntonCollege\NeedHelp\NotGit\NeedHelp30_4\needHelp\bin\System.Web.WebPages.Razor.dll
 C:\AntonCollege\NeedHelp\NotGit\NeedHelp30_4\needHelp\bin\WebGrease.dll
-C:\AntonCollege\NeedHelp\NotGit\NeedHelp30_4\needHelp\obj\Debug\needHelp.csprojResolveAssemblyReference.cache
-C:\AntonCollege\NeedHelp\NotGit\NeedHelp30_4\needHelp\obj\Debug\needHelp.dll
-C:\AntonCollege\NeedHelp\NotGit\NeedHelp30_4\needHelp\obj\Debug\needHelp.pdb
 C:\AntonCollege\NeedHelp\NotGit\NeedHelp30_4\needHelp\obj\Debug\needHelp.Migrations.post_account_changes.resources
 C:\AntonCollege\NeedHelp\NotGit\NeedHelp30_4\needHelp\obj\Debug\needHelp.csproj.GenerateResource.Cache
+C:\AntonCollege\NeedHelp\NotGit\NeedHelp30_4\needHelp\obj\Debug\needHelp.dll
+C:\AntonCollege\NeedHelp\NotGit\NeedHelp30_4\needHelp\obj\Debug\needHelp.pdb
+C:\AntonCollege\NeedHelp\NotGit\NeedHelp30_4\needHelp\obj\Debug\needHelp.csprojResolveAssemblyReference.cache
