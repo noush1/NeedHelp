@@ -1,7 +1,7 @@
 ﻿@model needHelp.Models.OrganizationModels
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "מחיקת אירגון";
 }
 <div dir="rtl">
     @if (User.IsInRole(roleType.admin.ToString()) || (User.IsInRole(roleType.organization.ToString()) && User.Identity.Name.Equals(Model.email)))
