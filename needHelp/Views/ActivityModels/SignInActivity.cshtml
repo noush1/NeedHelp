@@ -1,15 +1,21 @@
 ﻿@model needHelp.Models.ActivityModels
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "הרשמה לפעילות";
 }
 <div dir="rtl">
 
     <h1>פרטי פעילות</h1>
-    
-    <br />
 
-    <div >
+    <div>
+
+
+        @ViewBag.volunteer
+
+        @*<script>
+            window.alert("קיימת חפיפת זמנים בין שתי פעילויות שנרשמת אליהן");
+        </script>*@
+        
         <p>
             @if (!Model.type.imagePath.IsEmpty())
             {
@@ -23,12 +29,7 @@
         <p>סוג פעילות: @Html.DisplayFor(modelItem => Model.type.typeName)</p>
         <p>תיאור הפעילות: @Html.DisplayFor(model => Model.description)</p>
 
-        <p dir="ltr">
-            @if (User.IsInRole(roleType.volunteer.ToString())) {
-                @Html.ActionLink("הרשמה לפעילות", "SignInActivity", new { id = Model.id }) <text> | </text>
-            }
-            @Html.ActionLink("עריכה", "Edit", new { id = Model.id }) |
-            @Html.ActionLink("חזרה לרשימה", "Index")
-        </p>
+        </div>
     </div>
-</div>
+
+

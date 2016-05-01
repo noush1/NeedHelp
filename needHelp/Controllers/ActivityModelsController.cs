@@ -228,6 +228,48 @@ namespace needHelp.Controllers
             return View("Index", result.ToList());
         }
 
+        public ActionResult SignInActivity(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ActivityModels newActivity = db.activities.Find(id);
+            if (newActivity == null)
+            {
+                return HttpNotFound();
+            }
+
+            IQueryable<VolunteerModels> volunteers = from vol in db.volunteers
+                                        where vol.email == User.Identity.Name
+                                        select vol;
+
+            VolunteerModels volunteer = volunteers.First();
+
+            ViewBag.isAlreadySignIn = false;
+            ViewBag.isDateAlert = false;
+
+            foreach (ActivityModels activity in volunteer.registered_activities) {
+                if (id == activity.id) {
+                    ViewBag.isAlreadySignIn = true;
+                }
+                else if (activity.date.Date.Equals(newActivity.date.Date))
+                {
+                    ViewBag.isDateAlert = true;
+                }
+            }
+
+            // SignIn to new activity
+            if (!ViewBag.isAlreadySignIn)
+            {
+                // TODO: check if volunteer is confirmed by the organization of new activity, if not set request to organization
+                ViewBag.organization = db.organizations.Find(newActivity.id);
+            }
+
+
+            return View("SignInActivity", newActivity);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
