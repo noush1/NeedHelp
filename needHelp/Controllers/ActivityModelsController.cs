@@ -262,11 +262,29 @@ namespace needHelp.Controllers
             // SignIn to new activity
             if (!ViewBag.isAlreadySignIn)
             {
-                // TODO: check if volunteer is confirmed by the organization of new activity, if not set request to organization
-                ViewBag.organization = db.organizations.Find(newActivity.id);
+                // check if volunteer is confirmed by the organization of new activity, if not send a request to organization
+                TrustedUserModels trusted = new TrustedUserModels();
+                trusted.volunteerId = volunteer.id;
+                trusted.organizationId = newActivity.organizationId;
+
+                // check if the volunteer is confirmed
+                if (newActivity.org.trustedUsers.Contains(trusted))
+                {
+                    volunteer.registered_activities.Add(newActivity);
+                }
+                else // need to send a request to organization
+                {
+                    UserRequestModels volunteerRequest = new UserRequestModels();
+                    volunteerRequest.volunteerId = volunteer.id;
+                    volunteerRequest.activityId = newActivity.id;
+                    volunteerRequest.isAccepted = false;
+                    // TODO : add fields in UserRequested table - isAnswered, messageRequest, messageAnswer
+
+                    db.user_requests.Add(volunteerRequest);
+                }
             }
 
-
+            db.SaveChanges();
             return View("SignInActivity", newActivity);
         }
 
