@@ -4,7 +4,7 @@
     ViewBag.Title = "Edit";
 }
 <div dir="rtl">
-    @if (User.IsInRole("admin") || (User.IsInRole("organization") && User.Identity.Name.Equals(Model.email)))
+    @if (User.IsInRole(roleType.admin.ToString()) || (User.IsInRole(roleType.organization.ToString()) && User.Identity.Name.Equals(Model.email)))
     {
         <h2>עריכת פרטי ארגון</h2>
 

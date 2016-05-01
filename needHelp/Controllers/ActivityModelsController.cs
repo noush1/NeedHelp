@@ -21,7 +21,7 @@ namespace needHelp.Controllers
         {
             try
             {
-                bool role = User.IsInRole("admin");
+                bool role = User.IsInRole(roleType.admin.ToString());
             }
             catch (Exception ex)
             {

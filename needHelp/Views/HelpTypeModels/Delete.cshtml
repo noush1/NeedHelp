@@ -5,7 +5,7 @@
 }
 
 <div dir="rtl">
-    @if (User.IsInRole("admin"))
+    @if (User.IsInRole(roleType.admin.ToString()))
     {
         <h2>מחיקת סוג פעילות</h2>
 

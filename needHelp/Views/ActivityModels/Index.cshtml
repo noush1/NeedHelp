@@ -23,13 +23,14 @@
 <div dir="rtl">
     <h2>פעילויות</h2>
 
-@if (User.IsInRole("admin") || User.IsInRole("organization"))
+@if (User.IsInRole(roleType.admin.ToString()) || User.IsInRole(roleType.organization.ToString()))
 {
     <p>
         @Html.ActionLink("צור פעילות", "Create")
     </p>
 }
-    @if(User.IsInRole("admin")){
+    @if (User.IsInRole(roleType.admin.ToString()))
+    {
     <table class="table">
         <tr>
             <th>

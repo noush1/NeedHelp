@@ -5,7 +5,7 @@
 }
 
 <div dir="rtl">
-    @if (User.IsInRole("admin") || (User.IsInRole("organization") && User.Identity.Name.Equals(Model.org.email)))
+    @if (User.IsInRole(roleType.admin.ToString()) || (User.IsInRole(roleType.organization.ToString()) && User.Identity.Name.Equals(Model.org.email)))
     {
         <h1>עריכת פעילות</h1>
 

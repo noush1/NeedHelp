@@ -41,11 +41,11 @@
                     <li>@Html.ActionLink("דף הבית", "Index", "Home")</li>
                     @if (!User.Identity.Name.IsEmpty())
                     {
-                        if (User.IsInRole("organization"))
+                        if (User.IsInRole(roleType.organization.ToString()))
                         {
                             <li>@Html.ActionLink(@User.Identity.Name, "Index", "OrgProfileModels")</li>
                         }
-                        else if (User.IsInRole("volunteer"))
+                        else if (User.IsInRole(roleType.volunteer.ToString()))
                         {
                             <li>@Html.ActionLink(@User.Identity.Name, "Index", "ProfileModels")</li>
                         }
@@ -58,11 +58,11 @@
 
                     @if (!User.Identity.Name.IsEmpty())
                     {
-                        if (User.IsInRole("organization"))
+                        if (User.IsInRole(roleType.organization.ToString()))
                         {
                             <li>@Html.ActionLink(@User.Identity.Name, "Index", "OrgProfileModels")</li>
                         }
-                        else if (User.IsInRole("volunteer"))
+                        else if (User.IsInRole(roleType.volunteer.ToString()))
                         {
                             <li>@Html.ActionLink(@User.Identity.Name, "Index", "ProfileModels")</li>
                         }
