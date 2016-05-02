@@ -246,21 +246,22 @@ namespace needHelp.Controllers
 
             VolunteerModels volunteer = volunteers.First();
 
-            ViewBag.isAlreadySignIn = false;
-            ViewBag.isDateAlert = false;
+            bool isAlreadySignIn = false;
+            bool isDateAlert = false;
 
-            foreach (ActivityModels activity in volunteer.registered_activities) {
-                if (id == activity.id) {
-                    ViewBag.isAlreadySignIn = true;
-                }
-                else if (activity.date.Date.Equals(newActivity.date.Date))
+            foreach (UserRequestModels message in volunteer.messages) {
+                if (id == message.activityId)
                 {
-                    ViewBag.isDateAlert = true;
+                    isAlreadySignIn = true;
+                }
+                else if (message.activity.date.Date.Equals(newActivity.date.Date))
+                {
+                    isDateAlert = true;
                 }
             }
 
             // SignIn to new activity
-            if (!ViewBag.isAlreadySignIn)
+            if (!isAlreadySignIn)
             {
                 // check if volunteer is confirmed by the organization of new activity, if not send a request to organization
                 TrustedUserModels trusted = new TrustedUserModels();
@@ -278,14 +279,20 @@ namespace needHelp.Controllers
                     volunteerRequest.volunteerId = volunteer.id;
                     volunteerRequest.activityId = newActivity.id;
                     volunteerRequest.isAccepted = false;
-                    // TODO : add fields in UserRequested table - isAnswered, messageRequest, messageAnswer
+                    volunteerRequest.isAnswered = false;
+                    volunteerRequest.isDeletedByUser = false;
+                    volunteerRequest.isDeletedByOrganization = false;
 
                     db.user_requests.Add(volunteerRequest);
+                    //volunteer.messages.Add(volunteerRequest);
                 }
             }
 
+            TempData["isAlreadySignIn"] = isAlreadySignIn;
+            TempData["isDateAlert"] = isDateAlert;
+
             db.SaveChanges();
-            return View("SignInActivity", newActivity);
+            return RedirectToAction("Index","ProfileModels");
         }
 
         protected override void Dispose(bool disposing)

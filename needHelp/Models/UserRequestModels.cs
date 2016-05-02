@@ -20,5 +20,16 @@ namespace needHelp.Models
         public int activityId { get; set; }
 
         public bool isAccepted { get; set; }
+
+        public bool isAnswered { get; set; }
+
+        public string replyMessage { get; set; }
+
+        public bool isDeletedByUser { get; set; }
+
+        public bool isDeletedByOrganization { get; set; }
+
+        public virtual ActivityModels activity { get; set; }
+        public virtual VolunteerModels volunteer { get; set; }
     }
 }

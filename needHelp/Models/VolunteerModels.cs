@@ -33,5 +33,6 @@ namespace needHelp.Models
         public string phone { get; set; }
 
         public virtual ICollection<ActivityModels> registered_activities { get; set; }
+        public virtual ICollection<UserRequestModels> messages { get; set; }
     }
 }

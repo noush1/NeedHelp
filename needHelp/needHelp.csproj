@@ -211,6 +211,14 @@
     <Compile Include="Migrations\201604300455358_post_account_changes.Designer.cs">
       <DependentUpon>201604300455358_post_account_changes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201605020419340_change_user_request.cs" />
+    <Compile Include="Migrations\201605020419340_change_user_request.Designer.cs">
+      <DependentUpon>201605020419340_change_user_request.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201605020450120_connections_between_tables.cs" />
+    <Compile Include="Migrations\201605020450120_connections_between_tables.Designer.cs">
+      <DependentUpon>201605020450120_connections_between_tables.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ActivityModels.cs" />
@@ -2279,6 +2287,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201604300455358_post_account_changes.resx">
       <DependentUpon>201604300455358_post_account_changes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605020419340_change_user_request.resx">
+      <DependentUpon>201605020419340_change_user_request.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605020450120_connections_between_tables.resx">
+      <DependentUpon>201605020450120_connections_between_tables.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

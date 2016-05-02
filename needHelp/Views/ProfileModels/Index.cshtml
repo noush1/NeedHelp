@@ -19,6 +19,39 @@
     <br />
 
     <div dir="rtl" class="row">
+        @if (Model.messages.Count != 0)
+        {
+            <h3>הודעות:</h3>
+            foreach (var item in Model.messages)
+            {
+                <div class="col-xs-6 col-lg-4 pull-right" style="border: solid; border-radius: 10px; margin: 10px; width: 30%">
+                    <p>
+                        <label style="font-size: 30px">@Html.DisplayFor(modelItem => item.activity.name)</label>
+                    </p>
+                    <p>תאריך פעילות: @item.activity.date</p>
+                    @if (item.isAnswered && item.isAccepted)
+                    {
+                        <p>סטטוס בקשה: מאושר</p>
+                    }
+                    else if (item.isAnswered && !item.isAccepted)
+                    {
+                        <p>סטטוס בקשה: נדחה</p>
+                    }
+                    else
+                    {
+                        <p>סטטוס בקשה: טרם נענה</p>
+                    }
+
+                    <p>הודעה: @Html.DisplayFor(modelItem => item.replyMessage)</p>
+
+                </div>
+            }
+        }
+    </div>
+
+    <hr />
+
+    <div dir="rtl" class="row">
         <h3>הפעילויות אליהן את/ה רשום/ה:</h3>
         @foreach (var item in Model.registered_activities)
         {
@@ -60,5 +93,18 @@
             </div>
         }
     </div>
+
+    @if (TempData["isAlreadySignIn"] != null && (bool)TempData["isAlreadySignIn"])
+    {
+        <script>
+            alert("ביקשת להירשם לפעילות שהינך רשום אליה כבר.");
+        </script>
+    }
+    else if (TempData["isDateAlert"] != null && (bool)TempData["isDateAlert"])
+    {
+        <script>
+            alert("שים לב שהינך רשום ליותר מפעילות אחת ביום.");
+        </script>
+    }
     
 </div>
