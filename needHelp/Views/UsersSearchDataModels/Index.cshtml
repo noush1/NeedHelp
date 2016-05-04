@@ -1,0 +1,39 @@
+﻿@model IEnumerable<needHelp.Models.UserSearchDataModels>
+
+@{
+    ViewBag.Title = "נתוני חיפוש מתנדבים";
+}
+
+<div dir="rtl">
+    <h2>רשימת פרופילי חיפוש:</h2>
+
+    <table class="table">
+        <tr dir="rtl">
+            <td>
+                @Html.DisplayNameFor(model => model.VolunteerId)
+            </td>
+            <td>
+                @Html.DisplayNameFor(model => model.cityId)
+            </td>
+            <td>
+                @Html.DisplayNameFor(model => model.date)
+            </td>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VolunteerId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.cityId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.date)
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>

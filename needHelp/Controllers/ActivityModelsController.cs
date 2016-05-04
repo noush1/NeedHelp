@@ -225,6 +225,15 @@ namespace needHelp.Controllers
             ViewBag.cityId = new SelectList(db.cities, "id", "name");
             ViewBag.organizationId = new SelectList(db.organizations, "id", "name");
             ViewBag.typeId = new SelectList(db.help_types, "id", "typeName");
+
+            //Save the user search data for the learning-algorithem
+            UserSearchDataModels userSearchData = new UserSearchDataModels();
+            userSearchData.cityId = cityID;
+            userSearchData.date = startDate;
+            userSearchData.VolunteerId = db.volunteers.First(user => user.email.Equals(User.Identity.Name)).id;
+            db.search_data.Add(userSearchData);
+            db.SaveChanges();
+
             return View("Index", result.ToList());
         }
 

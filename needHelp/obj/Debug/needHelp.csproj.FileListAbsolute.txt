@@ -597,3 +597,46 @@ C:\AntonCollege\NeedHelp\NotGit\NoaMeeting2_5\needHelp\obj\Debug\needHelp.dll
 C:\AntonCollege\NeedHelp\NotGit\NoaMeeting2_5\needHelp\obj\Debug\needHelp.pdb
 C:\AntonCollege\NeedHelp\NotGit\NoaMeeting2_5\needHelp\obj\Debug\needHelp.Migrations.change_user_request.resources
 C:\AntonCollege\NeedHelp\NotGit\NoaMeeting2_5\needHelp\obj\Debug\needHelp.Migrations.connections_between_tables.resources
+C:\Users\Nuphar\Documents\לימודים\סימסטר א\פרוייקט סיום\finalProject\NeedHelp\needHelp\bin\ApplicationInsights.config
+C:\Users\Nuphar\Documents\לימודים\סימסטר א\פרוייקט סיום\finalProject\NeedHelp\needHelp\bin\needHelp.dll
+C:\Users\Nuphar\Documents\לימודים\סימסטר א\פרוייקט סיום\finalProject\NeedHelp\needHelp\bin\needHelp.pdb
+C:\Users\Nuphar\Documents\לימודים\סימסטר א\פרוייקט סיום\finalProject\NeedHelp\needHelp\bin\Antlr3.Runtime.dll
+C:\Users\Nuphar\Documents\לימודים\סימסטר א\פרוייקט סיום\finalProject\NeedHelp\needHelp\bin\EntityFramework.dll
+C:\Users\Nuphar\Documents\לימודים\סימסטר א\פרוייקט סיום\finalProject\NeedHelp\needHelp\bin\EntityFramework.SqlServer.dll
+C:\Users\Nuphar\Documents\לימודים\סימסטר א\פרוייקט סיום\finalProject\NeedHelp\needHelp\bin\Microsoft.AI.Agent.Intercept.dll
+C:\Users\Nuphar\Documents\לימודים\סימסטר א\פרוייקט סיום\finalProject\NeedHelp\needHelp\bin\Microsoft.AI.DependencyCollector.dll
+C:\Users\Nuphar\Documents\לימודים\סימסטר א\פרוייקט סיום\finalProject\NeedHelp\needHelp\bin\Microsoft.AI.PerfCounterCollector.dll
+C:\Users\Nuphar\Documents\לימודים\סימסטר א\פרוייקט סיום\finalProject\NeedHelp\needHelp\bin\Microsoft.AI.ServerTelemetryChannel.dll
+C:\Users\Nuphar\Documents\לימודים\סימסטר א\פרוייקט סיום\finalProject\NeedHelp\needHelp\bin\Microsoft.AI.Web.dll
+C:\Users\Nuphar\Documents\לימודים\סימסטר א\פרוייקט סיום\finalProject\NeedHelp\needHelp\bin\Microsoft.AI.WindowsServer.dll
+C:\Users\Nuphar\Documents\לימודים\סימסטר א\פרוייקט סיום\finalProject\NeedHelp\needHelp\bin\Microsoft.ApplicationInsights.dll
+C:\Users\Nuphar\Documents\לימודים\סימסטר א\פרוייקט סיום\finalProject\NeedHelp\needHelp\bin\Microsoft.AspNet.Identity.Core.dll
+C:\Users\Nuphar\Documents\לימודים\סימסטר א\פרוייקט סיום\finalProject\NeedHelp\needHelp\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\Nuphar\Documents\לימודים\סימסטר א\פרוייקט סיום\finalProject\NeedHelp\needHelp\bin\Microsoft.AspNet.Identity.Owin.dll
+C:\Users\Nuphar\Documents\לימודים\סימסטר א\פרוייקט סיום\finalProject\NeedHelp\needHelp\bin\Microsoft.Owin.dll
+C:\Users\Nuphar\Documents\לימודים\סימסטר א\פרוייקט סיום\finalProject\NeedHelp\needHelp\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\Nuphar\Documents\לימודים\סימסטר א\פרוייקט סיום\finalProject\NeedHelp\needHelp\bin\Microsoft.Owin.Security.Cookies.dll
+C:\Users\Nuphar\Documents\לימודים\סימסטר א\פרוייקט סיום\finalProject\NeedHelp\needHelp\bin\Microsoft.Owin.Security.dll
+C:\Users\Nuphar\Documents\לימודים\סימסטר א\פרוייקט סיום\finalProject\NeedHelp\needHelp\bin\Microsoft.Owin.Security.Facebook.dll
+C:\Users\Nuphar\Documents\לימודים\סימסטר א\פרוייקט סיום\finalProject\NeedHelp\needHelp\bin\Microsoft.Owin.Security.Google.dll
+C:\Users\Nuphar\Documents\לימודים\סימסטר א\פרוייקט סיום\finalProject\NeedHelp\needHelp\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+C:\Users\Nuphar\Documents\לימודים\סימסטר א\פרוייקט סיום\finalProject\NeedHelp\needHelp\bin\Microsoft.Owin.Security.OAuth.dll
+C:\Users\Nuphar\Documents\לימודים\סימסטר א\פרוייקט סיום\finalProject\NeedHelp\needHelp\bin\Microsoft.Owin.Security.Twitter.dll
+C:\Users\Nuphar\Documents\לימודים\סימסטר א\פרוייקט סיום\finalProject\NeedHelp\needHelp\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\Nuphar\Documents\לימודים\סימסטר א\פרוייקט סיום\finalProject\NeedHelp\needHelp\bin\Newtonsoft.Json.dll
+C:\Users\Nuphar\Documents\לימודים\סימסטר א\פרוייקט סיום\finalProject\NeedHelp\needHelp\bin\Owin.dll
+C:\Users\Nuphar\Documents\לימודים\סימסטר א\פרוייקט סיום\finalProject\NeedHelp\needHelp\bin\System.Web.Helpers.dll
+C:\Users\Nuphar\Documents\לימודים\סימסטר א\פרוייקט סיום\finalProject\NeedHelp\needHelp\bin\System.Web.Mvc.dll
+C:\Users\Nuphar\Documents\לימודים\סימסטר א\פרוייקט סיום\finalProject\NeedHelp\needHelp\bin\System.Web.Optimization.dll
+C:\Users\Nuphar\Documents\לימודים\סימסטר א\פרוייקט סיום\finalProject\NeedHelp\needHelp\bin\System.Web.Razor.dll
+C:\Users\Nuphar\Documents\לימודים\סימסטר א\פרוייקט סיום\finalProject\NeedHelp\needHelp\bin\System.Web.WebPages.Deployment.dll
+C:\Users\Nuphar\Documents\לימודים\סימסטר א\פרוייקט סיום\finalProject\NeedHelp\needHelp\bin\System.Web.WebPages.dll
+C:\Users\Nuphar\Documents\לימודים\סימסטר א\פרוייקט סיום\finalProject\NeedHelp\needHelp\bin\System.Web.WebPages.Razor.dll
+C:\Users\Nuphar\Documents\לימודים\סימסטר א\פרוייקט סיום\finalProject\NeedHelp\needHelp\bin\WebGrease.dll
+C:\Users\Nuphar\Documents\לימודים\סימסטר א\פרוייקט סיום\finalProject\NeedHelp\needHelp\obj\Debug\needHelp.csprojResolveAssemblyReference.cache
+C:\Users\Nuphar\Documents\לימודים\סימסטר א\פרוייקט סיום\finalProject\NeedHelp\needHelp\obj\Debug\needHelp.Migrations.post_account_changes.resources
+C:\Users\Nuphar\Documents\לימודים\סימסטר א\פרוייקט סיום\finalProject\NeedHelp\needHelp\obj\Debug\needHelp.Migrations.change_user_request.resources
+C:\Users\Nuphar\Documents\לימודים\סימסטר א\פרוייקט סיום\finalProject\NeedHelp\needHelp\obj\Debug\needHelp.Migrations.connections_between_tables.resources
+C:\Users\Nuphar\Documents\לימודים\סימסטר א\פרוייקט סיום\finalProject\NeedHelp\needHelp\obj\Debug\needHelp.csproj.GenerateResource.Cache
+C:\Users\Nuphar\Documents\לימודים\סימסטר א\פרוייקט סיום\finalProject\NeedHelp\needHelp\obj\Debug\needHelp.dll
+C:\Users\Nuphar\Documents\לימודים\סימסטר א\פרוייקט סיום\finalProject\NeedHelp\needHelp\obj\Debug\needHelp.pdb

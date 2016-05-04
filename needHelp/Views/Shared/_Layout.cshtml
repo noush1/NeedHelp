@@ -33,9 +33,13 @@
                 </ul>
                 <!-- Shown only when the window is large -->
                 <ul class="nav navbar-nav navbar-right hidden-xs">
+                    @if (User.IsInRole(roleType.admin.ToString()))
+                    {
+                        <li>@Html.ActionLink("פרופילי חיפוש", "Index", "UsersSearchDataModels")</li>  
+                    }      
                     <li>@Html.ActionLink("סוגים", "Index", "HelpTypeModels")</li>
                     <li>@Html.ActionLink("ערים", "Index", "CityModels")</li>
-
+                    
                     <li>@Html.ActionLink("אירגונים", "Index", "OrganizationModels")</li>
                     <li>@Html.ActionLink("פעילויות", "Index", "ActivityModels")</li>
                     <li>@Html.ActionLink("דף הבית", "Index", "Home")</li>

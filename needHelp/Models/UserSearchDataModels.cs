@@ -24,5 +24,10 @@ namespace needHelp.Models
         public DateTime date { get; set; }
 
         // TODO: add all the fileds of the search - organization name, type...
+        //[DisplayName("ארגון")]
+        //public int organizationId { get; set; }
+
+        //[DisplayName("סוג פעילות")]
+        //public int typeId { get; set; }
     }
 }
