@@ -227,12 +227,20 @@ namespace needHelp.Controllers
             ViewBag.typeId = new SelectList(db.help_types, "id", "typeName");
 
             //Save the user search data for the learning-algorithem
-            UserSearchDataModels userSearchData = new UserSearchDataModels();
-            userSearchData.cityId = cityID;
-            userSearchData.date = startDate;
-            userSearchData.VolunteerId = db.volunteers.First(user => user.email.Equals(User.Identity.Name)).id;
-            db.search_data.Add(userSearchData);
-            db.SaveChanges();
+
+            if (User.Identity.IsAuthenticated && db.volunteers.Any() && db.volunteers.First(user => user.email.Equals(User.Identity.Name)) != null)
+            {
+                UserSearchDataModels userSearchData = new UserSearchDataModels();
+                userSearchData.typeId = (typeID == 0 ? null : (int?)typeID); // cant case DBNull.Value
+                userSearchData.cityId = (cityID == 0 ? null : (int?)cityID);
+                userSearchData.startDate = (startDate == defaultDate ? null : (DateTime?)startDate);
+                userSearchData.endDate = (endDate == defaultDate ? null : (DateTime?)endDate);
+                userSearchData.searchDate = DateTime.Now;
+                userSearchData.organizationId = (organizationID == 0 ? null : (int?)organizationID);
+                userSearchData.VolunteerId = db.volunteers.First(user => user.email.Equals(User.Identity.Name)).id;
+                db.search_data.Add(userSearchData);
+                db.SaveChanges();
+            }
 
             return View("Index", result.ToList());
         }

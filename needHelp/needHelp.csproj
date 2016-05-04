@@ -220,6 +220,18 @@
     <Compile Include="Migrations\201605020450120_connections_between_tables.Designer.cs">
       <DependentUpon>201605020450120_connections_between_tables.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201605040704280_UserSearchFieldsAdd.cs" />
+    <Compile Include="Migrations\201605040704280_UserSearchFieldsAdd.Designer.cs">
+      <DependentUpon>201605040704280_UserSearchFieldsAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201605040739449_UserSearchFieldsAddNullable.cs" />
+    <Compile Include="Migrations\201605040739449_UserSearchFieldsAddNullable.Designer.cs">
+      <DependentUpon>201605040739449_UserSearchFieldsAddNullable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201605040810444_SearchDataModelsAddSearchTime.cs" />
+    <Compile Include="Migrations\201605040810444_SearchDataModelsAddSearchTime.Designer.cs">
+      <DependentUpon>201605040810444_SearchDataModelsAddSearchTime.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ActivityModels.cs" />
@@ -2295,6 +2307,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201605020450120_connections_between_tables.resx">
       <DependentUpon>201605020450120_connections_between_tables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605040704280_UserSearchFieldsAdd.resx">
+      <DependentUpon>201605040704280_UserSearchFieldsAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605040739449_UserSearchFieldsAddNullable.resx">
+      <DependentUpon>201605040739449_UserSearchFieldsAddNullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605040810444_SearchDataModelsAddSearchTime.resx">
+      <DependentUpon>201605040810444_SearchDataModelsAddSearchTime.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

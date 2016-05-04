@@ -13,7 +13,6 @@ namespace needHelp.Controllers
 
         public ActionResult Index()
         {
-            _db.cities.ToList();
             return View();
         }
 
