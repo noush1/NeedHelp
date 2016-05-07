@@ -15,7 +15,11 @@ namespace needHelp.Controllers
         {
             var usersSearchData = db.search_data;
 
-            ViewBag.cityName = new SelectList(db.cities, "id", "name");
+            foreach (UserSearchDataModels usd in usersSearchData.ToList())
+            {
+                usd.org = db.organizations.Find(usd.organizationId);
+            }
+
             return View(usersSearchData.ToList());
         }
     }

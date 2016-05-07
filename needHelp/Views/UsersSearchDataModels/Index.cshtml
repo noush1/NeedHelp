@@ -10,13 +10,26 @@
     <table class="table">
         <tr dir="rtl">
             <td>
-                @Html.DisplayNameFor(model => model.VolunteerId)
+                שם מתנדב
+                @*@Html.DisplayNameFor(model => model.VolunteerId)*@
             </td>
             <td>
                 @Html.DisplayNameFor(model => model.cityId)
             </td>
             <td>
-                @Html.DisplayNameFor(model => model.date)
+                @Html.DisplayNameFor(model => model.searchDate)
+            </td>
+            <td>
+                @Html.DisplayNameFor(model => model.startDate)
+            </td>
+            <td>
+                @Html.DisplayNameFor(model => model.endDate)
+            </td>
+            <td>
+                @Html.DisplayNameFor(model => model.organizationId)
+            </td>
+            <td>
+                @Html.DisplayNameFor(model => model.typeId)
             </td>
         </tr>
 
@@ -24,13 +37,25 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.VolunteerId)
+                    @Html.DisplayFor(modelItem => item.volunteer.firstName) @Html.DisplayFor(modelItem => item.volunteer.lastName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.cityId)
+                    @Html.DisplayFor(modelItem => item.city.name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.date)
+                    @Html.DisplayFor(modelItem => item.searchDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.startDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.endDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.org.name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.type.typeName)
                 </td>
             </tr>
         }
