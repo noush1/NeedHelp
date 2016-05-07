@@ -18,12 +18,13 @@ namespace needHelp.Controllers
         {
             OrganizationModels org = db.organizations.First(user => user.email.Equals(User.Identity.Name));
             
+            /*
             var result = from s in db.activities
                          where (s.organizationId == org.id)
                          select s;
 
             ViewBag.organizationActivities = result.ToList();
-
+            */
             return View(org);
         }
 

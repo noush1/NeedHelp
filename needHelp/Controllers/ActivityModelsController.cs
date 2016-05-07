@@ -93,12 +93,21 @@ namespace needHelp.Controllers
                 activityModels.type = db.help_types.Find(activityModels.typeId);
                 db.activities.Add(activityModels);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                if (User.IsInRole(roleType.organization.ToString()))
+                {
+                    return RedirectToAction("Index", "ActivityManagement");
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
             }
 
             ViewBag.cityId = new SelectList(db.cities, "id", "name", activityModels.cityId);
             ViewBag.organizationId = new SelectList(db.organizations, "id", "name", activityModels.organizationId);
             ViewBag.typeId = new SelectList(db.help_types, "id", "typeName", activityModels.typeId);
+
             return View(activityModels);
         }
 
@@ -133,7 +142,15 @@ namespace needHelp.Controllers
                 activityModels.type = db.help_types.Find(activityModels.typeId);
                 db.Entry(activityModels).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                if (User.IsInRole(roleType.organization.ToString()))
+                {
+                    return RedirectToAction("Index", "ActivityManagement");
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
             }
             ViewBag.cityId = new SelectList(db.cities, "id", "name", activityModels.cityId);
             ViewBag.organizationId = new SelectList(db.organizations, "id", "name", activityModels.organizationId);
@@ -164,7 +181,15 @@ namespace needHelp.Controllers
             ActivityModels activityModels = db.activities.Find(id);
             db.activities.Remove(activityModels);
             db.SaveChanges();
-            return RedirectToAction("Index");
+
+            if (User.IsInRole(roleType.organization.ToString()))
+            {
+                return RedirectToAction("Index", "ActivityManagement");
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
         }
 
         [HttpPost]

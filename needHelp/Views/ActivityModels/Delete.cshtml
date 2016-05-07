@@ -70,7 +70,18 @@
 
             <div class="form-actions no-color">
                 <input type="submit" value="מחק" class="btn btn-default" /> |
-                @Html.ActionLink("חזרה לרשימה", "Index")
+                @if (User.IsInRole(roleType.organization.ToString()))
+                {
+                <div dir="ltr">
+                    @Html.ActionLink("חזרה לרשימה", "Index", "ActivityManagement")
+                </div>
+                }
+                else
+                {
+                <div dir="ltr">
+                    @Html.ActionLink("חזרה לרשימה", "Index")
+                </div>
+                }
             </div>
         }
     }
@@ -78,5 +89,18 @@
     {
         <br /><br />
         <p><h3>אין ברשותך הרשאות מתאימות לצפייה בעמוד זה</h3></p>
+        
+        if (User.IsInRole(roleType.organization.ToString()))
+        {
+            <div dir="ltr">
+                @Html.ActionLink("חזרה לרשימה", "Index", "ActivityManagement")
+            </div>
+        }
+        else
+        {
+            <div dir="ltr">
+                @Html.ActionLink("חזרה לרשימה", "Index")
+            </div>
+        }
     }
 </div>

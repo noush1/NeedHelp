@@ -687,3 +687,4 @@ C:\AntonCollege\NeedHelp\NotGit\NuphVer4_5\needHelp\obj\Debug\needHelp.dll
 C:\AntonCollege\NeedHelp\NotGit\NuphVer4_5\needHelp\obj\Debug\needHelp.pdb
 C:\AntonCollege\NeedHelp\NotGit\NuphVer4_5\needHelp\obj\Debug\needHelp.csprojResolveAssemblyReference.cache
 C:\AntonCollege\NeedHelp\NotGit\NuphVer4_5\needHelp\obj\Debug\needHelp.Migrations.SearchDataModelsAddSearchTime.resources
+C:\AntonCollege\NeedHelp\NotGit\NuphVer4_5\needHelp\obj\Debug\needHelp.Migrations.fix_requests_for_orgs.resources

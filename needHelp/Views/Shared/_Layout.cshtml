@@ -1,6 +1,6 @@
 ﻿
 <!DOCTYPE html>
-<html >
+<html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,12 +13,12 @@
     <script src="~/Scripts/script.js"></script>
     <script src="~/Scripts/jquery-2.2.3.js"></script>
     <script src="~/Scripts/bootstrap-datepicker.js"></script>
-            @Styles.Render("~/Content/css")
-            @Scripts.Render("~/bundles/modernizr")
-            @Scripts.Render("~/bundles/angular")
-            @Scripts.Render("~/bundles/jquery")
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/angular")
+    @Scripts.Render("~/bundles/jquery")
 </head>
-<body >
+<body>
 
     <div dir="rtl" class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
@@ -35,13 +35,29 @@
                 <ul class="nav navbar-nav navbar-right hidden-xs">
                     @if (User.IsInRole(roleType.admin.ToString()))
                     {
-                        <li>@Html.ActionLink("פרופילי חיפוש", "Index", "UsersSearchDataModels")</li>  
-                    }      
+                        <li>@Html.ActionLink("פרופילי חיפוש", "Index", "UsersSearchDataModels")</li>
+                    }
                     <li>@Html.ActionLink("סוגים", "Index", "HelpTypeModels")</li>
                     <li>@Html.ActionLink("ערים", "Index", "CityModels")</li>
-                    
+
                     <li>@Html.ActionLink("אירגונים", "Index", "OrganizationModels")</li>
-                    <li>@Html.ActionLink("פעילויות", "Index", "ActivityModels")</li>
+
+
+                    @if (!User.Identity.Name.IsEmpty())
+                    {
+                        if (User.IsInRole(roleType.organization.ToString()))
+                        {
+                            <li>@Html.ActionLink("פעילויות", "Index", "ActivityManagement")</li>
+                        }
+                        else if (User.IsInRole(roleType.volunteer.ToString()))
+                        {
+                            <li>@Html.ActionLink("פעילויות", "Index", "ActivityModels")</li>
+                        }
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("פעילויות", "Index", "ActivityModels")</li>
+                    }
                     <li>@Html.ActionLink("דף הבית", "Index", "Home")</li>
                     @if (!User.Identity.Name.IsEmpty())
                     {
@@ -71,15 +87,31 @@
                             <li>@Html.ActionLink(@User.Identity.Name, "Index", "ProfileModels")</li>
                         }
                     }
-                    
+
                     <li>@Html.ActionLink("דף הבית", "Index", "Home")</li>
-                    <li>@Html.ActionLink("פעילויות", "Index", "ActivityModels")</li>
+                    
+                    @if (!User.Identity.Name.IsEmpty())
+                    {
+                        if (User.IsInRole(roleType.organization.ToString()))
+                        {
+                            <li>@Html.ActionLink("פעילויות", "Index", "ActivityManagement")</li>
+                        }
+                        else if (User.IsInRole(roleType.volunteer.ToString()))
+                        {
+                            <li>@Html.ActionLink("פעילויות", "Index", "ActivityModels")</li>
+                        }
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("פעילויות", "Index", "ActivityModels")</li>
+                    }
+
                     <li>@Html.ActionLink("אירגונים", "Index", "OrganizationModels")</li>
                     <li>@Html.ActionLink("ערים", "Index", "CityModels")</li>
                     <li>@Html.ActionLink("סוגים", "Index", "HelpTypeModels")</li>
-                    
+
                 </ul>
-                
+
             </div>
         </div>
     </div>

@@ -194,6 +194,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ActivityManagementController.cs" />
     <Compile Include="Controllers\ActivityModelsController.cs" />
     <Compile Include="Controllers\CityModelsController.cs" />
     <Compile Include="Controllers\HelpTypeModelsController.cs" />
@@ -231,6 +232,10 @@
     <Compile Include="Migrations\201605040810444_SearchDataModelsAddSearchTime.cs" />
     <Compile Include="Migrations\201605040810444_SearchDataModelsAddSearchTime.Designer.cs">
       <DependentUpon>201605040810444_SearchDataModelsAddSearchTime.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201605070212014_fix_requests_for_orgs.cs" />
+    <Compile Include="Migrations\201605070212014_fix_requests_for_orgs.Designer.cs">
+      <DependentUpon>201605070212014_fix_requests_for_orgs.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -273,6 +278,10 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\AntonPic.jpg" />
+    <Content Include="Images\JssorSlider\a11.png" />
+    <Content Include="Images\JssorSlider\a21.png" />
+    <Content Include="Images\JssorSlider\b05.png" />
+    <Content Include="Images\JssorSlider\b21.png" />
     <Content Include="Images\myPic.jpg" />
     <Content Include="Images\NoaPic.jpg" />
     <Content Include="Images\NuphPic.jpg" />
@@ -1442,6 +1451,7 @@
     <Content Include="packages\Respond.1.2.0\Respond.1.2.0.nupkg" />
     <Content Include="packages\WebGrease.1.5.2\WebGrease.1.5.2.nupkg" />
     <None Include="Properties\PublishProfiles\need-help.pubxml" />
+    <Content Include="Scripts\docs.min.js" />
     <Content Include="Scripts\errors.json" />
     <Content Include="Scripts\angular-touch.min.js.map" />
     <Content Include="Scripts\angular-sanitize.min.js.map" />
@@ -2199,6 +2209,7 @@
     <Content Include="Scripts\i18n\angular-locale_zu-za.js" />
     <Content Include="Scripts\i18n\angular-locale_zu.js" />
     <None Include="Scripts\jquery-2.2.3.intellisense.js" />
+    <Content Include="Scripts\ie10-viewport-bug-workaround.js" />
     <Content Include="Scripts\jquery-2.2.3.js" />
     <Content Include="Scripts\jquery-2.2.3.min.js" />
     <Content Include="Scripts\jquery-2.2.3.min.map" />
@@ -2207,6 +2218,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\jssor.slider.mini.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
@@ -2286,6 +2298,11 @@
     <Content Include="Views\OrgProfileModels\Edit.cshtml" />
     <Content Include="Views\OrgProfileModels\Index.cshtml" />
     <Content Include="Views\UsersSearchDataModels\Index.cshtml" />
+    <Content Include="Views\ActivityManagement\Create.cshtml" />
+    <Content Include="Views\ActivityManagement\Delete.cshtml" />
+    <Content Include="Views\ActivityManagement\Details.cshtml" />
+    <Content Include="Views\ActivityManagement\Edit.cshtml" />
+    <Content Include="Views\ActivityManagement\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App\Activity\ViewModels\" />
@@ -2316,6 +2333,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201605040810444_SearchDataModelsAddSearchTime.resx">
       <DependentUpon>201605040810444_SearchDataModelsAddSearchTime.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605070212014_fix_requests_for_orgs.resx">
+      <DependentUpon>201605070212014_fix_requests_for_orgs.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -33,7 +33,18 @@
                 @Html.ActionLink("עריכה", "Edit", new { id = Model.id }) <text> | </text>
             }
             
-            @Html.ActionLink("חזרה לרשימה", "Index")
+            @if (User.IsInRole(roleType.organization.ToString()))
+            {
+            <div dir="ltr">
+                @Html.ActionLink("חזרה לרשימה", "Index", "ActivityManagement")
+            </div>
+            }
+            else
+            {
+            <div dir="ltr">
+                @Html.ActionLink("חזרה לרשימה", "Index")
+            </div>
+            }
         </p>
     </div>
 </div>

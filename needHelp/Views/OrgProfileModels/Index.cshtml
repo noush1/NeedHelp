@@ -19,7 +19,7 @@
 
     <div dir="rtl" class="row">
         <h3>הפעילויות אשר ארגונך מציע:</h3>
-        @foreach (var activity in ViewBag.organizationActivities)
+        @foreach (var activity in Model.org_activities)
         {
             <div class="col-xs-6 col-lg-4 pull-right" style="border: solid; border-radius: 10px; margin: 10px; width: 30%">
                 <p>
@@ -35,7 +35,7 @@
                 <p>@Html.ActionLink("פרטים", "../ActivityModels/Details", new { id = activity.id })</p>
             </div>
         }
-        @if (ViewBag.organizationActivities.Count == 0)
+        @if (Model.org_activities.Count == 0)
         {
             <p>ארגונך אינו מציע פעילויות</p>
         }

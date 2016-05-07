@@ -15,7 +15,7 @@ namespace needHelp.Models
         public int id { get; set; }
 
         [Required]
-        [DisplayName("שם ארגון")]
+        [DisplayName("שם פעילות")]
         public string name { get; set; }
 
         // TODO: this field is foreignKey - supposed to link between organization and activity
@@ -49,6 +49,7 @@ namespace needHelp.Models
         public virtual CityModels city { get; set; }
         public virtual HelpTypeModels type { get; set; }
         public virtual ICollection<VolunteerModels> volunteers { get; set; }
+        public virtual ICollection<UserRequestModels> requests { get; set; }
     }
 
     public class ActivitiesAndOrganizations
