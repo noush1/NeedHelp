@@ -687,3 +687,6 @@ C:\AntonCollege\NeedHelp\NotGit\NuphVer4_5\needHelp\obj\Debug\needHelp.dll
 C:\AntonCollege\NeedHelp\NotGit\NuphVer4_5\needHelp\obj\Debug\needHelp.pdb
 C:\AntonCollege\NeedHelp\NotGit\NuphVer4_5\needHelp\obj\Debug\needHelp.csprojResolveAssemblyReference.cache
 C:\AntonCollege\NeedHelp\NotGit\NuphVer4_5\needHelp\obj\Debug\needHelp.Migrations.SearchDataModelsAddSearchTime.resources
+C:\Users\Nuphar\Documents\לימודים\סימסטר א\פרוייקט סיום\finalProject\NeedHelp\needHelp\obj\Debug\needHelp.Migrations.UserSearchFieldsAdd.resources
+C:\Users\Nuphar\Documents\לימודים\סימסטר א\פרוייקט סיום\finalProject\NeedHelp\needHelp\obj\Debug\needHelp.Migrations.UserSearchFieldsAddNullable.resources
+C:\Users\Nuphar\Documents\לימודים\סימסטר א\פרוייקט סיום\finalProject\NeedHelp\needHelp\obj\Debug\needHelp.Migrations.SearchDataModelsAddSearchTime.resources
