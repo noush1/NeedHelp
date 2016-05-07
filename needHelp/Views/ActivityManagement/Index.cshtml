@@ -197,7 +197,7 @@
 </div>
 
 <div dir="rtl">
-    <table dir="rtl" class="table">
+    <table dir="rtl" class="table" id="requests_table">
         <tr style ="font-weight:bold">
             <td>
                 שם פרטי
@@ -218,9 +218,11 @@
 
         @foreach (var activity in Model.org_activities)
         {
+            int request_count_for_activity = 0;
             foreach (var request in activity.requests)
             {
-                <tr id="volunteers_activity_@String.Concat(activity.id,"vol"+request.volunteerId)" class="activityassign text-right volunteers_activity_@activity.id">
+                request_count_for_activity++;
+                <tr id="volunteers_activity_@String.Concat(activity.id, "vol" + request_count_for_activity)" class="activityassign text-right volunteers_activity_@activity.id">
                     <td>
                         @Html.DisplayFor(modelItem => request.volunteer.firstName)
                     </td>
@@ -241,6 +243,9 @@
         }
 
     </table>
+    <p id="no_requests_received" style="display:none; text-align:center; font-size:2vw; font-weight:bold;">
+        טרם התקבלו בקשות הרשמה לפעילות זו
+    </p>
 
 </div>
 
@@ -327,7 +332,21 @@
 
     function showVolunteersById(obj) {
         $('.activityassign').hide();
-        $('.volunteers_' + obj.id).show();
+        // check to see if there is atleast one volunteer request for it.
+        var request = document.getElementById("volunteers_" + obj.id + "vol1");
+
+        if (request != null)
+        {
+            document.getElementById('requests_table').style.display = "";
+            document.getElementById('no_requests_received').style.display = "none";
+            $('.volunteers_' + obj.id).show();
+        }
+        else
+        {
+            document.getElementById('requests_table').style.display = "none";
+            document.getElementById('no_requests_received').style.display = "";
+        }
+        
     }
 
 </script>
