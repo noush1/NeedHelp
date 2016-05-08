@@ -27,7 +27,6 @@
 
                 <div class="form-group">
                     @Html.Label("מארגן:", "מארגן:", new { style = "width:150px; height:30px; display:inline-block; " })
-                    @*@Html.LabelFor(model => model.organizationId, "organizationId", htmlAttributes: new { @class = "control-label col-md-2" })*@
                     <div class="col-md-10">
                         @Html.DropDownList("organizationId", null, htmlAttributes: new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.organizationId, "", new { @class = "text-danger" })

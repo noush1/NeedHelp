@@ -36,9 +36,10 @@
                     @if (User.IsInRole(roleType.admin.ToString()))
                     {
                         <li>@Html.ActionLink("פרופילי חיפוש", "Index", "UsersSearchDataModels")</li>
+                        <li>@Html.ActionLink("סוגים", "Index", "HelpTypeModels")</li>
+                        <li>@Html.ActionLink("ערים", "Index", "CityModels")</li>
                     }
-                    <li>@Html.ActionLink("סוגים", "Index", "HelpTypeModels")</li>
-                    <li>@Html.ActionLink("ערים", "Index", "CityModels")</li>
+                    
 
                     <li>@Html.ActionLink("אירגונים", "Index", "OrganizationModels")</li>
 
@@ -49,7 +50,7 @@
                         {
                             <li>@Html.ActionLink("פעילויות", "Index", "ActivityManagement")</li>
                         }
-                        else if (User.IsInRole(roleType.volunteer.ToString()))
+                        else if (User.IsInRole(roleType.volunteer.ToString()) || User.IsInRole(roleType.admin.ToString()))
                         {
                             <li>@Html.ActionLink("פעילויות", "Index", "ActivityModels")</li>
                         }

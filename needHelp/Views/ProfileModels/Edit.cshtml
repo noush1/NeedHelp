@@ -8,7 +8,7 @@
 @if (User.IsInRole(roleType.admin.ToString()) || (User.IsInRole(roleType.volunteer.ToString()) && User.Identity.Name.Equals(Model.email)))
 {
     <h1>עריכת פרטים אישיים:</h1>
-    @using (Html.BeginForm())
+    using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
     

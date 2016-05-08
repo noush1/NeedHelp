@@ -19,9 +19,9 @@
     <br />
 
     <div dir="rtl" class="row">
+        <h3>הודעות:</h3>
         @if (Model.messages.Count != 0)
-        {
-            <h3>הודעות:</h3>
+        {            
             foreach (var item in Model.messages)
             {
                 <div class="col-xs-6 col-lg-4 pull-right" style="border: solid; border-radius: 10px; margin: 10px; width: 30%">
@@ -46,12 +46,16 @@
 
                 </div>
             }
+        } 
+        else
+        {
+            <p>לא קיימות הודעות עבורך</p>
         }
     </div>
 
     <hr />
 
-    <div dir="rtl" class="row">
+    @*<div dir="rtl" class="row">
         <h3>הפעילויות אליהן את/ה רשום/ה:</h3>
         @foreach (var item in Model.registered_activities)
         {
@@ -72,7 +76,7 @@
         {
             <p>לא קיימות פעילויות עבורך</p>
         }
-    </div>
+    </div>*@
 
     <div dir="rtl" class="row">
         <h3>פעילויות מומלצות:</h3>
