@@ -20,7 +20,7 @@ namespace needHelp.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 OrganizationModels org = db.organizations.First(user => user.email.Equals(User.Identity.Name));
-
+                org.org_activities = org.org_activities.OrderBy(d => d.date.Ticks).ToList();
                 return View(org);
             }
             else

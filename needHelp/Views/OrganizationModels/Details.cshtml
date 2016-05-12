@@ -4,7 +4,6 @@
     ViewBag.Title = "פרטי אירגון";
 }
 <div dir="rtl">
-    <h2>פרטי ארגון</h2>
 
     @*<div>
         <hr />
@@ -49,16 +48,20 @@
     </div>*@
 
     <div >
-                            
-        <p>שם ארגון: @Html.DisplayFor(model => Model.name)</p>
+        <label style="font-size:30px">@Html.DisplayFor(model => Model.name)</label>
         <p>איש קשר: @Html.DisplayFor(model => Model.contactName)</p>
         <p>טלפון: @Html.DisplayFor(model => Model.contactPhone)</p>
         <p>דואר אלקטרוני: @Html.DisplayFor(model => Model.email)</p>
         <p>אתר אינטרנט: @Html.DisplayFor(model => Model.website)</p>
-        <p dir="ltr">
-            @Html.ActionLink("עריכה", "Edit", new { id=Model.id }) |                                
-            @Html.ActionLink("מחיקה", "Delete", new { id=Model.id }) |
-            @Html.ActionLink("חזרה לרשימה", "Index")
+        <p dir="rtl">
+            @if(User.IsInRole(roleType.admin.ToString())) {
+                @Html.ActionLink("עריכה", "Edit", new { id = Model.id }) <text> | </text>
+                @Html.ActionLink("מחיקה", "Delete", new { id = Model.id })
+            }
+            else if (User.IsInRole(roleType.organization.ToString()) && User.Identity.Name.Equals(Model.email))
+            {
+                @Html.ActionLink("עריכה", "Edit", new { id = Model.id })
+            }
         </p>
     </div>
 

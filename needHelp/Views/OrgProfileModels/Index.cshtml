@@ -21,18 +21,17 @@
         <h3>הפעילויות אשר ארגונך מציע:</h3>
         @foreach (var activity in Model.org_activities)
         {
-            <div class="col-xs-6 col-lg-4 pull-right" style="border: solid; border-radius: 10px; margin: 10px; width: 30%">
+            <div class="col-xs-6 col-lg-4 pull-right" style="border: solid; border-radius: 10px; margin: 10px; width: 30%;">
                 <p>
                     @if (activity.type.imagePath != String.Empty)
                     {
                         <img class="img-circle" style="width: 60px; height: 60px; margin: 2px" src="~/Images/Types/@activity.type.imagePath" />
                     }
-                    <label style="font-size: 30px">@activity.name</label>
+                    <label style="font-size:30px; cursor:pointer; color: orange;" onclick="showDetailsDialog(this)" id="linkto_@activity.id">@activity.name</label>
                 </p>
                 @*<p>מארגן: @activity.org.name</p>*@
                 <p>מיקום: @activity.city.name @activity.address</p>
                 <p>תאריך: @activity.date</p>
-                <p>@Html.ActionLink("פרטים", "../ActivityModels/Details", new { id = activity.id })</p>
             </div>
         }
         @if (Model.org_activities.Count == 0)
@@ -42,3 +41,33 @@
     </div>
 </div>
 
+<div id="myDialogContent" dir="rtl" title="פרטי פעילות"></div>
+
+<script type="text/JavaScript">
+
+    $(document).ready(function () {
+        $("#myDialogContent").dialog({
+            autoOpen: false,
+            height: 'auto',
+            width: 500,
+            modal: true,
+
+            open: function () {
+                var link_id = $("#myDialogContent").data('param_1');
+                var only_id = link_id.replace("linkto_", "");
+                var txt_to_load = "@Url.Action("Details","ActivityModels",new { id="JS_CRAP",partial=1 })";
+                txt_to_load = txt_to_load.replace("JS_CRAP", only_id)
+                jQuery(this).load(txt_to_load);
+            },
+            buttons: {
+                סגור: function () {
+                    jQuery(this).dialog("close");
+                }
+            }
+        });
+    });
+
+    function showDetailsDialog(obj) {
+        jQuery('#myDialogContent').data('param_1', obj.id).dialog('open');
+    }
+</script>

@@ -21,7 +21,7 @@ namespace needHelp.Controllers
         }
 
         // GET: OrganizationModels/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int? id, int? partial)
         {
             if (id == null)
             {
@@ -32,7 +32,15 @@ namespace needHelp.Controllers
             {
                 return HttpNotFound();
             }
-            return View(organizationModels);
+
+            if (partial == null)
+            {
+                return View(organizationModels);
+            }
+            else
+            {
+                return PartialView(organizationModels);
+            }
         }
 
         // GET: OrganizationModels/Create

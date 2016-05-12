@@ -15,6 +15,8 @@
     }
 </div>
 
+<div id="myDialogContent" dir ="rtl" title="פרטי פעילות"></div>
+
 <!-- Use a container to wrap the slider, the purpose is to enable slider to always fit width of the wrapper while window resize -->
 <div class="container">
     <!-- Jssor Slider Begin -->
@@ -35,60 +37,60 @@
         </div>
 
         <!-- Slides Container -->
-        <div u="slides" style="cursor: move; position: absolute; left: 0px; top: 0px; width: 1140px; height: 342px;
+        <div u="slides"  style="cursor: move; position: absolute; left: 0px; top: 0px; width: 1140px; height: 342px;
             overflow: hidden;">
-            
-                @{int activity_counter = 0;}
 
-                @foreach (var item in Model.org_activities)
+            @{int activity_counter = 0;}
+
+            @foreach (var item in Model.org_activities)
+            {
+                if (activity_counter % 3 == 0)
                 {
-                    if(activity_counter % 3 == 0)
-                    {
-                        @Html.Raw("<div class='row vcenterdiv' style='height:200px;'><br /><br /><br />");
-                    }
-                    <div onclick="showVolunteersById(activity_@item.id)" id="activity_@item.id" dir="rtl" class="col-md-3 col-xs-6 col-lg-4 pull-right vcenterdiv" style="border:solid; border-radius:10px;height:60%; width:32%; margin-right:5px; overflow:hidden;">
-                        <p>
-                            @if (item.type.imagePath != String.Empty)
-                            {
-                                <img class="img-circle" style="width:60px; height:60px; margin:2px" src="~/Images/Types/@Html.DisplayFor(modelItem => item.type.imagePath)" />
-                            }
-                            <a href="@Url.Action("Details", "ActivityModels", new { id = item.id })">
-                                <label style="font-size:30px">@Html.DisplayFor(modelItem => item.name)</label>
-                            </a>
-                        </p>
-                        <p>מארגן: @Html.DisplayFor(modelItem => item.org.name)</p>
-                        <p>מיקום: @Html.DisplayFor(modelItem => item.city.name) @Html.DisplayFor(modelItem => item.address)</p>
-                        <p>תאריך: @Html.DisplayFor(modelItem => item.date)</p>
-                    </div>
-                            activity_counter++;
-                            if (activity_counter % 3 == 0)
-                            {
-                        @Html.Raw("</div>");
-                    }
-                    
+                    @Html.Raw("<div  class='row vcenterdiv' style='height:200px;'><br /><br /><br />");
                 }
-            @if(activity_counter % 3 != 0 && activity_counter > 0)
+                <div onclick="showVolunteersById(activity_@item.id)" id="activity_@item.id" dir="rtl" class="col-md-3 col-xs-6 col-lg-4 pull-left vcenterdiv" style="border:solid; border-radius:10px;height:60%; width:32%; left:30px; margin-left:5px; overflow:hidden;">
+                    <p>
+                        @if (item.type.imagePath != String.Empty)
+                        {
+                            <img class="img-circle" style="width:60px; height:60px; margin:2px" src="~/Images/Types/@Html.DisplayFor(modelItem => item.type.imagePath)" />
+                        }
+                        <label style="font-size:30px; cursor:pointer; color: orange;" onclick="showDetailsDialog(this)" id="linkto_@item.id">@Html.DisplayFor(modelItem => item.name)</label>
+                    </p>
+                    <p>מארגן: @Html.DisplayFor(modelItem => item.org.name)</p>
+                    <p>מיקום: @Html.DisplayFor(modelItem => item.city.name) @Html.DisplayFor(modelItem => item.address)</p>
+                    <p>תאריך: @Html.DisplayFor(modelItem => item.date)</p>
+                </div>
+                        activity_counter++;
+                        if (activity_counter % 3 == 0)
+                        {
+                            @Html.Raw("</div>");
+                        }
+
+            }
+            @if (activity_counter % 3 != 0 && activity_counter > 0)
             {
             <!-- make sure to end the row even if there are no 3 activities. -->
                 @Html.Raw("</div>");
             }
-            
+
 
             <!--
-            <div class="row">
-                <div class="col-md-3 pull-right">
-                    activity1
-                </div>
-                <div class="col-md-3 pull-right">
-                    activity2
-                </div>
-                <div class="col-md-3 pull-right">
-                    activity3
-                </div>
-                <img u="image" src2="../../Images/JssorSlider/home/04.jpg" />
+        <div class="row">
+            <div class="col-md-3 pull-right">
+                activity1
             </div>
-                -->
+            <div class="col-md-3 pull-right">
+                activity2
+            </div>
+            <div class="col-md-3 pull-right">
+                activity3
+            </div>
+            <img u="image" src2="../../Images/JssorSlider/home/04.jpg" />
         </div>
+            -->
+        </div>
+
+
 
         <!--#region Bullet Navigator Skin Begin -->
         <!-- Help: http://www.jssor.com/tutorial/set-bullet-navigator.html -->
@@ -324,12 +326,36 @@
     });
 </script>
 <script type="text/JavaScript">
-    $(document).ready(function () {
+    jQuery(document).ready(function ($) {
         $('div.chooseActivity').init(function () {
             $('.activityassign').hide();
         });
+
+
+    $("#myDialogContent").dialog({
+        autoOpen: false,
+        height: 'auto',
+        width: 500,
+        modal: true,
+        
+        open: function () {
+            var link_id = $("#myDialogContent").data('param_1');
+            var only_id = link_id.replace("linkto_", "");
+            var txt_to_load = "@Url.Action("Details","ActivityModels",new { id="JS_CRAP",partial=1 })";
+            txt_to_load = txt_to_load.replace("JS_CRAP", only_id)
+            jQuery(this).load(txt_to_load);
+        },
+        buttons: {
+            סגור: function () {
+                jQuery(this).dialog("close");
+            }
+        }
+    });
     });
 
+    function showDetailsDialog(obj) {
+        jQuery('#myDialogContent').data('param_1', obj.id).dialog('open');
+    }
     function showVolunteersById(obj) {
         $('.activityassign').hide();
         // check to see if there is atleast one volunteer request for it.
@@ -345,8 +371,7 @@
         {
             document.getElementById('requests_table').style.display = "none";
             document.getElementById('no_requests_received').style.display = "";
-        }
-        
+        }        
     }
 
 </script>

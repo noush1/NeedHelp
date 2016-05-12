@@ -57,7 +57,7 @@ namespace needHelp.Controllers
         }
 
         // GET: ActivityModels/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int? id,int? partial)
         {
             if (id == null)
             {
@@ -68,7 +68,15 @@ namespace needHelp.Controllers
             {
                 return HttpNotFound();
             }
-            return View(activityModels);
+
+            if (partial == null)
+            {
+                return View(activityModels);
+            }
+            else
+            {
+                return PartialView(activityModels);
+            }
         }
 
         // GET: ActivityModels/Create

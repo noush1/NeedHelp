@@ -13,7 +13,6 @@ namespace needHelp.Models
     {
         public OrganizationModels()
         {
-            trustedUsers = new List<TrustedUserModels>();
         }
 
         [Key]
@@ -42,7 +41,7 @@ namespace needHelp.Models
         [DisplayName("אתר")]
         public string website { get; set; }
 
-        public List<TrustedUserModels> trustedUsers { get; set; }
+        public virtual ICollection<TrustedUserModels> trustedUsers { get; set; }
 
         public virtual ICollection<ActivityModels> org_activities { get; set; }
     }

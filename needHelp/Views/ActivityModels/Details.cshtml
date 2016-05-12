@@ -4,9 +4,6 @@
     ViewBag.Title = "פרטי פעילות";
 }
 <div dir="rtl">
-
-    <h1>פרטי פעילות</h1>
-    
     <br />
 
     <div >
@@ -22,28 +19,15 @@
         <p>תאריך: @Html.DisplayFor(modelItem => Model.date)</p>
         <p>סוג פעילות: @Html.DisplayFor(modelItem => Model.type.typeName)</p>
         <p>תיאור הפעילות: @Html.DisplayFor(model => Model.description)</p>
-
-        <p dir="ltr">
+        <br/>
+        <p dir="rtl">
             @if (User.IsInRole(roleType.volunteer.ToString())) {
-                @Html.ActionLink("הרשמה לפעילות", "SignInActivity", new { id = Model.id }) <text> | </text>
+                @Html.ActionLink("הרשמה לפעילות", "SignInActivity", new { id = Model.id })
             }
             else if (User.IsInRole(roleType.admin.ToString()) || (User.IsInRole(roleType.organization.ToString()) && User.Identity.Name.Equals(Model.org.email)))
             {
-                @Html.ActionLink("מחיקה", "Delete", new { id = Model.id }) <text> | </text>
-                @Html.ActionLink("עריכה", "Edit", new { id = Model.id }) <text> | </text>
-            }
-            
-            @if (User.IsInRole(roleType.organization.ToString()))
-            {
-            <div dir="ltr">
-                @Html.ActionLink("חזרה לרשימה", "Index", "ActivityManagement")
-            </div>
-            }
-            else
-            {
-            <div dir="ltr">
-                @Html.ActionLink("חזרה לרשימה", "Index")
-            </div>
+                @Html.ActionLink("עריכה", "Edit", new { id = Model.id })<text> | </text>
+                @Html.ActionLink("מחיקה", "Delete", new { id = Model.id }) 
             }
         </p>
     </div>
