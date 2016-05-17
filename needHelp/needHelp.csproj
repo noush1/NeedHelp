@@ -209,6 +209,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="LearningAlgorithm\ActivitiesSuggestion.cs" />
     <Compile Include="Migrations\201604300455358_post_account_changes.cs" />
     <Compile Include="Migrations\201604300455358_post_account_changes.Designer.cs">
       <DependentUpon>201604300455358_post_account_changes.cs</DependentUpon>
