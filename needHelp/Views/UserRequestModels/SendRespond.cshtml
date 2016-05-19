@@ -1,0 +1,47 @@
+﻿@model needHelp.Models.UserRequestModels
+
+@{
+    ViewBag.Title = "בקשה להתנדבות";
+}
+<div dir="rtl">
+    <br />
+
+    <div dir="rtl">
+        <h4> בקשה להתנדבות </h4>
+
+        <br />
+
+        <p>מתנדב: @Html.DisplayFor(modelItem => Model.volunteer.firstName) + " " + @Html.DisplayFor(modelItem => Model.volunteer.lastName)</p>
+        <p>פעילות: @Html.DisplayFor(modelItem => Model.activity.name)</p>
+        <p>הוספת הודעה למתנדב: <textarea> @Html.DisplayFor(modelItem => Model.replyMessage)</textarea></p>
+        @if (!Model.isAnswered && Model.isAccepted)
+        {
+            <p> סטטוס בקשה: מאושר </p>
+        }
+        else if (Model.isAnswered)
+        {
+            if (Model.isAccepted)
+            {
+                <p> סטטוס בקשה: מאושר </p>
+            }
+            else
+            {
+                <p> סטטוס בקשה: נדחה </p>
+            }
+        }
+        else
+        {
+            <p> סטטוס בקשה:  </p>
+            <div class="col-md-2">
+                אשר
+                <br />
+                דחה
+            </div>
+            <div class="col-md-3" id="radioButton">
+                @Html.RadioButtonFor(m => Model.isAccepted, "confirm", new { @val = "confirm", style = "width:20px; display:inline; " })
+                @Html.RadioButtonFor(m => Model.isAccepted, "reject", new { Checked = "checked", @val = "reject", style = "width:20px; display:inline; " })
+
+            </div>
+        }
+    </div>
+</div>

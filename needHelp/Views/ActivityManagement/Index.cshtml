@@ -198,7 +198,7 @@
     <!-- Jssor Slider End -->
 </div>
 
-<div dir="rtl" id="volunteerContainer">
+<div dir="rtl">
     <table dir="rtl" class="table" id="requests_table">
         <tr style ="font-weight:bold">
             <td>
@@ -233,6 +233,7 @@
                     </td>
                     <td>
                         <div id="openDialogRespond">
+                            <!--@Html.ActionLink("שלח תגובה למתנדב", "SendRespond", "UserRequestModel", new { activity = request.activity, volunteer = request.volunteer, partial = 1 })-->
                             <!--TODO: open dialog window-->
                             <!--<a onclick="sendRespond(this)" id="linkto_@request.activityId">שלח תגובה למתנדב</a>-->
                         </div>
