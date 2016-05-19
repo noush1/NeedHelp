@@ -198,7 +198,7 @@
     <!-- Jssor Slider End -->
 </div>
 
-<div dir="rtl">
+<div dir="rtl" id="volunteerContainer">
     <table dir="rtl" class="table" id="requests_table">
         <tr style ="font-weight:bold">
             <td>
@@ -211,10 +211,7 @@
                 טלפון
             </td>
             <td>
-                אשר
-            </td>
-            <td>
-                דחה
+                תגובה למתנדב
             </td>
         </tr>
 
@@ -235,10 +232,10 @@
                         @Html.DisplayFor(modelItem => request.volunteer.phone)
                     </td>
                     <td>
-                        אשר
-                    </td>
-                    <td>
-                        דחה
+                        <div>
+                            <a style="font-size:30px; cursor:pointer; color: orange;" onclick="showDetailsDialog(this)" id="linkto_@request.activityId">בדיקה</a>
+                            <!--<a onclick="sendRespond(this)" id="linkto_@request.activityId">שלח תגובה למתנדב</a>-->
+                        </div>
                     </td>
                 </tr>
             }
@@ -372,6 +369,9 @@
             document.getElementById('requests_table').style.display = "none";
             document.getElementById('no_requests_received').style.display = "";
         }        
+    }
+    function sendRespond(obj) {
+        jQuery('#myDialogContent').data('param_1', obj.id).dialog('open');
     }
 
 </script>

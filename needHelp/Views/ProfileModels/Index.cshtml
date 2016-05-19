@@ -33,7 +33,7 @@
                         <label style="font-size:30px; cursor:pointer; color: orange;" onclick="showDetailsDialog(this)" id="linkto_@item.activity.id">@Html.DisplayFor(modelItem => item.activity.name)</label>
                     </p>
                     <p>תאריך פעילות: @item.activity.date</p>
-                    @if (item.isAnswered && item.isAccepted)
+                    @if (item.isAccepted)
                     {
                         <p>סטטוס בקשה: מאושר</p>
                     }
