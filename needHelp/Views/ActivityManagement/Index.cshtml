@@ -235,7 +235,7 @@
                         <div id="openDialogRespond">
                             <!--@Html.ActionLink("שלח תגובה למתנדב", "SendRespond", "UserRequestModel", new { activity = request.activity, volunteer = request.volunteer, partial = 1 })-->
                             <!--TODO: open dialog window-->
-                            <!--<a onclick="sendRespond(this)" id="linkto_@request.activityId">שלח תגובה למתנדב</a>-->
+                            <a onclick="sendRespond(this)" id="@request.activityId,@request.volunteerId">שלח תגובה למתנדב</a>
                         </div>
                     </td>
                 </tr>
@@ -330,25 +330,36 @@
         });
 
 
-    $("#myDialogContent").dialog({
-        autoOpen: false,
-        height: 'auto',
-        width: 500,
-        modal: true,
-        
-        open: function () {
-            var link_id = $("#myDialogContent").data('param_1');
-            var only_id = link_id.replace("linkto_", "");
-            var txt_to_load = "@Url.Action("Details","ActivityModels",new { id="JS_CRAP",partial=1 })";
-            txt_to_load = txt_to_load.replace("JS_CRAP", only_id)
-            jQuery(this).load(txt_to_load);
-        },
-        buttons: {
-            סגור: function () {
-                jQuery(this).dialog("close");
+        $("#myDialogContent").dialog({
+            autoOpen: false,
+            height: 'auto',
+            width: 500,
+            modal: true,
+
+            open: function () {
+                var link_id = $("#myDialogContent").data('param_1');
+
+                if (link_id.toLowerCase().indexOf("linkto_") >= 0) {
+                    var only_id = link_id.replace("linkto_", "");
+                    var txt_to_load = "@Url.Action("Details", "ActivityModels", new { id = "JS_CRAP", partial = 1 })";
+                    txt_to_load = txt_to_load.replace("JS_CRAP", only_id)
+                    jQuery(this).load(txt_to_load);
+                } else if (link_id.toLowerCase().indexOf(",") >= 0) {
+                    var arr = link_id.split(",")
+                    var activityId = arr[0]
+                    var volunteerId = arr[1]
+                    var txt_to_load = "@Url.Action("SendRespond", "UserRequestModels", new { activityId = "ACT", volunteerId = "VOL", partial = 1 })";
+                    txt_to_load = txt_to_load.replace("ACT", activityId)
+                    txt_to_load = txt_to_load.replace("VOL", volunteerId)
+                    jQuery(this).load(txt_to_load);
+                }
+            },
+            buttons: {
+                סגור: function () {
+                    jQuery(this).dialog("close");
+                }
             }
-        }
-    });
+        });
     });
 
     function showDetailsDialog(obj) {
@@ -369,7 +380,7 @@
         {
             document.getElementById('requests_table').style.display = "none";
             document.getElementById('no_requests_received').style.display = "";
-        }        
+        }
     }
     function sendRespond(obj) {
         jQuery('#myDialogContent').data('param_1', obj.id).dialog('open');
