@@ -5,43 +5,70 @@
 }
 <div dir="rtl">
     <br />
-
-    <div dir="rtl">
-        <h4> בקשה להתנדבות </h4>
-
-        <br />
-
-        <p>מתנדב: @Html.DisplayFor(modelItem => Model.volunteer.firstName) + " " + @Html.DisplayFor(modelItem => Model.volunteer.lastName)</p>
-        <p>פעילות: @Html.DisplayFor(modelItem => Model.activity.name)</p>
-        <p>הוספת הודעה למתנדב: <textarea> @Html.DisplayFor(modelItem => Model.replyMessage)</textarea></p>
-        @if (!Model.isAnswered && Model.isAccepted)
+    @if (User.IsInRole(roleType.organization.ToString()) && User.Identity.Name.Equals(Model.activity.org.email))
+    {
+        @using (Html.BeginForm())
         {
-            <p> סטטוס בקשה: מאושר </p>
-        }
-        else if (Model.isAnswered)
-        {
-            if (Model.isAccepted)
-            {
-                <p> סטטוס בקשה: מאושר </p>
-            }
-            else
-            {
-                <p> סטטוס בקשה: נדחה </p>
-            }
-        }
-        else
-        {
-            <p> סטטוס בקשה:  </p>
-            <div class="col-md-2">
-                אשר
+
+            <div dir="rtl">
+                <h4> בקשה להתנדבות </h4>
+
                 <br />
-                דחה
-            </div>
-            <div class="col-md-3" id="radioButton">
-                @Html.RadioButtonFor(m => Model.isAccepted, "confirm", new { @val = "confirm", style = "width:20px; display:inline; " })
-                @Html.RadioButtonFor(m => Model.isAccepted, "reject", new { Checked = "checked", @val = "reject", style = "width:20px; display:inline; " })
 
+                <p>מתנדב: @Html.DisplayFor(modelItem => Model.volunteer.firstName) + " " + @Html.DisplayFor(modelItem => Model.volunteer.lastName)</p>
+                <p>פעילות: @Html.DisplayFor(modelItem => Model.activity.name)</p>
+
+                <div class="form-group">
+                    @Html.Label("הוספת הודעה למתנדב:", "הוספת הודעה למתנדב:", new { style = "width:150px; height:30px; display:inline-block; " })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.replyMessage, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.replyMessage, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                @if (!Model.isAnswered && Model.isAccepted)
+                {
+                    <p> סטטוס בקשה: מאושר </p>
+                }
+                else if (Model.isAnswered)
+                {
+                    if (Model.isAccepted)
+                    {
+                        <p> סטטוס בקשה: מאושר </p>
+                    }
+                    else
+                    {
+                        <p> סטטוס בקשה: נדחה </p>
+                    }
+                }
+                else
+                {
+                    <div class="form-group">
+                        <p> סטטוס בקשה:  </p>
+                        <div class="col-md-2">
+                            אשר
+                            <br />
+                            דחה
+                        </div>
+                        <div class="col-md-3" id="radioButton">
+                            @Html.RadioButtonFor(m => Model.isAccepted, "confirm", new { @val = "confirm", style = "width:20px; display:inline; " })
+                            @Html.RadioButtonFor(m => Model.isAccepted, "reject", new { Checked = "checked", @val = "reject", style = "width:20px; display:inline; " })
+
+                        </div>
+                    </div>
+                }
+
+                        <p dir="rtl">
+                            <div class="form-group">
+                                <div>
+                                    <input type="submit" value="שמירת תגובה" class="btn btn-default" />
+                                </div>
+                            </div>
+                        </p>
+                    
             </div>
         }
-    </div>
+        
+        @Html.ActionLink("ביטול תגובה", "Index", "ActivityManagement")
+    }
 </div>
