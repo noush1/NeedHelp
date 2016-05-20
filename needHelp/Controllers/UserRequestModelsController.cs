@@ -16,8 +16,7 @@ namespace needHelp.Controllers
     {
         private GeneralModel db = new GeneralModel();
 
-        // GET: UserRequest
-        public ActionResult SendRespond(int? activityId, int? volunteerId, int? partial)
+        public ActionResult Details(int? activityId, int? volunteerId, int? partial)
         {
             if (activityId == null || volunteerId == null)
             {

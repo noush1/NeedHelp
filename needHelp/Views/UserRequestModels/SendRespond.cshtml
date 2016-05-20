@@ -7,7 +7,7 @@
     <br />
     @if (User.IsInRole(roleType.organization.ToString()) && User.Identity.Name.Equals(Model.activity.org.email))
     {
-        @using (Html.BeginForm())
+        using (Html.BeginForm())
         {
 
             <div dir="rtl">
