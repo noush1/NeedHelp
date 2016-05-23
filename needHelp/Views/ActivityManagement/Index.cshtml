@@ -16,6 +16,7 @@
 </div>
 
 <div id="myDialogContent" dir ="rtl" title="פרטי פעילות"></div>
+<div id="AcceptRejectDialog" dir="rtl" title="תגובה למתנדב"></div>
 
 <!-- Use a container to wrap the slider, the purpose is to enable slider to always fit width of the wrapper while window resize -->
 <div class="container">
@@ -211,10 +212,7 @@
                 טלפון
             </td>
             <td>
-                אשר
-            </td>
-            <td>
-                דחה
+                תגובה למתנדב
             </td>
         </tr>
 
@@ -235,10 +233,10 @@
                         @Html.DisplayFor(modelItem => request.volunteer.phone)
                     </td>
                     <td>
-                        אשר
-                    </td>
-                    <td>
-                        דחה
+                        <div id="openDialogRespond">
+                            <!--TODO: open dialog window-->
+                            <a onclick="sendRespond(this)" id="@request.activityId-@request.volunteerId">שלח תגובה למתנדב</a>
+                        </div>
                     </td>
                 </tr>
             }
@@ -331,30 +329,54 @@
             $('.activityassign').hide();
         });
 
+        $("#AcceptRejectDialog").dialog({
+            autoOpen: false,
+            height: 'auto',
+            width: 500,
+            modal: true,
 
-    $("#myDialogContent").dialog({
-        autoOpen: false,
-        height: 'auto',
-        width: 500,
-        modal: true,
-        
-        open: function () {
-            var link_id = $("#myDialogContent").data('param_1');
-            var only_id = link_id.replace("linkto_", "");
-            var txt_to_load = "@Url.Action("Details","ActivityModels",new { id="JS_CRAP",partial=1 })";
-            txt_to_load = txt_to_load.replace("JS_CRAP", only_id)
-            jQuery(this).load(txt_to_load);
-        },
-        buttons: {
-            סגור: function () {
-                jQuery(this).dialog("close");
+            open: function () {
+                var link_id = $("#AcceptRejectDialog").data('param_1');
+                var arr = link_id.split("-");
+                var activityId_local = arr[0];
+                var volunteerId_local = arr[1];
+                var my_text = "@Url.Action("Details", "UserRequestModels", new { activityId = "ACT", volunteerId = "VOL", partial = 1 })";
+                my_text = my_text.replace("ACT", activityId_local);
+                var new_text = my_text.replace("VOL", volunteerId_local);
+                jQuery("#AcceptRejectDialog").load(new_text);
+            },
+            buttons: {
+                סגור: function () {
+                    jQuery('#AcceptRejectDialog').dialog('close');
+                }
             }
-        }
-    });
+        });
+        $("#myDialogContent").dialog({
+            autoOpen: false,
+            height: 'auto',
+            width: 500,
+            modal: true,
+
+            open: function () {
+                var link_id = $("#myDialogContent").data('param_1');
+                var only_id = link_id.replace("linkto_", "");
+                var txt_to_load = "@Url.Action("Details", "ActivityModels", new { id = "JS_CRAP", partial = 1 })";
+                txt_to_load = txt_to_load.replace("JS_CRAP", only_id);
+                jQuery("#myDialogContent").load(txt_to_load);
+            },
+            buttons: {
+                סגור: function () {
+                    jQuery('#myDialogContent').dialog('close');
+                }
+            }
+        });
     });
 
     function showDetailsDialog(obj) {
         jQuery('#myDialogContent').data('param_1', obj.id).dialog('open');
+    }
+    function sendRespond(obj) {
+        jQuery('#AcceptRejectDialog').data('param_1', obj.id).dialog('open');
     }
     function showVolunteersById(obj) {
         $('.activityassign').hide();
@@ -371,7 +393,8 @@
         {
             document.getElementById('requests_table').style.display = "none";
             document.getElementById('no_requests_received').style.display = "";
-        }        
+        }
     }
+
 
 </script>

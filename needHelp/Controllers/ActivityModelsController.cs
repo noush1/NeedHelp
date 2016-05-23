@@ -321,6 +321,18 @@ namespace needHelp.Controllers
                 // check if the volunteer is confirmed
                 if (newActivity.org.trustedUsers.Contains(trusted))
                 {
+                    // automatic confirm request by organization
+                    // create userRequest - isAccepted = false, isAnswered = true
+                    UserRequestModels volunteerRequest = new UserRequestModels();
+                    volunteerRequest.volunteerId = volunteer.id;
+                    volunteerRequest.activityId = newActivity.id;
+                    volunteerRequest.isAccepted = true;
+                    volunteerRequest.isAnswered = false;
+                    volunteerRequest.isDeletedByUser = false;
+                    volunteerRequest.isDeletedByOrganization = false;
+
+                    db.user_requests.Add(volunteerRequest);
+
                     volunteer.registered_activities.Add(newActivity);
                 }
                 else // need to send a request to organization

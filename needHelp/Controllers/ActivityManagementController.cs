@@ -140,5 +140,21 @@ namespace needHelp.Controllers
             }
             base.Dispose(disposing);
         }
+
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Respond([Bind(Include = "activityId,volunteerId,isDeletedByOrganization,isDeletedByUser,isAccepted,replyMessage")] UserRequestModels request)
+        {
+            if (ModelState.IsValid)
+            {
+                request.isAnswered = true;
+                db.Entry(request).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return Index();
+        }
     }
 }

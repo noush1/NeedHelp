@@ -14,10 +14,18 @@ namespace needHelp
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+          "RejectAcceptVolunteers",                                              // Route name
+          "UserRequestModels/{action}/{activityId}/{volunteerId}",                           // URL with parameters
+          new { controller = "UserRequestModels", action = "Details", activityId = "", volunteerId = "" }  // Parameter defaults
+          );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
+           
         }
     }
 }

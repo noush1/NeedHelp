@@ -205,6 +205,7 @@
     <Compile Include="Controllers\ProfileModelsController.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Controllers\UserRequestModelsController.cs" />
     <Compile Include="Controllers\UsersSearchDataModelsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -2337,6 +2338,7 @@
     <Content Include="Views\ActivityManagement\Details.cshtml" />
     <Content Include="Views\ActivityManagement\Edit.cshtml" />
     <Content Include="Views\ActivityManagement\Index.cshtml" />
+    <Content Include="Views\UserRequestModels\SendRespond.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App\Activity\ViewModels\" />
