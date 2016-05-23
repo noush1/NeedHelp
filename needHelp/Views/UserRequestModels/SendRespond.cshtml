@@ -51,11 +51,11 @@
                         <tr dir="rtl">
                             <td>
                                 כן
-                                @Html.RadioButtonFor(m => Model.isAccepted, "confirm", new { Checked = "checked", @val = "confirm", style = "width:20px; display:inline; " })
+                                @Html.RadioButtonFor(m => Model.isAccepted, "true", new { Checked = "checked", @val = "confirm", style = "width:20px; display:inline; " })
                             </td>
                             <td>
                                 לא
-                                @Html.RadioButtonFor(m => Model.isAccepted, "reject", new { @val = "reject", style = "width:20px; display:inline; " })
+                                @Html.RadioButtonFor(m => Model.isAccepted, "false", new { @val = "reject", style = "width:20px; display:inline; " })
                             </td>
                         </tr>
                     </table>

@@ -49,7 +49,7 @@ namespace needHelp.Controllers
                 request.isAnswered = true;
                 db.Entry(request).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "ActivityManagement");
             }
 
             return (new ActivityManagementController().Index());
