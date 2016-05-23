@@ -16,7 +16,7 @@
 </div>
 
 <div id="myDialogContent" dir ="rtl" title="פרטי פעילות"></div>
-<div id="AcceptRejectDialog" dir="rtl" title="אישור מתנדב"></div>
+<div id="AcceptRejectDialog" dir="rtl" title="תגובה למתנדב"></div>
 
 <!-- Use a container to wrap the slider, the purpose is to enable slider to always fit width of the wrapper while window resize -->
 <div class="container">
@@ -341,14 +341,12 @@
                 var activityId_local = arr[0];
                 var volunteerId_local = arr[1];
                 var my_text = "@Url.Action("Details", "UserRequestModels", new { activityId = "ACT", volunteerId = "VOL", partial = 1 })";
-                alert(my_text);
                 my_text = my_text.replace("ACT", activityId_local);
                 var new_text = my_text.replace("VOL", volunteerId_local);
-                alert(new_text);
                 jQuery("#AcceptRejectDialog").load(new_text);
             },
             buttons: {
-                סגור1: function () {
+                סגור: function () {
                     jQuery('#AcceptRejectDialog').dialog('close');
                 }
             }
@@ -363,12 +361,11 @@
                 var link_id = $("#myDialogContent").data('param_1');
                 var only_id = link_id.replace("linkto_", "");
                 var txt_to_load = "@Url.Action("Details", "ActivityModels", new { id = "JS_CRAP", partial = 1 })";
-                alert(txt_to_load);
                 txt_to_load = txt_to_load.replace("JS_CRAP", only_id);
                 jQuery("#myDialogContent").load(txt_to_load);
             },
             buttons: {
-                סגור2: function () {
+                סגור: function () {
                     jQuery('#myDialogContent').dialog('close');
                 }
             }

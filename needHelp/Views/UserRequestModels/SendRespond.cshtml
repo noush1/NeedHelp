@@ -7,68 +7,111 @@
     <br />
     @if (User.IsInRole(roleType.organization.ToString()) && User.Identity.Name.Equals(Model.activity.org.email))
     {
-        using (Html.BeginForm())
+        using (Html.BeginForm("Respond", "UserRequestModels", FormMethod.Post, new { role = "form" }))
         {
+            @Html.AntiForgeryToken()
+    <div dir="rtl" class="form-horizontal">
 
-            <div dir="rtl">
-                <h4> בקשה להתנדבות </h4>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.volunteerId)
 
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.activityId)
+
+        <p> המתנדב &nbsp; @Html.DisplayFor(modelItem => Model.volunteer.firstName) &nbsp; @Html.DisplayFor(modelItem => Model.volunteer.lastName) </p>
+        <p> מעוניין להתנדב בפעילות &nbsp; @Html.DisplayFor(modelItem => Model.activity.name)</p>
+
+        @if (!Model.isAnswered && Model.isAccepted)
+        {
+            <p> סטטוס בקשה: מאושר - המשתמש הוגדר ע"י הארגון כמאושר אוטומטית</p>
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.isAccepted)
+        }
+        else if (Model.isAnswered)
+        {
+            if (Model.isAccepted)
+            {
+                <p> סטטוס בקשה: מאושר </p>
+            }
+            else
+            {
+                <p> סטטוס בקשה: נדחה </p>
+            }
+            
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.isAccepted)
+        }
+        else
+        {
+            <div class="form-group" dir="rtl">
+                <p> האם את/ה מעוניין/ת לאשר ל &nbsp; @Html.DisplayFor(modelItem => Model.volunteer.firstName) &nbsp; להשתתף בפעילות זו?</p>
                 <br />
-
-                <p>מתנדב: @Html.DisplayFor(modelItem => Model.volunteer.firstName) + " " + @Html.DisplayFor(modelItem => Model.volunteer.lastName)</p>
-                <p>פעילות: @Html.DisplayFor(modelItem => Model.activity.name)</p>
-
-                <div class="form-group">
-                    @Html.Label("הוספת הודעה למתנדב:", "הוספת הודעה למתנדב:", new { style = "width:150px; height:30px; display:inline-block; " })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.replyMessage, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.replyMessage, "", new { @class = "text-danger" })
-                    </div>
+                <div class="col-md-3" id="radioButton" dir="rtl">
+                    <table dir="rtl" class="table" align="right" style="width:50%">
+                        <tr dir="rtl">
+                            <td>
+                                כן
+                                @Html.RadioButtonFor(m => Model.isAccepted, "confirm", new { Checked = "checked", @val = "confirm", style = "width:20px; display:inline; " })
+                            </td>
+                            <td>
+                                לא
+                                @Html.RadioButtonFor(m => Model.isAccepted, "reject", new { @val = "reject", style = "width:20px; display:inline; " })
+                            </td>
+                        </tr>
+                    </table>
                 </div>
-
-                @if (!Model.isAnswered && Model.isAccepted)
-                {
-                    <p> סטטוס בקשה: מאושר </p>
-                }
-                else if (Model.isAnswered)
-                {
-                    if (Model.isAccepted)
-                    {
-                        <p> סטטוס בקשה: מאושר </p>
-                    }
-                    else
-                    {
-                        <p> סטטוס בקשה: נדחה </p>
-                    }
-                }
-                else
-                {
-                    <div class="form-group">
-                        <p> סטטוס בקשה:  </p>
-                        <div class="col-md-2">
-                            אשר
-                            <br />
-                            דחה
-                        </div>
-                        <div class="col-md-3" id="radioButton">
-                            @Html.RadioButtonFor(m => Model.isAccepted, "confirm", new { @val = "confirm", style = "width:20px; display:inline; " })
-                            @Html.RadioButtonFor(m => Model.isAccepted, "reject", new { Checked = "checked", @val = "reject", style = "width:20px; display:inline; " })
-
-                        </div>
-                    </div>
-                }
-
-                        <p dir="rtl">
-                            <div class="form-group">
-                                <div>
-                                    <input type="submit" value="שמירת תגובה" class="btn btn-default" />
-                                </div>
-                            </div>
-                        </p>
-                    
             </div>
         }
-        
-        @Html.ActionLink("ביטול תגובה", "Index", "ActivityManagement")
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.isAnswered)
+
+        <div class="form-group" dir="rtl">
+            <div class="col-md-10" dir="rtl">
+                <table dir="rtl" class="table" align="right" style="width:50%">
+                    <tr>
+                        <td>
+                            @Html.Label("הוסף תגובה:", "הוסף תגובה:")
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.TextAreaFor(model => model.replyMessage, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.replyMessage, "", new { @class = "text-danger" })
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.isDeletedByUser)
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.isDeletedByOrganization)
+
+        <p dir="rtl">
+            <div class="form-group">
+                <div>
+                    <table dir="rtl" class="table" style="width:100%">
+                        <tr>
+                            <td>
+                                <input type="submit" value="שמירת תגובה" class="btn btn-default" />
+                            </td>
+                            <td>
+                                @Html.ActionLink("ביטול תגובה", "Index", "ActivityManagement")
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </p>
+    </div>
+        }
+    }
+    else
+    {
+        <br /><br />
+        <p><h3>אין ברשותך הרשאות מתאימות לצפייה בעמוד זה</h3></p>
     }
 </div>

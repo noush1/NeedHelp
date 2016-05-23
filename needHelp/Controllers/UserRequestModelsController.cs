@@ -39,5 +39,20 @@ namespace needHelp.Controllers
 
             return View("SendRespond", requests.First());
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Respond([Bind(Include = "volunteerId,activityId,isAccepted,isAnswered,replyMessage,isDeletedByUser,isDeletedByOrganization")] UserRequestModels request)
+        {
+            if (ModelState.IsValid)
+            {
+                request.isAnswered = true;
+                db.Entry(request).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return (new ActivityManagementController().Index());
+        }
     }
 }
