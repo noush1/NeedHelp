@@ -21,6 +21,20 @@ namespace needHelp.Controllers
             {
                 OrganizationModels org = db.organizations.First(user => user.email.Equals(User.Identity.Name));
                 org.org_activities = org.org_activities.OrderBy(d => d.date.Ticks).ToList();
+
+                if (ViewBag.requestsToDelete != null) 
+                {
+                    List<UserRequestModels> requests = ViewBag.requestsToDelete;
+                    foreach (UserRequestModels requestToDelete in requests)
+                    {
+                        db.user_requests.Remove(requestToDelete);
+                    }
+
+                    ViewBag.requestsToDelete = null;
+                    ViewBag.showAlert = null;
+                    db.SaveChanges();
+                }
+
                 return View(org);
             }
             else

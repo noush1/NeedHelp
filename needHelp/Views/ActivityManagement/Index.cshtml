@@ -1,4 +1,5 @@
-﻿@model needHelp.Models.OrganizationModels
+﻿@using needHelp.Models;
+@model needHelp.Models.OrganizationModels
 
 @{
     ViewBag.Title = "Index";
@@ -14,6 +15,46 @@
         </p>
     }
 </div>
+
+@if (Model.org_activities.Count != 0)
+{
+    List<UserRequestModels> deletedRequests = new List<UserRequestModels>();
+    foreach (var activity in Model.org_activities)
+    {
+        foreach (var request in activity.requests)
+        {
+            if (request.isDeletedByUser && request.isAccepted)
+            {
+                deletedRequests.Add(request);
+            }
+        }
+    }
+
+    if (deletedRequests.Count() > 1)
+    {
+        ViewBag.requestsToDelete = deletedRequests;
+        string alertString = "מספר מתנדבים ביטלו את השתתפותם מפעילויות האירגון: ";
+        foreach (UserRequestModels request in deletedRequests)
+        {
+            alertString = alertString + "\\n " + request.volunteer.firstName + " " + request.volunteer.lastName + " - " + request.activity.name;
+        }
+        //<p onload="showAlert(''@alertString'')" />
+        @*<script language="JavaScript">
+            if (window.confirm("@alertString")) {
+                @Html.Action("Index");
+            }
+        </script>*@
+    }
+    else if (deletedRequests.Count == 1)
+    {
+        string alertString = "המתנדב " + deletedRequests.First().volunteer.firstName + " " + deletedRequests.First().volunteer.lastName
+            + " ביטל את השתתפות בפעילות " + deletedRequests.First().activity.name;
+
+        <script language="JavaScript">
+            alert("@alertString");
+        </script>
+    }
+}
 
 <div id="myDialogContent" dir ="rtl" title="פרטי פעילות"></div>
 <div id="AcceptRejectDialog" dir="rtl" title="תגובה למתנדב"></div>
@@ -73,7 +114,6 @@
             <!-- make sure to end the row even if there are no 3 activities. -->
                 @Html.Raw("</div>");
             }
-
 
             <!--
         <div class="row">
@@ -200,6 +240,7 @@
 </div>
 
 <div dir="rtl">
+
     <table dir="rtl" class="table" id="requests_table">
         <tr style ="font-weight:bold">
             <td>
@@ -234,7 +275,6 @@
                     </td>
                     <td>
                         <div id="openDialogRespond">
-                            <!--TODO: open dialog window-->
                             <a onclick="sendRespond(this)" id="@request.activityId-@request.volunteerId">שלח תגובה למתנדב</a>
                         </div>
                     </td>
@@ -243,10 +283,10 @@
         }
 
     </table>
+
     <p id="no_requests_received" style="display:none; text-align:center; font-size:2vw; font-weight:bold;">
         טרם התקבלו בקשות הרשמה לפעילות זו
     </p>
-
 </div>
 
 
@@ -395,6 +435,12 @@
             document.getElementById('no_requests_received').style.display = "";
         }
     }
-
+    function showAlert(str) {
+        if (window.confirm(str)) {
+            @Html.Action("Index");
+            return true;
+        }
+        return false;
+    }
 
 </script>

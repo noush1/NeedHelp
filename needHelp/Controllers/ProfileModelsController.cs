@@ -57,5 +57,29 @@ namespace needHelp.Controllers
 
             return View(volunteer);
         }
+
+        public ActionResult RemoveFromActivity(int? id, int? activityId)
+        {
+            if (id == null || activityId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            VolunteerModels volunteerModels = db.volunteers.Find(id);
+            var request = (from s in db.user_requests
+                           where s.volunteerId == id && s.activityId == activityId
+                           select s).First();
+            if (volunteerModels == null || request == null)
+            {
+                return HttpNotFound();
+            }
+
+            request.isDeletedByUser = true;
+            db.SaveChanges();
+
+            ViewBag.sugestedActivities = db.activities.ToList();
+
+            return View("Index", volunteerModels);
+        }
     }
 }
