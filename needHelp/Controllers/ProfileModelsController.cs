@@ -1,4 +1,5 @@
-﻿using needHelp.Models;
+﻿using needHelp.LearningAlgorithm;
+using needHelp.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -17,7 +18,9 @@ namespace needHelp.Controllers
         public ActionResult Index()
         {
             VolunteerModels volunteer = db.volunteers.First(user => user.email.Equals(User.Identity.Name));
-            ViewBag.sugestedActivities = db.activities.ToList();
+
+            ActivitiesSuggestion suggestion = new ActivitiesSuggestion();
+            ViewBag.sugestedActivities = suggestion.SuggestActivities(volunteer);
 
             return View(volunteer);
         }

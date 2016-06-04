@@ -19,32 +19,22 @@ namespace needHelp.LearningAlgorithm
         private const int _dayPartsAmount = 6;
         private const int _daysAmount = 7;
         // TODO: deside the value of the distance threshold... 
-        private const int _distanceThreshold = 3;
+        private const int _distanceThreshold = 2;
 
         private ActivitiesSuggestion _instance;
 
         #endregion
 
-        #region Singletone
 
-        public ActivitiesSuggestion Instance()
-        {
-            if (_instance == null)
-            {
-                _instance = new ActivitiesSuggestion();
-            }
 
-            return _instance;
-        }
-
-        private ActivitiesSuggestion()
+        public ActivitiesSuggestion()
         {
             _citiesAmount = _db.cities.Count();
             _typesAmount = _db.help_types.Count();
             _organizationsAmount = _db.organizations.Count();
         }
 
-        #endregion
+
 
         public List<ActivityModels> SuggestActivities(VolunteerModels volunteer)
         {
@@ -53,54 +43,65 @@ namespace needHelp.LearningAlgorithm
             List<ActivityModels> RegisteredActivities = new List<ActivityModels>();
             List<UserSearchDataModels> UserSearchData = new List<UserSearchDataModels>();
             List<ActivityModels> AllActivities = new List<ActivityModels>();
+            List<ActivityModels> NotRegisteredActivities = new List<ActivityModels>();
+            List<int> UserRequestsActivities = new List<int>();
             List<int[]> RegisteredActivitiesVectors = new List<int[]>();
             List<int[]> NotRegisteredActivitiesVec = new List<int[]>();
             double[] avgVector = new double[_citiesAmount + _typesAmount + _organizationsAmount + _dayPartsAmount + _daysAmount];
-            Dictionary<ActivityModels, float> distanceDict = new Dictionary<ActivityModels, float>();
+            Dictionary<ActivityModels, double> distanceDict = new Dictionary<ActivityModels, double>();
 
             RegisteredActivities = volunteer.registered_activities.ToList<ActivityModels>();
             UserSearchData = _db.search_data.Where(usr => usr.VolunteerId == volunteer.id).ToList<UserSearchDataModels>();
+            UserRequestsActivities = _db.user_requests.Where(u => u.volunteerId == volunteer.id).Select(ur => ur.activityId).ToList<int>();
             AllActivities = _db.activities.ToList<ActivityModels>();
 
             // Go over all the user's activities and make vectors for them
-            int i;
-            for (i = 0; i < RegisteredActivities.Count; i++)
+            foreach (ActivityModels currActivity in RegisteredActivities)
             {
-                ActivityModels activity = RegisteredActivities.ElementAt(i);
-                RegisteredActivitiesVectors[i] = MakeVector(activity.cityId, activity.typeId, activity.organizationId, activity.date);
+                RegisteredActivitiesVectors.Add(MakeVector(currActivity.cityId, currActivity.typeId, currActivity.organizationId, currActivity.date));
             }
             
             // Go over all the user's searches and make vectors for them
-            for (int j = i + 1; j <  i + UserSearchData.Count + 1; j++)
+            foreach (UserSearchDataModels usd in UserSearchData)
             {
-                UserSearchDataModels usd = UserSearchData.ElementAt(j);
-                RegisteredActivitiesVectors[j] = MakeVector(usd.cityId, usd.typeId, usd.organizationId, usd.startDate);
+                RegisteredActivitiesVectors.Add(MakeVector(usd.cityId, usd.typeId, usd.organizationId, usd.startDate));
+            }
+
+            // Go over all the user's requests for activities and make vectors for them
+            foreach (int currRequest in UserRequestsActivities)
+            {
+                ActivityModels activity = AllActivities.Where(a => a.id == currRequest).First();
+                RegisteredActivitiesVectors.Add(MakeVector(activity.cityId, activity.typeId, activity.organizationId, activity.date));
             }
 
             // Make the average vector from the vectors we have made
             MakeAvgVector(RegisteredActivitiesVectors, avgVector);
 
             // Go over all the existing activities, if the user isn't registered for them - make a vector for them
-            for (int k = 0; k < AllActivities.Count; k++)
+            foreach (ActivityModels currActivity in AllActivities)
             {
-                ActivityModels currActivity = AllActivities.ElementAt(k);
-
-                if (!volunteer.registered_activities.Contains(currActivity))
+                if (!UserRequestsActivities.Contains(currActivity.id))
                 {
-                    NotRegisteredActivitiesVec[k] = MakeVector(currActivity.cityId, currActivity.typeId, currActivity.organizationId, currActivity.date);
+                    NotRegisteredActivitiesVec.Add(MakeVector(currActivity.cityId, currActivity.typeId, currActivity.organizationId, currActivity.date));
+                    NotRegisteredActivities.Add(currActivity);
                 }
             }
 
             // Calculate the distance between every unregistered activity's vector and the average vector
-            CalculateDistance(distanceDict, avgVector, NotRegisteredActivitiesVec);
+            CalculateDistance(distanceDict, avgVector, NotRegisteredActivitiesVec, NotRegisteredActivities);
 
             // Recommend activities
-            for (int l = 0; l < distanceDict.Count; l++)
+            for (int i = 0; i < distanceDict.Count; i++)
             {
-                if (distanceDict.Values.ElementAt(l) >= _distanceThreshold)
+                if (distanceDict.Values.ElementAt(i) <= _distanceThreshold)
                 {
-                    RecommendedActivities.Add(distanceDict.Keys.ElementAt(l));
+                    RecommendedActivities.Add(distanceDict.Keys.ElementAt(i));
                 }
+            }
+
+            if (RecommendedActivities.Count == 0)
+            {
+                return AllActivities;
             }
 
             return RecommendedActivities;
@@ -127,19 +128,19 @@ namespace needHelp.LearningAlgorithm
             // Make cities vector
             if (cityId != null)
             {
-                citiesVec[cityId.Value] = 1; 
+                citiesVec[cityId.Value - 1] = 1; 
             }
 
             // Make types vector
             if (typeId != null)
             {
-                typesVec[typeId.Value] = 1;
+                typesVec[typeId.Value - 1] = 1;
             }
 
             // Make organization vector
             if (orgId != null)
             {
-                organizationsVec[orgId.Value] = 1;
+                organizationsVec[orgId.Value - 1] = 1;
             }
 
             if (date != null)
@@ -269,13 +270,26 @@ namespace needHelp.LearningAlgorithm
                     sumOfCurrCell += vectors.ElementAt(j)[i];
                 }
 
-                avgVector[i] = (double)(sumOfCurrCell / vectorsAmount);
+                avgVector[i] = ((double)sumOfCurrCell / (double)vectorsAmount);
             }
         }
 
-        private void CalculateDistance(Dictionary<ActivityModels, float> dict, double[] avgVector, List<int[]> activitiesVect)
+        private void CalculateDistance(Dictionary<ActivityModels, double> dict, double[] avgVector, List<int[]> activitiesVect, List<ActivityModels> activities)
         {
-            //TODO: implement...
+            // Calculate the Euclidean distance between every activity and the average vector 
+            for (int i = 0; i < activitiesVect.Count(); i++)
+            {
+                double sumOfPow = 0;
+
+                for (int j = 0; j < avgVector.Count(); j++)
+                {
+                    sumOfPow += Math.Pow((avgVector[j] - activitiesVect[i][j]), 2);
+                }
+
+                double currDistance = Math.Sqrt(sumOfPow);
+
+                dict.Add(activities.ElementAt(i), currDistance);
+            }
         }
     }
 }
