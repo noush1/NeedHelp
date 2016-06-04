@@ -15,7 +15,7 @@
     <script src="http://code.jquery.com/jquery-1.12.3.min.js"></script>
     <script src="~/Scripts/bootstrap-datepicker.js"></script>
     <script src="~/Scripts/jquery-ui.min.js"></script>
-
+    <script src="~/Scripts/Trail.js"></script>
     
 
 
@@ -25,6 +25,7 @@
     @Scripts.Render("~/bundles/jquery")
 </head>
 <body>
+    <canvas id='world' style="pointer-events:none; background-color: rgba(158, 167, 184, 0.0);position:fixed; top:0;left:0;z-index:-1;"></canvas>
 
     <div dir="rtl" class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
@@ -131,7 +132,7 @@
 
     <div class="container body-content">
         @RenderBody()
-        <hr />
+
         <footer>
             <p>&copy; @DateTime.Now.Year</p>
         </footer>
