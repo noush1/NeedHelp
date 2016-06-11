@@ -6,7 +6,7 @@
 
 @section scripts{
     <script src="~/Scripts/angular.js">
-</script>
+    </script>
     <script src="~/Scripts/bootstrap-datepicker.js">
 
     </script>
@@ -17,67 +17,67 @@
 <div dir="rtl">
     <h2>פעילויות</h2>
 
-@if (User.IsInRole(roleType.admin.ToString()) || User.IsInRole(roleType.organization.ToString()))
-{
-    <p>
-        @Html.ActionLink("צור פעילות", "Create")
-    </p>
-}
+    @if (User.IsInRole(roleType.admin.ToString()) || User.IsInRole(roleType.organization.ToString()))
+    {
+        <p>
+            @Html.ActionLink("צור פעילות", "Create")
+        </p>
+    }
     @if (User.IsInRole(roleType.admin.ToString()))
     {
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.city.name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.organizationId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.address)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.date)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.description)
-            </th>
-            <th></th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
+        <table class="table">
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.city.name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.org.name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.address)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.date)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.description)
-                </td>
-                <td>
-                    @Html.ActionLink("עריכה", "Edit", new { id = item.id }) |
-                    @Html.ActionLink("פרטים", "Details", new { id = item.id }) |
-                    @Html.ActionLink("מחיקה", "Delete", new { id = item.id })
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.city.name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.organizationId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.address)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.date)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.description)
+                </th>
+                <th></th>
             </tr>
-        }
 
-    </table>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.city.name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.org.name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.address)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.date)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.description)
+                    </td>
+                    <td>
+                        @Html.ActionLink("עריכה", "Edit", new { id = item.id }) |
+                        @Html.ActionLink("פרטים", "Details", new { id = item.id }) |
+                        @Html.ActionLink("מחיקה", "Delete", new { id = item.id })
+                    </td>
+                </tr>
+            }
+
+        </table>
     }
 
     <div class="SearchColumn divOpacity" style="border:solid; border-radius:10px; padding:10px; width:94%">
@@ -117,20 +117,20 @@
     <div class="container marketing">
 
         <div dir="rtl" class="row">
-                                    @foreach (var item in Model)
-                                    {
-                                        <div class="col-xs-6 col-lg-4 pull-right divOpacity" style="border:solid; border-radius:10px; margin:10px; width:30%; ">
-                                            <p>
-                                                @if (item.type.imagePath != String.Empty)
-                                                {
-                                                    <img class="img-circle" style="width:60px; height:60px; margin:2px" src="~/Images/Types/@Html.DisplayFor(modelItem => item.type.imagePath)" />
-                                                }
-                                                <label style="font-size:30px; cursor:pointer; color: orange;" onclick="showDetailsDialog(this)" id="linkto_@item.id">@Html.DisplayFor(modelItem => item.name)</label>
-                                            </p>
-                                            <p>מארגן: @Html.DisplayFor(modelItem => item.org.name)</p>
-                                            <p>מיקום: @Html.DisplayFor(modelItem => item.city.name) @Html.DisplayFor(modelItem => item.address)</p>
-                                            <p>תאריך: @Html.DisplayFor(modelItem => item.date)</p>
-                                        </div><!--/span-->
+            @foreach (var item in Model)
+            {
+                <div class="col-xs-6 col-lg-4 pull-right" style="border:solid; border-radius:10px; margin:10px; width:30%; background: rgba(255, 255, 102, 1.0);">
+                    <p>
+                        @if (item.type.imagePath != String.Empty)
+                        {
+                            <img class="img-circle" style="width:60px; height:60px; margin:2px" src="~/Images/Types/@Html.DisplayFor(modelItem => item.type.imagePath)" />
+                        }
+                        <label style="font-size:30px; cursor:pointer; color: #cc3300;" onclick="showDetailsDialog(this)" id="linkto_@item.id">@Html.DisplayFor(modelItem => item.name)</label>
+                    </p>
+                    <p>מארגן: @Html.DisplayFor(modelItem => item.org.name)</p>
+                    <p>מיקום: @Html.DisplayFor(modelItem => item.city.name) @Html.DisplayFor(modelItem => item.address)</p>
+                    <p>תאריך: @Html.DisplayFor(modelItem => item.date)</p>
+                </div><!--/span-->
             }
 
         </div><!--/row-->
@@ -141,7 +141,7 @@
     <!--
     <table class="table table-striped">
         <tr ng-repeat="activity in activityList">
-            
+
         </tr>
     </table>
         -->
@@ -163,7 +163,7 @@
             height: 'auto',
             width: 500,
             modal: true,
-        
+
             open: function () {
                 var link_id = $("#myDialogContent").data('param_1');
                 var only_id = link_id.replace("linkto_", "");

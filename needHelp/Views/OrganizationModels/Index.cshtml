@@ -69,15 +69,15 @@
     <div dir="rtl" class="row">
                     @foreach (var item in Model)
                     {
-                        <div class="col-xs-6 col-lg-4 pull-right" style="border:solid; border-radius:10px; margin:10px; width:30%">
-                            
-                            <label style="font-size:30px; cursor:pointer; color: orange;" onclick="showDetailsDialog(this)" id="linkto_@item.id">@Html.DisplayFor(modelItem => item.name)</label>
+                        <div class="col-xs-6 col-lg-4 pull-right" style="background: rgba(255, 255, 102, 0.7); border:solid; border-radius:10px; margin:10px; width:30%">
+
+                            <label style="font-size:30px; cursor:pointer; color: #cc3300;" onclick="showDetailsDialog(this)" id="linkto_@item.id">@Html.DisplayFor(modelItem => item.name)</label>
                             @*<p>איש קשר: @Html.DisplayFor(modelItem => item.contactName)</p>*@
                             @*<p>טלפון: @Html.DisplayFor(modelItem => item.contactPhone)</p>*@
                             <p>דואר אלקטרוני: @Html.DisplayFor(modelItem => item.email)</p>
                             <p>אתר אינטרנט: @Html.DisplayFor(modelItem => item.website)</p>
                         </div>
-        }
+                    }
 
     </div>
 

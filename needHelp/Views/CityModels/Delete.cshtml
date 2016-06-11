@@ -9,21 +9,12 @@
     {
         <h2>מחיקת עיר</h2>
 
-        <h3>האם הינך בטוח כי ברצונך למחוק אלמנט זה?</h3>
-        <div>
+        <h3>האם הינך בטוח כי ברצונך למחוק עיר זו?</h3>
             <hr />
-            <dl class="dl-horizontal">
-                <dt>
-                    @Html.DisplayNameFor(model => model.name)
-                </dt>
+        @Html.Label("עיר:", "עיר:", new { style = "width:50px; height:30px; display:inline-block; " })
+        @Html.DisplayFor(model => model.name)
 
-                <dd>
-                    @Html.DisplayFor(model => model.name)
-                </dd>
-
-            </dl>
-
-            @using (Html.BeginForm())
+            using (Html.BeginForm())
             {
                 @Html.AntiForgeryToken()
 
@@ -31,7 +22,6 @@
                     <input type="submit" value="Delete" class="btn btn-default" /> |
                 </div>
             }
-        </div>
     }
     else
     {

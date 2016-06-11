@@ -16,46 +16,6 @@
     }
 </div>
 
-@if (Model.org_activities.Count != 0)
-{
-    List<UserRequestModels> deletedRequests = new List<UserRequestModels>();
-    foreach (var activity in Model.org_activities)
-    {
-        foreach (var request in activity.requests)
-        {
-            if (request.isDeletedByUser && request.isAccepted)
-            {
-                deletedRequests.Add(request);
-            }
-        }
-    }
-
-    if (deletedRequests.Count() > 1)
-    {
-        ViewBag.requestsToDelete = deletedRequests;
-        string alertString = "מספר מתנדבים ביטלו את השתתפותם מפעילויות האירגון: ";
-        foreach (UserRequestModels request in deletedRequests)
-        {
-            alertString = alertString + "\\n " + request.volunteer.firstName + " " + request.volunteer.lastName + " - " + request.activity.name;
-        }
-        //<p onload="showAlert(''@alertString'')" />
-        @*<script language="JavaScript">
-            if (window.confirm("@alertString")) {
-                @Html.Action("Index");
-            }
-        </script>*@
-    }
-    else if (deletedRequests.Count == 1)
-    {
-        string alertString = "המתנדב " + deletedRequests.First().volunteer.firstName + " " + deletedRequests.First().volunteer.lastName
-            + " ביטל את השתתפות בפעילות " + deletedRequests.First().activity.name;
-
-        <script language="JavaScript">
-            alert("@alertString");
-        </script>
-    }
-}
-
 <div id="myDialogContent" dir ="rtl" title="פרטי פעילות"></div>
 <div id="AcceptRejectDialog" dir="rtl" title="תגובה למתנדב"></div>
 
@@ -90,13 +50,13 @@
                 {
                     @Html.Raw("<div  class='row vcenterdiv' style='height:200px;'><br /><br /><br />");
                 }
-                <div onclick="showVolunteersById(activity_@item.id)" id="activity_@item.id" dir="rtl" class="col-md-3 col-xs-6 col-lg-4 pull-left vcenterdiv" style="border:solid; border-radius:10px;height:60%; width:32%; left:30px; margin-left:5px; overflow:hidden;">
+                <div onclick="showVolunteersById(activity_@item.id)" id="activity_@item.id" dir="rtl" class="col-md-3 col-xs-6 col-lg-4 pull-right vcenterdiv" style="border:solid; border-radius:10px;height:60%; width:32%; margin-left:5px; overflow:hidden; background: rgba(255, 255, 102, 0.7);">
                     <p>
                         @if (item.type.imagePath != String.Empty)
                         {
                             <img class="img-circle" style="width:60px; height:60px; margin:2px" src="~/Images/Types/@Html.DisplayFor(modelItem => item.type.imagePath)" />
                         }
-                        <label style="font-size:30px; cursor:pointer; color: orange;" onclick="showDetailsDialog(this)" id="linkto_@item.id">@Html.DisplayFor(modelItem => item.name)</label>
+                        <label style="font-size:30px; cursor:pointer; color: #cc3300;" onclick="showDetailsDialog(this)" id="linkto_@item.id">@Html.DisplayFor(modelItem => item.name)</label>
                     </p>
                     <p>מארגן: @Html.DisplayFor(modelItem => item.org.name)</p>
                     <p>מיקום: @Html.DisplayFor(modelItem => item.city.name) @Html.DisplayFor(modelItem => item.address)</p>
@@ -241,8 +201,8 @@
 
 <div dir="rtl">
 
-    <table dir="rtl" class="table" id="requests_table">
-        <tr style ="font-weight:bold">
+    <table dir="rtl" class="table" id="requests_table" style="background: rgba(255, 255, 102, 0.6);">
+        <tr style ="font-weight:bold; font-size:medium">
             <td>
                 שם פרטי
             </td>
@@ -263,7 +223,7 @@
             foreach (var request in activity.requests)
             {
                 request_count_for_activity++;
-                <tr id="volunteers_activity_@String.Concat(activity.id, "vol" + request_count_for_activity)" class="activityassign text-right volunteers_activity_@activity.id">
+                <tr id="volunteers_activity_@String.Concat(activity.id, "vol" + request_count_for_activity)" class="activityassign text-right volunteers_activity_@activity.id" style="font-size:medium">
                     <td>
                         @Html.DisplayFor(modelItem => request.volunteer.firstName)
                     </td>
@@ -286,6 +246,9 @@
 
     <p id="no_requests_received" style="display:none; text-align:center; font-size:2vw; font-weight:bold;">
         טרם התקבלו בקשות הרשמה לפעילות זו
+    </p>
+    <p id="init_panel" style="display:none; text-align:center; font-size:2vw; font-weight:bold;">
+        לחצו על פעילות ואשרו הרשמת מתנדבים
     </p>
 </div>
 
@@ -365,6 +328,8 @@
 </script>
 <script type="text/JavaScript">
     jQuery(document).ready(function ($) {
+        initView();
+
         $('div.chooseActivity').init(function () {
             $('.activityassign').hide();
         });
@@ -418,10 +383,17 @@
     function sendRespond(obj) {
         jQuery('#AcceptRejectDialog').data('param_1', obj.id).dialog('open');
     }
+
+    function initView() {
+        document.getElementById('requests_table').style.display = "none";
+        document.getElementById('init_panel').style.display = "";
+    }
+
     function showVolunteersById(obj) {
         $('.activityassign').hide();
         // check to see if there is atleast one volunteer request for it.
         var request = document.getElementById("volunteers_" + obj.id + "vol1");
+        document.getElementById('init_panel').style.display = "none";
 
         if (request != null)
         {
@@ -434,13 +406,6 @@
             document.getElementById('requests_table').style.display = "none";
             document.getElementById('no_requests_received').style.display = "";
         }
-    }
-    function showAlert(str) {
-        if (window.confirm(str)) {
-            @Html.Action("Index");
-            return true;
-        }
-        return false;
     }
 
 </script>

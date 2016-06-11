@@ -4,30 +4,44 @@
     ViewBag.Title = "ערים";
 }
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.name)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.name)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.id })
-        </td>
-    </tr>
+<style type="text/css">
+    a.nounderline{text-decoration: none; 
 }
+    span.hovercolor {
+        font-size: 30px;
+        cursor: pointer;
+        color: #cc3300;
+    }
+</style>
 
-</table>
+<center>
+    <div dir="rtl">
+        <p>
+            <a class="nounderline" href="@Url.Action("Create", "CityModels")"><span class="hovercolor">יצירת עיר</span></a>
+        </p>
+        <div style="width:50%; border:solid; border-radius:10px; border-color:orange; background: rgba(255, 255, 102, 0.6);">
+            <table border="0" cellpadding="0" cellspacing="0" dir="rtl" class="table">
+                <tr style="font-weight:bold; font-size:medium; border-style:hidden">
+                    <td>
+                        @Html.DisplayNameFor(model => model.name)
+                    </td>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr style="border-style:hidden">
+                        <td width="20%">
+                            @Html.DisplayFor(modelItem => item.name)
+                        </td>
+                        <td align="center">
+                            @Html.ActionLink("עריכה", "Edit", new { id = item.id }) |
+                            @Html.ActionLink("פרטים", "Details", new { id = item.id }) |
+                            @Html.ActionLink("מחיקה", "Delete", new { id = item.id })
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+    </div>
+</center>

@@ -25,6 +25,7 @@
     @Scripts.Render("~/bundles/jquery")
 </head>
 <body>
+    <img id="bgimage" />
     <canvas id='world' style="pointer-events:none; background-color: rgba(158, 167, 184, 0.0);position:fixed; top:0;left:0;z-index:-1;"></canvas>
 
     <div dir="rtl" class="navbar navbar-inverse navbar-fixed-top">
@@ -46,7 +47,7 @@
                         <li>@Html.ActionLink("סוגים", "Index", "HelpTypeModels")</li>
                         <li>@Html.ActionLink("ערים", "Index", "CityModels")</li>
                     }
-                    
+
 
                     <li>@Html.ActionLink("אירגונים", "Index", "OrganizationModels")</li>
 
@@ -97,7 +98,7 @@
                     }
 
                     <li>@Html.ActionLink("דף הבית", "Index", "Home")</li>
-                    
+
                     @if (!User.Identity.Name.IsEmpty())
                     {
                         if (User.IsInRole(roleType.organization.ToString()))
@@ -134,7 +135,7 @@
         @RenderBody()
 
         <footer>
-            <p>&copy; @DateTime.Now.Year</p>
+            
         </footer>
     </div>
 
