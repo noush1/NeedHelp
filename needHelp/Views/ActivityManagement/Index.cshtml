@@ -20,12 +20,19 @@
 {
     <script>
 
-        function confirmRequestDelete() {
-            if (confirm())
-                window.location.href = "ActivityManagement/RemoveRequest";
-            else
-                return false;
+    function confirmRequestDelete() {
+        if (confirm('@ViewBag.alertString'))
+        {
+            $.ajax({
+                type: 'POST',
+                url: 'ActivityManagement/RemoveRequest'
+            });
         }
+        else
+        {
+            return false;
+        } 
+    }
     </script>
 }
 
@@ -409,13 +416,6 @@
             document.getElementById('requests_table').style.display = "none";
             document.getElementById('no_requests_received').style.display = "";
         }
-    }
-    function showAlert(str) {
-        if (window.confirm(str)) {
-            @Html.Action("Index");
-            return true;
-        }
-        return false;
     }
 
 </script>

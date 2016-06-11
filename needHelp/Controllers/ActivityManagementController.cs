@@ -221,7 +221,7 @@ namespace needHelp.Controllers
                 db.SaveChanges();
 
                 // return Index
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "ActivityManagement");
             }
             else
             {
