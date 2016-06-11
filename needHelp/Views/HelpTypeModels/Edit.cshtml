@@ -3,7 +3,17 @@
 @{
     ViewBag.Title = "עריכת סוג התנדבות";
 }
+<style type="text/css">
+    a.nounderline {
+        text-decoration: none;
+    }
 
+    span.hovercolor {
+        font-size: 20px;
+        cursor: pointer;
+        color: #cc3300;
+    }
+</style>
 <div dir="rtl">
     @if (User.IsInRole(roleType.admin.ToString()))
     {
@@ -49,6 +59,6 @@
     }
 
     <div>
-        @Html.ActionLink("חזרה", "Index")
+        <a class="nounderline" href="@Url.Action("Index", "HelpTypeModels")"><span class="hovercolor">חזרה</span></a>
     </div>
 </div>

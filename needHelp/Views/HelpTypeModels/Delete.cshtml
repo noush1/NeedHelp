@@ -3,41 +3,42 @@
 @{
     ViewBag.Title = "מחיקת סוג התנדבות";
 }
+<style type="text/css">
+    a.nounderline {
+        text-decoration: none;
+    }
 
+    span.hovercolor {
+        font-size: 20px;
+        cursor: pointer;
+        color: #cc3300;
+    }
+</style>
 <div dir="rtl">
     @if (User.IsInRole(roleType.admin.ToString()))
     {
         <h2>מחיקת סוג פעילות</h2>
 
-    <h3>האם הינך בטוח כי ברצונך למחוק אלמנט זה?</h3>
+    <h3>האם הינך בטוח כי ברצונך למחוק סוג זה?</h3>
         <div>
-            <hr />
-            <dl class="dl-horizontal">
-                <dt>
-                    @Html.DisplayNameFor(model => model.typeName)
-                </dt>
-
-                <dd>
+            <div dir="rtl" class="dl-horizontal">
+                <div>
+                    @Html.Label("סוג:", "סוג:", new { style = "width:100px; height:30px; display:inline-block; " })
                     @Html.DisplayFor(model => model.typeName)
-                </dd>
+                </div>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.imagePath)
-                </dt>
-
-                <dd>
+                <div>
+                    @Html.Label("נתיב תמונה:", "נתיב תמונה:", new { style = "width:100px; height:30px; display:inline-block; " })
                     @Html.DisplayFor(model => model.imagePath)
-                </dd>
-
-            </dl>
+                </div>
+            </div>
 
             @using (Html.BeginForm())
             {
                 @Html.AntiForgeryToken()
 
                 <div class="form-actions no-color">
-                    <input type="submit" value="Delete" class="btn btn-default" /> |
-                    @Html.ActionLink("Back to List", "Index")
+                    <input type="submit" value="מחיקה" class="btn btn-default" /> 
                 </div>
             }
         </div>
@@ -47,5 +48,5 @@
         <br /><br />
         <p><h3>אין ברשותך הרשאות מתאימות לצפייה בעמוד זה</h3></p>
     }
-
+    <a class="nounderline" href="@Url.Action("Index", "HelpTypeModels")"><span class="hovercolor">חזרה</span></a>
 </div>

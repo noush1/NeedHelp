@@ -3,7 +3,17 @@
 @{
     ViewBag.Title = "עריכת עיר";
 }
+<style type="text/css">
+    a.nounderline {
+        text-decoration: none;
+    }
 
+    span.hovercolor {
+        font-size: 20px;
+        cursor: pointer;
+        color: #cc3300;
+    }
+</style>
 <div dir="rtl">
     @if (User.IsInRole(roleType.admin.ToString()))
     {
@@ -23,7 +33,7 @@
                     </div>
 
                     <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Save" class="btn btn-default" />
+                        <input type="submit" value="שמור שינויים" class="btn btn-default" />
                     </div>
             </div>
         }
@@ -34,6 +44,6 @@
         <p><h3>אין ברשותך הרשאות מתאימות לצפייה בעמוד זה</h3></p>
     }
     <div>
-        @Html.ActionLink("חזרה", "Index")
+        <a class="nounderline" href="@Url.Action("Index", "CityModels")"><span class="hovercolor">חזרה</span></a>
     </div>
 </div>
