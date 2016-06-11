@@ -16,44 +16,17 @@
     }
 </div>
 
-@if (Model.org_activities.Count != 0)
+@if (ViewBag.alertString != null)
 {
-    List<UserRequestModels> deletedRequests = new List<UserRequestModels>();
-    foreach (var activity in Model.org_activities)
-    {
-        foreach (var request in activity.requests)
-        {
-            if (request.isDeletedByUser && request.isAccepted)
-            {
-                deletedRequests.Add(request);
-            }
-        }
-    }
+    <script>
 
-    if (deletedRequests.Count() > 1)
-    {
-        ViewBag.requestsToDelete = deletedRequests;
-        string alertString = "מספר מתנדבים ביטלו את השתתפותם מפעילויות האירגון: ";
-        foreach (UserRequestModels request in deletedRequests)
-        {
-            alertString = alertString + "\\n " + request.volunteer.firstName + " " + request.volunteer.lastName + " - " + request.activity.name;
+        function confirmRequestDelete() {
+            if (confirm())
+                window.location.href = "ActivityManagement/RemoveRequest";
+            else
+                return false;
         }
-        //<p onload="showAlert(''@alertString'')" />
-        @*<script language="JavaScript">
-            if (window.confirm("@alertString")) {
-                @Html.Action("Index");
-            }
-        </script>*@
-    }
-    else if (deletedRequests.Count == 1)
-    {
-        string alertString = "המתנדב " + deletedRequests.First().volunteer.firstName + " " + deletedRequests.First().volunteer.lastName
-            + " ביטל את השתתפות בפעילות " + deletedRequests.First().activity.name;
-
-        <script language="JavaScript">
-            alert("@alertString");
-        </script>
-    }
+    </script>
 }
 
 <div id="myDialogContent" dir ="rtl" title="פרטי פעילות"></div>
@@ -369,6 +342,10 @@
             $('.activityassign').hide();
         });
 
+        if ('@ViewBag.alertString' != null) {
+            confirmRequestDelete();
+        }
+
         $("#AcceptRejectDialog").dialog({
             autoOpen: false,
             height: 'auto',
@@ -423,14 +400,12 @@
         // check to see if there is atleast one volunteer request for it.
         var request = document.getElementById("volunteers_" + obj.id + "vol1");
 
-        if (request != null)
-        {
+        if (request != null) {
             document.getElementById('requests_table').style.display = "";
             document.getElementById('no_requests_received').style.display = "none";
             $('.volunteers_' + obj.id).show();
         }
-        else
-        {
+        else {
             document.getElementById('requests_table').style.display = "none";
             document.getElementById('no_requests_received').style.display = "";
         }
