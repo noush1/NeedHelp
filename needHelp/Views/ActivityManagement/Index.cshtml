@@ -33,6 +33,20 @@
     }
 </div>
 
+    <script>
+    function confirmRequestDelete() {
+        if (confirm('@ViewBag.alertString'))
+        {
+            alert("got here");
+            $.post("/ActivityManagement/RemoveRequest");
+        }
+        else
+        {
+            return false;
+        } 
+    }
+    </script>
+
 <div id="myDialogContent" dir ="rtl" title="פרטי פעילות"></div>
 <div id="AcceptRejectDialog" dir="rtl" title="תגובה למתנדב"></div>
 
@@ -351,6 +365,10 @@
             $('.activityassign').hide();
         });
 
+        if ('@ViewBag.alertString') {
+            confirmRequestDelete();
+        }
+
         $("#AcceptRejectDialog").dialog({
             autoOpen: false,
             height: 'auto',
@@ -415,14 +433,12 @@
         var request = document.getElementById("volunteers_" + obj.id + "vol1");
         document.getElementById('init_panel').style.display = "none";
 
-        if (request != null)
-        {
+        if (request != null) {
             document.getElementById('requests_table').style.display = "";
             document.getElementById('no_requests_received').style.display = "none";
             $('.volunteers_' + obj.id).show();
         }
-        else
-        {
+        else {
             document.getElementById('requests_table').style.display = "none";
             document.getElementById('no_requests_received').style.display = "";
         }

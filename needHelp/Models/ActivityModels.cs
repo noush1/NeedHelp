@@ -57,4 +57,11 @@ namespace needHelp.Models
         public IEnumerable<ActivityModels> acts { get; set; }
         public IEnumerable<OrganizationModels> orgs { get; set; }
     }
+
+    public class ActivityAsEvent
+    {
+        public string title;
+        public string description;
+        public string datetime;
+    }
 }

@@ -9,12 +9,14 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.css" />
     <link rel="stylesheet" href="~/Content/Site.css" />
     <link rel="stylesheet" href="~/Content/jquery-ui.min.css" />
+    <link rel="stylesheet" href="~/Content/jquery.e-calendar.css" />
     @Styles.Render("~/Content/css")
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
     <script src="~/Scripts/script.js"></script>
     <script src="http://code.jquery.com/jquery-1.12.3.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.e-calendar.js"></script>
     <script src="~/Scripts/bootstrap-datepicker.js"></script>
     <script src="~/Scripts/jquery-ui.min.js"></script>
     <script src="~/Scripts/Trail.js"></script>
@@ -55,8 +57,8 @@
                     {
                         if (User.IsInRole(roleType.organization.ToString()))
                         {
-                            <li>@Html.ActionLink("פעילויות", "Index", "ActivityManagement")</li>
                             <li>@Html.ActionLink("יומן", "Index", "OrganizationCalendar")</li>
+                            <li>@Html.ActionLink("פעילויות", "Index", "ActivityManagement")</li>
                         }
                         else if (User.IsInRole(roleType.volunteer.ToString()) || User.IsInRole(roleType.admin.ToString()))
                         {

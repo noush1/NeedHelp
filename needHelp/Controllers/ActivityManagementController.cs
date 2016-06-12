@@ -17,21 +17,63 @@ namespace needHelp.Controllers
         // GET: ActivityManagement
         public ActionResult Index()
         {
+            bool needToUpdateDB = false;
             if (User.Identity.IsAuthenticated)
             {
                 OrganizationModels org = db.organizations.First(user => user.email.Equals(User.Identity.Name));
                 org.org_activities = org.org_activities.OrderBy(d => d.date.Ticks).ToList();
 
-                if (ViewBag.requestsToDelete != null) 
+                IQueryable<UserRequestModels> deletedRequestsByUser = from r in db.user_requests
+                                                                      where r.activity.organizationId == org.id && r.isDeletedByUser == true
+                                                                      select r;
+                ICollection<UserRequestModels> acceptedRequests = new LinkedList<UserRequestModels>();
+
+                foreach (UserRequestModels request in deletedRequestsByUser)
                 {
-                    List<UserRequestModels> requests = ViewBag.requestsToDelete;
-                    foreach (UserRequestModels requestToDelete in requests)
+                    if (request.isAccepted) 
                     {
-                        db.user_requests.Remove(requestToDelete);
+                        acceptedRequests.Add(request);
+                    }
+                    else if (!request.isAccepted) 
+                    {
+                        needToUpdateDB = true;
+                        db.user_requests.Remove(request);
+                    }
+                }
+
+                int acceptedRequestsAmount = acceptedRequests.Count();
+
+                // check if to build an alert message
+                if (acceptedRequestsAmount > 0)
+                {
+                    string alertString;
+
+                    if (acceptedRequestsAmount == 1)
+                    {
+                        UserRequestModels request = acceptedRequests.First();
+                        alertString = "המתנדב " + request.volunteer.firstName + " " + request.volunteer.lastName
+                                             + " ביטל את השתתפות בפעילות " + request.activity.name;
+                    }
+                    else
+                    {
+                        alertString = "מספר מתנדבים ביטלו את השתתפותם מפעילויות האירגון: ";
+                        foreach (UserRequestModels request in acceptedRequests)
+                        {
+                            alertString = alertString + "\\n " + request.volunteer.firstName + " " + request.volunteer.lastName + " - " + request.activity.name;
+                        }
                     }
 
-                    ViewBag.requestsToDelete = null;
-                    ViewBag.showAlert = null;
+                    ViewBag.alertString = alertString;
+                }
+                else
+                {
+                    ViewBag.alertString = null;
+                }
+                
+
+                // check if there are deleted requests from the DB
+                if (needToUpdateDB)
+                {
                     db.SaveChanges();
                 }
 
@@ -169,6 +211,30 @@ namespace needHelp.Controllers
             }
 
             return Index();
+        }
+
+        [HttpPost]
+        public ActionResult RemoveRequest()
+        {
+            ViewBag.alertString = null;
+            if (User.Identity.IsAuthenticated)
+            {
+                OrganizationModels org = db.organizations.First(user => user.email.Equals(User.Identity.Name));
+
+                if (org != null)
+                {
+                    // delete the confirmed requests
+                    db.user_requests.RemoveRange(db.user_requests.Where(r => r.activity.organizationId == org.id && r.isDeletedByUser));
+                    db.SaveChanges();
+                }
+
+                // return Index
+                return RedirectToAction("Index", "ActivityManagement");
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
     }
 }

@@ -43,7 +43,7 @@ namespace needHelp.Models
     {
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "סיסמה קודמת")]
+        [Display(Name = "סיסמה נוכחית")]
         public string OldPassword { get; set; }
 
         [Required]

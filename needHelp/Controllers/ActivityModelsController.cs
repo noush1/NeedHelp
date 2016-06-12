@@ -319,10 +319,23 @@ namespace needHelp.Controllers
             bool isAlreadySignIn = false;
             bool isDateAlert = false;
 
+            bool needToRenewRequest = false;
+            int needToRenewReqActId = 0;
+            int needToRenewReqVolId = 0;
+
             foreach (UserRequestModels message in volunteer.messages) {
                 if (id == message.activityId)
                 {
-                    isAlreadySignIn = true;
+                    if (message.isDeletedByUser && !message.isDeletedByOrganization)
+                    {
+                        needToRenewRequest = true;
+                        needToRenewReqActId = message.activityId;
+                        needToRenewReqVolId = message.volunteerId;
+                    }
+                    else 
+                    {
+                       isAlreadySignIn = true;
+                    }
                 }
                 else if (message.activity.date.Date.Equals(newActivity.date.Date))
                 {
@@ -330,8 +343,21 @@ namespace needHelp.Controllers
                 }
             }
 
+            if(needToRenewRequest)
+            {
+                UserRequestModels requestMsg = db.user_requests.Find(needToRenewReqVolId,needToRenewReqActId);
+                if (requestMsg == null)
+                {
+                    return HttpNotFound();
+                }
+
+                requestMsg.isDeletedByUser = false;
+                db.Entry(requestMsg).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+
             // SignIn to new activity
-            if (!isAlreadySignIn)
+            if (!isAlreadySignIn && !needToRenewRequest)
             {
                 // check if volunteer is confirmed by the organization of new activity, if not send a request to organization
                 TrustedUserModels trusted = new TrustedUserModels();

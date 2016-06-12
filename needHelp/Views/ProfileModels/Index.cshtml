@@ -21,38 +21,48 @@
     <div dir="rtl" class="row">
         <h3>הודעות:</h3>
         @if (Model.messages.Count != 0)
-        {            
+        {
+            int amount_of_seen_messages = 0;
             foreach (var item in Model.messages)
-            {
-                <div class="col-xs-6 col-lg-4 pull-right" style="background: rgba(255, 255, 102, 0.7); border: solid; border-radius: 10px; margin: 10px; width: 30%">
-                    <p>
-                        @if (item.activity.type.imagePath != String.Empty)
+            {     
+                if (!item.isDeletedByUser)
+                {
+                    amount_of_seen_messages++;
+                    <div class="col-xs-6 col-lg-4 pull-right" style="background: rgba(255, 255, 102, 0.7); border: solid; border-radius: 10px; margin: 10px; width: 30%">
+                        <p>
+                            @if (item.activity.type.imagePath != String.Empty)
+                            {
+                                <img class="img-circle" style="width: 60px; height: 60px; margin: 2px" src="~/Images/Types/@item.activity.type.imagePath" />
+                            }
+                            <label style="font-size:30px; cursor:pointer; color: #cc3300;" onclick="showDetailsDialog(this)" id="linkto_@item.activity.id">@Html.DisplayFor(modelItem => item.activity.name)</label>
+                        </p>
+                        <p>תאריך פעילות: @item.activity.date</p>
+                        @if (item.isAccepted)
                         {
-                            <img class="img-circle" style="width: 60px; height: 60px; margin: 2px" src="~/Images/Types/@item.activity.type.imagePath" />
+                            <p>סטטוס בקשה: מאושר</p>
                         }
-                        <label style="font-size:30px; cursor:pointer; color: orange;" onclick="showDetailsDialog(this)" id="linkto_@item.activity.id">@Html.DisplayFor(modelItem => item.activity.name)</label>
-                    </p>
-                    <p>תאריך פעילות: @item.activity.date</p>
-                    @if (item.isAccepted)
-                    {
-                        <p>סטטוס בקשה: מאושר</p>
-                    }
-                    else if (item.isAnswered && !item.isAccepted)
-                    {
-                        <p>סטטוס בקשה: נדחה</p>
-                    }
-                    else
-                    {
-                        <p>סטטוס בקשה: טרם נענה</p>
-                    }
+                        else if (item.isAnswered && !item.isAccepted)
+                        {
+                            <p>סטטוס בקשה: נדחה</p>
+                        }
+                        else
+                        {
+                            <p>סטטוס בקשה: טרם נענה</p>
+                        }
 
-                    <p>הודעה: @Html.DisplayFor(modelItem => item.replyMessage)</p>
+                        <p>הודעה: @Html.DisplayFor(modelItem => item.replyMessage)</p>
 
-                    <p dir="ltr"> @Html.ActionLink("מחק אותי מפעילות זו", "RemoveFromActivity", new { id = Model.id, activityID = item.activityId }) </p>
+                        <p dir="ltr"> @Html.ActionLink("מחק אותי מפעילות זו", "RemoveFromActivity", new { id = Model.id, activityID = item.activityId }) </p>
 
-                </div>
+                    </div>
+                }
             }
-        } 
+
+            if (amount_of_seen_messages == 0)
+            {
+                <p>לא קיימות הודעות עבורך</p>
+            }
+        }
         else
         {
             <p>לא קיימות הודעות עבורך</p>
@@ -67,11 +77,11 @@
         {
             <div class="col-xs-6 col-lg-4 pull-right" style="background: rgba(255, 255, 102, 0.7); border: solid; border-radius: 10px; margin: 10px; width: 30%; overflow: hidden;">
                 <p>
-                    @if (activity.type.imagePath!=String.Empty)
+                    @if (activity.type.imagePath != String.Empty)
                     {
                         <img class="img-circle" style="width: 60px; height: 60px; margin: 2px" src="~/Images/Types/@activity.type.imagePath" />
                     }
-                    <label style="font-size:30px; cursor:pointer; color: orange;" onclick="showDetailsDialog(this)" id="linkto_@activity.id">@activity.name</label>
+                    <label style="font-size:30px; cursor:pointer; color: #cc3300;" onclick="showDetailsDialog(this)" id="linkto_@activity.id">@activity.name</label>
                 </p>
                 @*<p>מארגן: @activity.org.name</p>*@
                 <p>מיקום: @activity.city.name @activity.address</p>
@@ -92,7 +102,7 @@
             alert("שים לב שהינך רשום ליותר מפעילות אחת ביום.");
         </script>
     }
-    
+
 </div>
 
 

@@ -17,7 +17,20 @@ namespace needHelp.Controllers
         // GET: OrganizationCalendar
         public ActionResult Index()
         {
-            return View(db.organizations.ToList());
+            List<ActivityAsEvent> events = new List<ActivityAsEvent>();
+            OrganizationModels org = db.organizations.First(user => user.email.Equals(User.Identity.Name));
+            List<ActivityModels> activities = org.org_activities.OrderBy(d => d.date.Ticks).ToList();
+
+            foreach(ActivityModels act in activities)
+            {
+                ActivityAsEvent to_add = new ActivityAsEvent();
+                to_add.title = String.Concat(act.name,"-",act.city.name);
+                to_add.description = act.description;
+                to_add.datetime = String.Format("{0:s}", act.date);
+                events.Add(to_add);
+            }
+
+            return View("Index",this.Json(events,JsonRequestBehavior.AllowGet));
         }
 
         // GET: OrganizationCalendar/Details/5

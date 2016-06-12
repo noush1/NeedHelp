@@ -1,4 +1,4 @@
-﻿@model IEnumerable<needHelp.Models.OrganizationModels>
+﻿@model System.Web.Mvc.JsonResult
 
 @{
     ViewBag.Title = "Index";
@@ -7,6 +7,22 @@
 <center>
     <div dir="rtl">
         <h2>יומן הארגון</h2>
-        <iframe src="https://calendar.google.com/calendar/embed?title=%D7%99%D7%95%D7%9E%D7%9F%20%D7%90%D7%A8%D7%92%D7%95%D7%9F%20%D7%97%D7%A1%D7%A7%D7%94&amp;showCalendars=0&amp;height=600&amp;wkst=1&amp;hl=iw&amp;bgcolor=%23ffff66&amp;ctz=Asia%2FJerusalem" style="border:solid 1px #777" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+        <!--<iframe src="https://calendar.google.com/calendar/embed?title=%D7%99%D7%95%D7%9E%D7%9F%20%D7%90%D7%A8%D7%92%D7%95%D7%9F%20%D7%97%D7%A1%D7%A7%D7%94&amp;showCalendars=0&amp;height=600&amp;wkst=1&amp;hl=iw&amp;bgcolor=%23ffff66&amp;ctz=Asia%2FJerusalem" style="border:solid 1px #777" width="800" height="600" frameborder="0" scrolling="no"></iframe> 
+        -->
+        <div id="calendar" dir="rtl"></div>   
     </div>
 </center>
+
+<script type="text/JavaScript">
+    $(document).ready(function () {
+        var x = @Html.Raw(Json.Encode(@Model.Data));
+        $('#calendar').eCalendar({
+            events: x
+        });
+
+        
+
+        
+
+    });
+</script>
