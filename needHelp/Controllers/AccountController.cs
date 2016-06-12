@@ -71,15 +71,16 @@ namespace needHelp.Controllers
                     {
                         string msg = e.Message;
                     }
-
+                    
 
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
             }
 
+            full_model.vol = model;
             // If we got this far, something failed, redisplay form
-            return View(model.StandartRegInfo);
+            return View("Register", full_model);
 
         }
 
@@ -136,8 +137,9 @@ namespace needHelp.Controllers
                 AddErrors(result);
             }
 
+            full_model.org = model;
             // If we got this far, something failed, redisplay form
-            return View(model.StandartRegInfo);
+            return View("Register", full_model);
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)

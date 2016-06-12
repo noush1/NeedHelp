@@ -55,8 +55,8 @@ namespace needHelp
             //   consumerSecret: "");
 
             //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            //   appId: "647606188728570",
+            //   appSecret: "3cc6e37a74c87ebdd33da127fca2a800");
 
             //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             //{

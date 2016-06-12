@@ -5,13 +5,30 @@
     ViewBag.Title = "Index";
 }
 
+<style type="text/css">
+    a.nounderline {
+        text-decoration: none;
+    }
+
+    span.hovercolorsmall {
+        font-size: 20px;
+        cursor: pointer;
+        color: #cc3300;
+    }
+
+    span.hovercolor {
+        font-size: 30px;
+        cursor: pointer;
+        color: #cc3300;
+    }
+</style>
 
 <div dir="rtl">
     <h2>שיבוץ פעילויות</h2>
     @if (User.IsInRole(roleType.admin.ToString()) || User.IsInRole(roleType.organization.ToString()))
     {
         <p>
-            @Html.ActionLink("צור פעילות", "Create","ActivityModels")
+            <a class="nounderline" href="@Url.Action("Create", "ActivityModels")"><span class="hovercolorsmall">צור פעילות</span></a>
         </p>
     }
 </div>
@@ -386,7 +403,10 @@
 
     function initView() {
         document.getElementById('requests_table').style.display = "none";
-        document.getElementById('init_panel').style.display = "";
+        var areThereActivities = @Json.Encode(@Model.org_activities.Any());
+        if (areThereActivities) {
+            document.getElementById('init_panel').style.display = "";
+        }
     }
 
     function showVolunteersById(obj) {

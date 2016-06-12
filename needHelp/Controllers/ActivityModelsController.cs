@@ -97,7 +97,18 @@ namespace needHelp.Controllers
         {
             if (ModelState.IsValid)
             {
-                activityModels.org = db.organizations.Find(activityModels.organizationId);
+                OrganizationModels current_org;
+                if (User.IsInRole(roleType.organization.ToString()))
+                {
+                    current_org = db.organizations.FirstOrDefault(i => i.email.Equals(User.Identity.Name));
+                }
+                else
+                {
+                    current_org = db.organizations.Find(activityModels.organizationId);
+                }
+
+                activityModels.org = current_org;
+                activityModels.city = db.cities.Find(activityModels.cityId);
                 activityModels.type = db.help_types.Find(activityModels.typeId);
                 db.activities.Add(activityModels);
                 db.SaveChanges();
@@ -144,9 +155,17 @@ namespace needHelp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "id,name,organizationId,address,cityId,date,typeId,description")] ActivityModels activityModels)
         {
-            if (ModelState.IsValid)
+            if (User.IsInRole(roleType.organization.ToString()))
+            {
+                activityModels.org = db.organizations.FirstOrDefault(i => i.email.Equals(User.Identity.Name));
+            }
+            else
             {
                 activityModels.org = db.organizations.Find(activityModels.organizationId);
+            }
+
+            if (ModelState.IsValid)
+            {
                 activityModels.type = db.help_types.Find(activityModels.typeId);
                 db.Entry(activityModels).State = EntityState.Modified;
                 db.SaveChanges();
@@ -160,6 +179,7 @@ namespace needHelp.Controllers
                     return RedirectToAction("Index");
                 }
             }
+
             ViewBag.cityId = new SelectList(db.cities, "id", "name", activityModels.cityId);
             ViewBag.organizationId = new SelectList(db.organizations, "id", "name", activityModels.organizationId);
             ViewBag.typeId = new SelectList(db.help_types, "id", "typeName", activityModels.typeId);

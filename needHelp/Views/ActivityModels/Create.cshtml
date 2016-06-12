@@ -3,7 +3,17 @@
 @{
     ViewBag.Title = "יצירת פעילות";
 }
+<style type="text/css">
+    a.nounderline {
+        text-decoration: none;
+    }
 
+    span.hovercolor {
+        font-size: 20px;
+        cursor: pointer;
+        color: #cc3300;
+    }
+</style>
 <div dir="rtl">
     @if (User.IsInRole(roleType.admin.ToString()) || User.IsInRole(roleType.organization.ToString()))
     {
@@ -25,6 +35,7 @@
                     </div>
                 </div>
 
+                @if (User.IsInRole(roleType.admin.ToString())) {
                 <div class="form-group">
                     @Html.Label("מארגן:", "מארגן:", new { style = "width:150px; height:30px; display:inline-block; " })
                     <div class="col-md-10">
@@ -32,6 +43,11 @@
                         @Html.ValidationMessageFor(model => model.organizationId, "", new { @class = "text-danger" })
                     </div>
                 </div>
+                }
+                else
+                {
+                    @Html.Hidden("organizationId", 1);
+                }
 
                 <div class="form-group">
                     @Html.Label("כתובת:", "כתובת:", new { style = "width:150px; height:30px; display:inline-block; " })
@@ -78,11 +94,8 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <div>
-                        <input type="submit" value="צור" class="btn btn-default" />
-                    </div>
-                </div>
+                 <input type="submit" value="צור" class="btn btn-default" />
+                 
             </div>
         }
     }
@@ -94,14 +107,10 @@
 
 @if (User.IsInRole(roleType.organization.ToString()))
 {
-    <div dir="ltr">
-        @Html.ActionLink("חזרה לרשימה", "Index","ActivityManagement")
-    </div>
+    <a class="nounderline" href="@Url.Action("Index", "ActivityManagement")"><span class="hovercolor">חזרה</span></a>
 }
 else
 {
-    <div dir="ltr">
-        @Html.ActionLink("חזרה לרשימה", "Index")
-    </div>
+    <a class="nounderline" href="@Url.Action("Index", "ActivityModels")"><span class="hovercolor">חזרה</span></a>
 }
 </div>

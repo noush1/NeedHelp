@@ -125,22 +125,30 @@ namespace needHelp.LearningAlgorithm
             int[] dayPartsVec = new int[_dayPartsAmount];
             int[] daysVec = new int[_daysAmount];
 
-            // Make cities vector
-            if (cityId != null)
+            try
             {
-                citiesVec[cityId.Value - 1] = 1; 
-            }
+                // Make cities vector
+                if (cityId != null)
+                {
+                    citiesVec[cityId.Value - 1] = 1;
+                }
 
-            // Make types vector
-            if (typeId != null)
-            {
-                typesVec[typeId.Value - 1] = 1;
-            }
+                // Make types vector
+                if (typeId != null)
+                {
+                    typesVec[typeId.Value - 1] = 1;
+                }
 
-            // Make organization vector
-            if (orgId != null)
+                // Make organization vector
+                if (orgId != null)
+                {
+                    organizationsVec[orgId.Value - 1] = 1;
+                }
+            }
+            catch(Exception e)
             {
-                organizationsVec[orgId.Value - 1] = 1;
+                // an error accured, most likely because search data wasnt deleted for cities/types that were deleted.
+                // TODO : make sure search records are deleted for deleted pro
             }
 
             if (date != null)

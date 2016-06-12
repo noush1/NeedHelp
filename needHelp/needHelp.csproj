@@ -200,6 +200,7 @@
     <Compile Include="Controllers\HelpTypeModelsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\OrganizationCalendarController.cs" />
     <Compile Include="Controllers\OrganizationModelsController.cs" />
     <Compile Include="Controllers\OrgProfileModelsController.cs" />
     <Compile Include="Controllers\ProfileModelsController.cs">
@@ -305,6 +306,7 @@
     <Content Include="Images\NuphPic.jpg" />
     <Content Include="Images\Types\animals.png" />
     <Content Include="Images\Types\food.png" />
+    <Content Include="Images\Types\help_old.png" />
     <Content Include="Images\Types\learning.png" />
     <Content Include="obj\Release\CSAutoParameterize.parameters.xml" />
     <Content Include="obj\Release\needHelp.csproj.FileListAbsolute.txt" />
@@ -2342,6 +2344,11 @@
     <Content Include="Views\ActivityManagement\Edit.cshtml" />
     <Content Include="Views\ActivityManagement\Index.cshtml" />
     <Content Include="Views\UserRequestModels\SendRespond.cshtml" />
+    <Content Include="Views\OrganizationCalendar\Create.cshtml" />
+    <Content Include="Views\OrganizationCalendar\Delete.cshtml" />
+    <Content Include="Views\OrganizationCalendar\Details.cshtml" />
+    <Content Include="Views\OrganizationCalendar\Edit.cshtml" />
+    <Content Include="Views\OrganizationCalendar\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App\Activity\ViewModels\" />

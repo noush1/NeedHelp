@@ -3,7 +3,17 @@
 @{
     ViewBag.Title = "עריכת פעילות";
 }
+<style type="text/css">
+    a.nounderline {
+        text-decoration: none;
+    }
 
+    span.hovercolor {
+        font-size: 20px;
+        cursor: pointer;
+        color: #cc3300;
+    }
+</style>
 <div dir="rtl">
     @if (User.IsInRole(roleType.admin.ToString()) || (User.IsInRole(roleType.organization.ToString()) && User.Identity.Name.Equals(Model.org.email)))
     {
@@ -26,13 +36,20 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    @Html.Label("מארגן:", "מארגן:", new { style = "width:150px; height:30px; display:inline-block; " })
-                    <div class="col-md-10">
-                        @Html.DropDownList("organizationId", null, htmlAttributes: new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.organizationId, "", new { @class = "text-danger" })
+                @if (User.IsInRole(roleType.admin.ToString()))
+                {
+                    <div class="form-group">
+                        @Html.Label("מארגן:", "מארגן:", new { style = "width:150px; height:30px; display:inline-block; " })
+                        <div class="col-md-10">
+                            @Html.DropDownList("organizationId", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.organizationId, "", new { @class = "text-danger" })
+                        </div>
                     </div>
-                </div>
+                }
+                else
+                {
+                    @Html.Hidden("organizationId", 1);
+                }
 
                 <div class="form-group">
                     @Html.Label("כתובת:", "כתובת:", new { style = "width:150px; height:30px; display:inline-block; " })
@@ -73,12 +90,7 @@
                         @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
                     </div>
                 </div>
-
-                <div class="form-group">
-                    <div>
-                        <input type="submit" value="שמור" class="btn btn-default" />
-                    </div>
-                </div>
+                <input type="submit" value="שמור" class="btn btn-default" />
             </div>
         }
     }
@@ -88,16 +100,12 @@
         <p><h3>אין ברשותך הרשאות מתאימות לצפייה בעמוד זה</h3></p>
     }
 
-    @if (User.IsInRole(roleType.organization.ToString()))
-    {
-    <div dir="ltr">
-        @Html.ActionLink("חזרה לרשימה", "Index", "ActivityManagement")
-    </div>
-    }
-    else
-    {
-    <div dir="ltr">
-        @Html.ActionLink("חזרה לרשימה", "Index")
-    </div>
-    }
+   @if (User.IsInRole(roleType.organization.ToString()))
+   {
+    <a class="nounderline" href="@Url.Action("Index", "ActivityManagement")"><span class="hovercolor">חזרה</span></a>
+   }
+   else
+   {
+    <a class="nounderline" href="@Url.Action("Index", "ActivityModels")"><span class="hovercolor">חזרה</span></a>
+   }
 </div>

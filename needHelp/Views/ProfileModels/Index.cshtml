@@ -24,7 +24,7 @@
         {            
             foreach (var item in Model.messages)
             {
-                <div class="col-xs-6 col-lg-4 pull-right" style="border: solid; border-radius: 10px; margin: 10px; width: 30%">
+                <div class="col-xs-6 col-lg-4 pull-right" style="background: rgba(255, 255, 102, 0.7); border: solid; border-radius: 10px; margin: 10px; width: 30%">
                     <p>
                         @if (item.activity.type.imagePath != String.Empty)
                         {
@@ -65,7 +65,7 @@
         <h3>פעילויות מומלצות:</h3>
         @foreach (var activity in ViewBag.sugestedActivities)
         {
-            <div class="col-xs-6 col-lg-4 pull-right" style="border: solid; border-radius: 10px; margin: 10px; width: 30%; overflow: hidden;">
+            <div class="col-xs-6 col-lg-4 pull-right" style="background: rgba(255, 255, 102, 0.7); border: solid; border-radius: 10px; margin: 10px; width: 30%; overflow: hidden;">
                 <p>
                     @if (activity.type.imagePath!=String.Empty)
                     {

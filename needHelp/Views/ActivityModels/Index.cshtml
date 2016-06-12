@@ -13,14 +13,28 @@
 
 
 }
-
+<style type="text/css">
+    a.nounderline {
+        text-decoration: none;
+    }
+    span.hovercolorsmall {
+        font-size: 20px;
+        cursor: pointer;
+        color: #cc3300;
+    }
+    span.hovercolor {
+        font-size: 30px;
+        cursor: pointer;
+        color: #000000;
+    }
+</style>
 <div dir="rtl">
     <h2>פעילויות</h2>
 
     @if (User.IsInRole(roleType.admin.ToString()) || User.IsInRole(roleType.organization.ToString()))
     {
         <p>
-            @Html.ActionLink("צור פעילות", "Create")
+            <a class="nounderline" href="@Url.Action("Create", "ActivityModels")"><span class="hovercolorsmall">צור פעילות</span></a>
         </p>
     }
     @if (User.IsInRole(roleType.admin.ToString()))
@@ -114,12 +128,14 @@
        ================================================== -->
     <!-- Wrap the rest of the page in another container to center all the content. -->
 
+    
     <div class="container marketing">
-
+@if (Model.Any())
+{
         <div dir="rtl" class="row">
             @foreach (var item in Model)
             {
-                <div class="col-xs-6 col-lg-4 pull-right" style="border:solid; border-radius:10px; margin:10px; width:30%; background: rgba(255, 255, 102, 1.0);">
+                <div class="col-xs-6 col-lg-4 pull-right" style="border:solid; border-radius:10px; margin:10px; width:30%; background: rgba(255, 255, 102, 0.7);">
                     <p>
                         @if (item.type.imagePath != String.Empty)
                         {
@@ -134,7 +150,15 @@
             }
 
         </div><!--/row-->
+}
+else
+{
+    <center>
+        <span class="hovercolor">לא נמצאו פעילויות עבור חיפוש זה</span>
+    </center>
+}
     </div>
+    
 
     <div id="myDialogContent" dir="rtl" title="פרטי פעילות"></div>
 

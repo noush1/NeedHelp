@@ -3,7 +3,17 @@
 @{
     ViewBag.Title = "מחיקת פעילות";
 }
+<style type="text/css">
+    a.nounderline {
+        text-decoration: none;
+    }
 
+    span.hovercolor {
+        font-size: 20px;
+        cursor: pointer;
+        color: #cc3300;
+    }
+</style>
 <div dir="rtl">
 
     @if (User.IsInRole(roleType.admin.ToString()) || (User.IsInRole(roleType.organization.ToString()) && User.Identity.Name.Equals(Model.org.email)))
@@ -12,75 +22,52 @@
 
         <h3>האם אתה בטוח כי ברצונך למחוק פעילות זו?</h3>
 
-        <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.city.name)
-            </dt>
+    <div dir="rtl" class="dl-horizontal">
+        <div>
+            @Html.Label("עיר:", "עיר:", new { style = "width:100px; height:30px; display:inline-block; " })
+            @Html.DisplayFor(model => model.city.name)
+        </div>
 
-            <dd>
-                @Html.DisplayFor(model => model.city.name)
-            </dd>
+        <div>
+            @Html.Label("שם פעילות:", "שם פעילות:", new { style = "width:100px; height:30px; display:inline-block; " })
+            @Html.DisplayFor(model => model.name)
+        </div>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.name)
-            </dt>
+        <div>
+            @Html.Label("ארגון:", "ארגון:", new { style = "width:100px; height:30px; display:inline-block; " })
+            @Html.DisplayFor(model => model.org.name)
+        </div>
 
-            <dd>
-                @Html.DisplayFor(model => model.name)
-            </dd>
+        <div>
+            @Html.Label("כתובת:", "כתובת:", new { style = "width:100px; height:30px; display:inline-block; " })
+            @Html.DisplayFor(model => model.address)
+        </div>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.organizationId)
-            </dt>
+        <div>
+            @Html.Label("תאריך:", "תאריך:", new { style = "width:100px; height:30px; display:inline-block; " })
+            @Html.DisplayFor(model => model.date)
+        </div>
 
-            <dd>
-                @Html.DisplayFor(model => model.organizationId)
-            </dd>
+        <div>
+            @Html.Label("תיאור:", "תיאור:", new { style = "width:100px; height:30px; display:inline-block; " })
+            @Html.DisplayFor(model => model.description)
+        </div>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.address)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.address)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.date)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.date)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.description)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.description)
-            </dd>
-
-        </dl>
+    </div>
 
         using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
 
             <div class="form-actions no-color">
-                <input type="submit" value="מחק" class="btn btn-default" /> |
+                <input type="submit" value="מחק" class="btn btn-default" /> 
                 @if (User.IsInRole(roleType.organization.ToString()))
                 {
-                <div dir="ltr">
-                    @Html.ActionLink("חזרה לרשימה", "Index", "ActivityManagement")
-                </div>
+                    <a class="nounderline" href="@Url.Action("Index", "ActivityManagement")"><span class="hovercolor">חזרה</span></a>
                 }
                 else
                 {
-                <div dir="ltr">
-                    @Html.ActionLink("חזרה לרשימה", "Index")
-                </div>
+                    <a class="nounderline" href="@Url.Action("Index", "ActivityModels")"><span class="hovercolor">חזרה</span></a>
                 }
             </div>
         }
@@ -92,15 +79,11 @@
         
         if (User.IsInRole(roleType.organization.ToString()))
         {
-            <div dir="ltr">
-                @Html.ActionLink("חזרה לרשימה", "Index", "ActivityManagement")
-            </div>
+                <a class="nounderline" href="@Url.Action("Index", "ActivityManagement")"><span class="hovercolor">חזרה</span></a>
         }
         else
         {
-            <div dir="ltr">
-                @Html.ActionLink("חזרה לרשימה", "Index")
-            </div>
+                <a class="nounderline" href="@Url.Action("Index", "ActivityModels")"><span class="hovercolor">חזרה</span></a>
         }
     }
 </div>
