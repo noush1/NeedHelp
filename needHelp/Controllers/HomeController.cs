@@ -9,7 +9,7 @@ namespace needHelp.Controllers
 {
     public class HomeController : Controller
     {
-        private GeneralModel _db = new GeneralModel();
+        private GeneralModel _db = GeneralModel.Instance();
 
         public ActionResult Index()
         {

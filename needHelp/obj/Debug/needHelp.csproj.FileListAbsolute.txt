@@ -928,3 +928,7 @@ C:\AntonCollege\NeedHelp\NotGit\NeedHelp_new\needHelp\obj\Debug\needHelp.Migrati
 C:\AntonCollege\NeedHelp\NotGit\NeedHelp_new\needHelp\obj\Debug\needHelp.csproj.GenerateResource.Cache
 C:\AntonCollege\NeedHelp\NotGit\NeedHelp_new\needHelp\obj\Debug\needHelp.dll
 C:\AntonCollege\NeedHelp\NotGit\NeedHelp_new\needHelp\obj\Debug\needHelp.pdb
+C:\Users\Nuphar\Documents\לימודים\סימסטר א\פרוייקט סיום\finalProject\NeedHelp\needHelp\obj\Debug\needHelp.Migrations.UserSearchFieldsAdd.resources
+C:\Users\Nuphar\Documents\לימודים\סימסטר א\פרוייקט סיום\finalProject\NeedHelp\needHelp\obj\Debug\needHelp.Migrations.UserSearchFieldsAddNullable.resources
+C:\Users\Nuphar\Documents\לימודים\סימסטר א\פרוייקט סיום\finalProject\NeedHelp\needHelp\obj\Debug\needHelp.Migrations.SearchDataModelsAddSearchTime.resources
+C:\Users\Nuphar\Documents\לימודים\סימסטר א\פרוייקט סיום\finalProject\NeedHelp\needHelp\obj\Debug\needHelp.Migrations.fix_requests_for_orgs.resources

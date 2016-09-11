@@ -16,7 +16,7 @@ namespace needHelp.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
-        private GeneralModel _db = new GeneralModel();
+        private GeneralModel _db = GeneralModel.Instance();
 
         public ManageController()
         {

@@ -10,7 +10,7 @@ namespace needHelp.LearningAlgorithm
     {
         #region Members
 
-        private GeneralModel _db = new GeneralModel();
+        private GeneralModel _db = GeneralModel.Instance();
         private int _citiesAmount;
         private int _typesAmount;
         private int _organizationsAmount;

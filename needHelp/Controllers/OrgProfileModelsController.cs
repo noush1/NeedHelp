@@ -1,4 +1,5 @@
-﻿using needHelp.Models;
+﻿using needHelp.Common;
+using needHelp.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -12,11 +13,12 @@ namespace needHelp.Controllers
 {
     public class OrgProfileModelsController : Controller
     {
-        private GeneralModel db = new GeneralModel();
+        private GeneralModel db = GeneralModel.Instance();
+        private Cache _cache = Cache.Instance();
 
         public ActionResult Index()
         {
-            OrganizationModels org = db.organizations.First(user => user.email.Equals(User.Identity.Name));
+            OrganizationModels org = _cache.organizations.First(user => user.email.Equals(User.Identity.Name));
             
             /*
             var result = from s in db.activities
@@ -35,7 +37,7 @@ namespace needHelp.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            OrganizationModels org = db.organizations.Find(id);
+            OrganizationModels org = _cache.organizations.Find(id);
             if (org == null)
             {
                 return HttpNotFound();
@@ -59,6 +61,7 @@ namespace needHelp.Controllers
             {
                 db.Entry(organizationModels).State = EntityState.Modified;
                 db.SaveChanges();
+                _cache.UpdateCache();
                 return RedirectToAction("Index");
             }
             return View(organizationModels);

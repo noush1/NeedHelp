@@ -7,18 +7,20 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using needHelp.Models;
+using needHelp.Common;
 
 namespace needHelp.Controllers
 {
     public class OrganizationCalendarController : Controller
     {
-        private GeneralModel db = new GeneralModel();
+        private GeneralModel db = GeneralModel.Instance();
+        private Cache _cache = Cache.Instance();
 
         // GET: OrganizationCalendar
         public ActionResult Index()
         {
             List<ActivityAsEvent> events = new List<ActivityAsEvent>();
-            OrganizationModels org = db.organizations.First(user => user.email.Equals(User.Identity.Name));
+            OrganizationModels org = _cache.organizations.First(user => user.email.Equals(User.Identity.Name));
             List<ActivityModels> activities = org.org_activities.OrderBy(d => d.date.Ticks).ToList();
 
             foreach(ActivityModels act in activities)
@@ -40,7 +42,7 @@ namespace needHelp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            OrganizationModels organizationModels = db.organizations.Find(id);
+            OrganizationModels organizationModels = _cache.organizations.Find(id);
             if (organizationModels == null)
             {
                 return HttpNotFound();
@@ -65,6 +67,7 @@ namespace needHelp.Controllers
             {
                 db.organizations.Add(organizationModels);
                 db.SaveChanges();
+                _cache.UpdateCache();
                 return RedirectToAction("Index");
             }
 
@@ -78,7 +81,7 @@ namespace needHelp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            OrganizationModels organizationModels = db.organizations.Find(id);
+            OrganizationModels organizationModels = _cache.organizations.Find(id);
             if (organizationModels == null)
             {
                 return HttpNotFound();
@@ -97,6 +100,7 @@ namespace needHelp.Controllers
             {
                 db.Entry(organizationModels).State = EntityState.Modified;
                 db.SaveChanges();
+                _cache.UpdateCache();
                 return RedirectToAction("Index");
             }
             return View(organizationModels);
@@ -109,7 +113,7 @@ namespace needHelp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            OrganizationModels organizationModels = db.organizations.Find(id);
+            OrganizationModels organizationModels = _cache.organizations.Find(id);
             if (organizationModels == null)
             {
                 return HttpNotFound();
@@ -125,16 +129,17 @@ namespace needHelp.Controllers
             OrganizationModels organizationModels = db.organizations.Find(id);
             db.organizations.Remove(organizationModels);
             db.SaveChanges();
+            _cache.UpdateCache();
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        //protected override void Dispose(bool disposing)
+        //{
+        //    if (disposing)
+        //    {
+        //        db.Dispose();
+        //    }
+        //    base.Dispose(disposing);
+        //}
     }
 }

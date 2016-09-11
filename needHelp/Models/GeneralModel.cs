@@ -12,7 +12,19 @@ namespace needHelp.Models
 {
     public class GeneralModel: IdentityDbContext
     {
-        public GeneralModel()
+        private static GeneralModel _instance;
+
+        public static GeneralModel Instance()
+        {
+            if (_instance == null)
+            {
+                _instance = new GeneralModel();
+            }
+
+            return _instance;
+        }
+
+        private GeneralModel()
             : base("DefaultConnection")
         {
         }

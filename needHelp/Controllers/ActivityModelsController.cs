@@ -9,12 +9,14 @@ using System.Web.Mvc;
 using needHelp.Models;
 using System.Net.Http;
 using System.Net.Http.Formatting;
+using needHelp.Common;
 
 namespace needHelp.Controllers
 {
     public class ActivityModelsController : Controller
     {
-        private GeneralModel db = new GeneralModel();
+        private GeneralModel db = GeneralModel.Instance();
+        private Cache _cache = Cache.Instance();
 
         // GET: ActivityModels
         public ActionResult Index()
@@ -48,11 +50,11 @@ namespace needHelp.Controllers
             }
             db.Users
                 */
-            var activities = db.activities.Include(a => a.city);
+            var activities = _cache.activities.Include(a => a.city);
 
-            ViewBag.cityId = new SelectList(db.cities, "id", "name");
-            ViewBag.organizationId = new SelectList(db.organizations, "id", "name");
-            ViewBag.typeId = new SelectList(db.help_types, "id", "typeName");
+            ViewBag.cityId = new SelectList(_cache.cities, "id", "name");
+            ViewBag.organizationId = new SelectList(_cache.organizations, "id", "name");
+            ViewBag.typeId = new SelectList(_cache.help_types, "id", "typeName");
             return View(activities.ToList());
         }
 
@@ -63,7 +65,7 @@ namespace needHelp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ActivityModels activityModels = db.activities.Find(id);
+            ActivityModels activityModels = _cache.activities.Find(id);
             if (activityModels == null)
             {
                 return HttpNotFound();
@@ -82,9 +84,9 @@ namespace needHelp.Controllers
         // GET: ActivityModels/Create
         public ActionResult Create()
         {
-            ViewBag.cityId = new SelectList(db.cities, "id", "name");
-            ViewBag.organizationId = new SelectList(db.organizations, "id", "name");
-            ViewBag.typeId = new SelectList(db.help_types, "id", "typeName");
+            ViewBag.cityId = new SelectList(_cache.cities, "id", "name");
+            ViewBag.organizationId = new SelectList(_cache.organizations, "id", "name");
+            ViewBag.typeId = new SelectList(_cache.help_types, "id", "typeName");
             return View();
         }
 
@@ -112,6 +114,7 @@ namespace needHelp.Controllers
                 activityModels.type = db.help_types.Find(activityModels.typeId);
                 db.activities.Add(activityModels);
                 db.SaveChanges();
+                _cache.UpdateCache();
 
                 if (User.IsInRole(roleType.organization.ToString()))
                 {
@@ -123,9 +126,9 @@ namespace needHelp.Controllers
                 }
             }
 
-            ViewBag.cityId = new SelectList(db.cities, "id", "name", activityModels.cityId);
-            ViewBag.organizationId = new SelectList(db.organizations, "id", "name", activityModels.organizationId);
-            ViewBag.typeId = new SelectList(db.help_types, "id", "typeName", activityModels.typeId);
+            ViewBag.cityId = new SelectList(_cache.cities, "id", "name", activityModels.cityId);
+            ViewBag.organizationId = new SelectList(_cache.organizations, "id", "name", activityModels.organizationId);
+            ViewBag.typeId = new SelectList(_cache.help_types, "id", "typeName", activityModels.typeId);
 
             return View(activityModels);
         }
@@ -137,14 +140,14 @@ namespace needHelp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ActivityModels activityModels = db.activities.Find(id);
+            ActivityModels activityModels = _cache.activities.Find(id);
             if (activityModels == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.cityId = new SelectList(db.cities, "id", "name", activityModels.cityId);
-            ViewBag.organizationId = new SelectList(db.organizations, "id", "name", activityModels.organizationId);
-            ViewBag.typeId = new SelectList(db.help_types, "id", "typeName", activityModels.typeId);
+            ViewBag.cityId = new SelectList(_cache.cities, "id", "name", activityModels.cityId);
+            ViewBag.organizationId = new SelectList(_cache.organizations, "id", "name", activityModels.organizationId);
+            ViewBag.typeId = new SelectList(_cache.help_types, "id", "typeName", activityModels.typeId);
             return View(activityModels);
         }
 
@@ -155,20 +158,29 @@ namespace needHelp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "id,name,organizationId,address,cityId,date,typeId,description")] ActivityModels activityModels)
         {
+            ActivityModels activity = db.activities.First(a => a.id == activityModels.id);
+
             if (User.IsInRole(roleType.organization.ToString()))
             {
-                activityModels.org = db.organizations.FirstOrDefault(i => i.email.Equals(User.Identity.Name));
+                activity.org = db.organizations.FirstOrDefault(i => i.email.Equals(User.Identity.Name));
             }
             else
             {
-                activityModels.org = db.organizations.Find(activityModels.organizationId);
+                activity.org = db.organizations.Find(activity.organizationId);
             }
 
             if (ModelState.IsValid)
             {
-                activityModels.type = db.help_types.Find(activityModels.typeId);
-                db.Entry(activityModels).State = EntityState.Modified;
+                activity.type = db.help_types.Find(activityModels.typeId);
+                activity.address = activityModels.address;
+                activity.cityId = activityModels.cityId;
+                activity.date = activityModels.date;
+                activity.description = activityModels.description;
+                activity.name = activityModels.name;
+
+                db.Entry(activity).State = EntityState.Modified;
                 db.SaveChanges();
+                _cache.UpdateCache();
 
                 if (User.IsInRole(roleType.organization.ToString()))
                 {
@@ -180,10 +192,10 @@ namespace needHelp.Controllers
                 }
             }
 
-            ViewBag.cityId = new SelectList(db.cities, "id", "name", activityModels.cityId);
-            ViewBag.organizationId = new SelectList(db.organizations, "id", "name", activityModels.organizationId);
-            ViewBag.typeId = new SelectList(db.help_types, "id", "typeName", activityModels.typeId);
-            return View(activityModels);
+            ViewBag.cityId = new SelectList(_cache.cities, "id", "name", activity.cityId);
+            ViewBag.organizationId = new SelectList(_cache.organizations, "id", "name", activity.organizationId);
+            ViewBag.typeId = new SelectList(_cache.help_types, "id", "typeName", activity.typeId);
+            return View(activity);
         }
 
         // GET: ActivityModels/Delete/5
@@ -193,7 +205,7 @@ namespace needHelp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ActivityModels activityModels = db.activities.Find(id);
+            ActivityModels activityModels = _cache.activities.Find(id);
             if (activityModels == null)
             {
                 return HttpNotFound();
@@ -209,6 +221,7 @@ namespace needHelp.Controllers
             ActivityModels activityModels = db.activities.Find(id);
             db.activities.Remove(activityModels);
             db.SaveChanges();
+            _cache.UpdateCache();
 
             if (User.IsInRole(roleType.organization.ToString()))
             {
@@ -264,8 +277,8 @@ namespace needHelp.Controllers
                     endDate = temp;
                 }
             }
-           
-            var result = from s in db.activities
+
+            var result = from s in _cache.activities
                          where s.name.Contains(activityName) &&
                          (cityID == 0 || s.cityId == cityID) &&
                          (typeID == 0 || s.typeId == typeID) &&
@@ -275,13 +288,13 @@ namespace needHelp.Controllers
                          select s;
 
             //return RedirectToAction("Index","Series");
-            ViewBag.cityId = new SelectList(db.cities, "id", "name");
-            ViewBag.organizationId = new SelectList(db.organizations, "id", "name");
-            ViewBag.typeId = new SelectList(db.help_types, "id", "typeName");
+            ViewBag.cityId = new SelectList(_cache.cities, "id", "name");
+            ViewBag.organizationId = new SelectList(_cache.organizations, "id", "name");
+            ViewBag.typeId = new SelectList(_cache.help_types, "id", "typeName");
 
             //Save the user search data for the learning-algorithem
 
-            if (User.Identity.IsAuthenticated && db.volunteers.Any() && db.volunteers.First(user => user.email.Equals(User.Identity.Name)) != null)
+            if (User.Identity.IsAuthenticated && _cache.volunteers.Any() && _cache.volunteers.First(user => user.email.Equals(User.Identity.Name)) != null)
             {
                 UserSearchDataModels userSearchData = new UserSearchDataModels();
                 userSearchData.typeId = (typeID == 0 ? null : (int?)typeID); // cant case DBNull.Value
@@ -293,6 +306,7 @@ namespace needHelp.Controllers
                 userSearchData.VolunteerId = db.volunteers.First(user => user.email.Equals(User.Identity.Name)).id;
                 db.search_data.Add(userSearchData);
                 db.SaveChanges();
+                _cache.UpdateCache();
             }
 
             return View("Index", result.ToList());
@@ -304,13 +318,13 @@ namespace needHelp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ActivityModels newActivity = db.activities.Find(id);
+            ActivityModels newActivity = _cache.activities.Find(id);
             if (newActivity == null)
             {
                 return HttpNotFound();
             }
 
-            IQueryable<VolunteerModels> volunteers = from vol in db.volunteers
+            IQueryable<VolunteerModels> volunteers = from vol in _cache.volunteers
                                         where vol.email == User.Identity.Name
                                         select vol;
 
@@ -354,6 +368,7 @@ namespace needHelp.Controllers
                 requestMsg.isDeletedByUser = false;
                 db.Entry(requestMsg).State = EntityState.Modified;
                 db.SaveChanges();
+                _cache.UpdateCache();
             }
 
             // SignIn to new activity
@@ -400,21 +415,22 @@ namespace needHelp.Controllers
             TempData["isDateAlert"] = isDateAlert;
 
             db.SaveChanges();
+            _cache.UpdateCache();
             return RedirectToAction("Index","ProfileModels");
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        //protected override void Dispose(bool disposing)
+        //{
+        //    if (disposing)
+        //    {
+        //        db.Dispose();
+        //    }
+        //    base.Dispose(disposing);
+        //}
 
         public HttpResponseMessage Get()
         {
-             var result = db.activities.Include(a => a.city).ToList();
+            var result = _cache.activities.Include(a => a.city).ToList();
              HttpResponseMessage msg = new HttpResponseMessage();
              msg.Content = new ObjectContent<object>(result, new System.Net.Http.Formatting.JsonMediaTypeFormatter());
 

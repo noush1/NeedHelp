@@ -7,17 +7,19 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using needHelp.Models;
+using needHelp.Common;
 
 namespace needHelp.Controllers
 {
     public class CityModelsController : Controller
     {
-        private GeneralModel db = new GeneralModel();
+        private GeneralModel db = GeneralModel.Instance();
+        private Cache _cache = Cache.Instance();
 
         // GET: CityModels
         public ActionResult Index()
         {
-            return View(db.cities.ToList());
+            return View(_cache.cities.ToList());
         }
 
         // GET: CityModels/Details/5
@@ -27,7 +29,7 @@ namespace needHelp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CityModels cityModels = db.cities.Find(id);
+            CityModels cityModels = _cache.cities.Find(id);
             if (cityModels == null)
             {
                 return HttpNotFound();
@@ -52,6 +54,7 @@ namespace needHelp.Controllers
             {
                 db.cities.Add(cityModels);
                 db.SaveChanges();
+                _cache.UpdateCache();
                 return RedirectToAction("Index");
             }
 
@@ -65,7 +68,7 @@ namespace needHelp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CityModels cityModels = db.cities.Find(id);
+            CityModels cityModels = _cache.cities.Find(id);
             if (cityModels == null)
             {
                 return HttpNotFound();
@@ -80,13 +83,18 @@ namespace needHelp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "id,name")] CityModels cityModels)
         {
+            CityModels city = db.cities.First(c => c.id == cityModels.id);
+
             if (ModelState.IsValid)
             {
-                db.Entry(cityModels).State = EntityState.Modified;
+                city.name = cityModels.name;
+
+                db.Entry(city).State = EntityState.Modified;
                 db.SaveChanges();
+                _cache.UpdateCache();
                 return RedirectToAction("Index");
             }
-            return View(cityModels);
+            return View(city);
         }
 
         // GET: CityModels/Delete/5
@@ -96,7 +104,7 @@ namespace needHelp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CityModels cityModels = db.cities.Find(id);
+            CityModels cityModels = _cache.cities.Find(id);
             if (cityModels == null)
             {
                 return HttpNotFound();
@@ -112,16 +120,17 @@ namespace needHelp.Controllers
             CityModels cityModels = db.cities.Find(id);
             db.cities.Remove(cityModels);
             db.SaveChanges();
+            _cache.UpdateCache();
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        //protected override void Dispose(bool disposing)
+        //{
+        //    if (disposing)
+        //    {
+        //        db.Dispose();
+        //    }
+        //    base.Dispose(disposing);
+        //}
     }
 }
