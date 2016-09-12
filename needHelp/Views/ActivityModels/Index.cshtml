@@ -97,16 +97,16 @@
         <!-- Search series -->
         @using (Html.BeginForm("SearchActivities", "ActivityModels"))
         {
-            <div class="row">
+            <div class="row" style="margin-left:auto; margin-right:auto">
                 <div class="col-md-1 text-right pull-right">
                     @Html.Label("שם פעילות:", "שם פעילות:", new { style = "width:150px; height:30px; display:inline-block; " }) <br />
                     @Html.Label("מיקום:", "מיקום:", new { style = "width:150px; height:30px; display:inline-block; " }) <br />
                     @Html.Label("סוג פעילות:", "סוג פעילות:", new { style = "width:150px; height:30px; display:inline-block; " })
                 </div>
                 <div class="col-md-3 text-right pull-right">
-                    @Html.TextBox("txtActivityName", "", new { style = "width:100px;" })
-                    @Html.DropDownList("cityId", null, "--None--", htmlAttributes: new { @class = "form-control" })
-                    @Html.DropDownList("typeId", null, "--None--", htmlAttributes: new { @class = "form-control" })
+                    @Html.TextBox("txtActivityName", "", new { style = "width:100%" })
+                    @Html.DropDownList("cityId", null, "", htmlAttributes: new { @class = "form-control" })
+                    @Html.DropDownList("typeId", null, "", htmlAttributes: new { @class = "form-control" })
                 </div>
                 <div class="col-md-1 text-right pull-right">
                     @Html.Label("שם ארגון:", "שם ארגון:", new { style = "width:150px; height:30px; display:inline-block; " }) <br />
@@ -114,7 +114,7 @@
                     @Html.Label("עד תאריך:", "עד תאריך:", new { style = "width:150px; height:30px; display:inline-block; " }) <br />
                 </div>
                 <div class="col-md-3 text-right pull-right">
-                    @Html.DropDownList("organizationId", null, "--None--", htmlAttributes: new { @class = "form-control" })
+                    @Html.DropDownList("organizationId", null, "", htmlAttributes: new { @class = "form-control" })
                     @Html.TextBox("txtStartDate", null, DateTime.Today.ToString(), new { @class = "form-control datepicker", placeholder = "בחר תאריך התחלה" })
                     @Html.TextBox("txtEndDate", null, DateTime.Today.ToString(), new { @class = "form-control datepicker", placeholder = "בחר תאריך סיום" })
                 </div>
