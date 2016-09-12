@@ -7,17 +7,19 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using needHelp.Models;
+using needHelp.Common;
 
 namespace needHelp.Controllers
 {
     public class OrganizationModelsController : Controller
     {
-        private GeneralModel db = new GeneralModel();
+        private GeneralModel db = GeneralModel.Instance();
+        private Cache _cache = Cache.Instance();
 
         // GET: OrganizationModels
         public ActionResult Index()
         {
-            return View(db.organizations.ToList());
+            return View(_cache.organizations.ToList());
         }
 
         // GET: OrganizationModels/Details/5
@@ -27,7 +29,7 @@ namespace needHelp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            OrganizationModels organizationModels = db.organizations.Find(id);
+            OrganizationModels organizationModels = _cache.organizations.Find(id);
             if (organizationModels == null)
             {
                 return HttpNotFound();
@@ -60,6 +62,7 @@ namespace needHelp.Controllers
             {
                 db.organizations.Add(organizationModels);
                 db.SaveChanges();
+                _cache.UpdateCache();
                 return RedirectToAction("Index");
             }
 
@@ -73,7 +76,7 @@ namespace needHelp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            OrganizationModels organizationModels = db.organizations.Find(id);
+            OrganizationModels organizationModels = _cache.organizations.Find(id);
             if (organizationModels == null)
             {
                 return HttpNotFound();
@@ -88,13 +91,22 @@ namespace needHelp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "id,userId,name,contactName,contactPhone,email,website")] OrganizationModels organizationModels)
         {
+            OrganizationModels org = db.organizations.First(o => o.id == organizationModels.id);
+
             if (ModelState.IsValid)
             {
-                db.Entry(organizationModels).State = EntityState.Modified;
+                org.contactName = organizationModels.contactName;
+                org.contactPhone = organizationModels.contactPhone;
+                org.email = organizationModels.email;
+                org.name = organizationModels.name;
+                org.website = organizationModels.website;
+
+                db.Entry(org).State = EntityState.Modified;
                 db.SaveChanges();
+                _cache.UpdateCache();
                 return RedirectToAction("Index");
             }
-            return View(organizationModels);
+            return View(org);
         }
 
         // GET: OrganizationModels/Delete/5
@@ -104,7 +116,7 @@ namespace needHelp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            OrganizationModels organizationModels = db.organizations.Find(id);
+            OrganizationModels organizationModels = _cache.organizations.Find(id);
             if (organizationModels == null)
             {
                 return HttpNotFound();
@@ -120,16 +132,17 @@ namespace needHelp.Controllers
             OrganizationModels organizationModels = db.organizations.Find(id);
             db.organizations.Remove(organizationModels);
             db.SaveChanges();
+            _cache.UpdateCache();
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        //protected override void Dispose(bool disposing)
+        //{
+        //    if (disposing)
+        //    {
+        //        db.Dispose();
+        //    }
+        //    base.Dispose(disposing);
+        //}
     }
 }

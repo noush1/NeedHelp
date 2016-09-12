@@ -9,7 +9,7 @@ namespace needHelp.Controllers
 {
     public class UsersSearchDataModelsController : Controller
     {
-        private GeneralModel db = new GeneralModel();
+        private GeneralModel db = GeneralModel.Instance();
 
         public ActionResult Index()
         {

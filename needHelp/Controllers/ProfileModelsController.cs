@@ -1,4 +1,5 @@
-﻿using needHelp.LearningAlgorithm;
+﻿using needHelp.Common;
+using needHelp.LearningAlgorithm;
 using needHelp.Models;
 using System;
 using System.Collections.Generic;
@@ -13,11 +14,12 @@ namespace needHelp.Controllers
 {
     public class ProfileModelsController : Controller
     {
-        private GeneralModel db = new GeneralModel();
+        private GeneralModel db = GeneralModel.Instance();
+        private Cache _cache = Cache.Instance();
 
         public ActionResult Index()
         {
-            VolunteerModels volunteer = db.volunteers.First(user => user.email.Equals(User.Identity.Name));
+            VolunteerModels volunteer = _cache.volunteers.First(user => user.email.Equals(User.Identity.Name));
 
             ActivitiesSuggestion suggestion = new ActivitiesSuggestion();
             ViewBag.sugestedActivities = suggestion.SuggestActivities(volunteer);
@@ -32,7 +34,7 @@ namespace needHelp.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            VolunteerModels volunteerModels = db.volunteers.Find(id);
+            VolunteerModels volunteerModels = _cache.volunteers.Find(id);
             if (volunteerModels == null)
             {
                 return HttpNotFound();
@@ -55,6 +57,7 @@ namespace needHelp.Controllers
             {
                 db.Entry(volunteerModels).State = EntityState.Modified;
                 db.SaveChanges();
+                _cache.UpdateCache();
                 return RedirectToAction("Index");
             }
 
@@ -79,8 +82,9 @@ namespace needHelp.Controllers
 
             request.isDeletedByUser = true;
             db.SaveChanges();
+            _cache.UpdateCache();
 
-            ViewBag.sugestedActivities = db.activities.ToList();
+            ViewBag.sugestedActivities = _cache.activities.ToList();
 
             return View("Index", volunteerModels);
         }
