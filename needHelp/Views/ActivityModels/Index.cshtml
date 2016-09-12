@@ -36,140 +36,142 @@
             <a class="nounderline" href="@Url.Action("Create", "ActivityModels")"><span class="hovercolorsmall">צור פעילות</span></a>
         </p>
     }
-    @if (User.IsInRole(roleType.admin.ToString()))
-    {
-        <table class="table">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.city.name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.organizationId)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.address)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.date)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.description)
-                </th>
-                <th></th>
-            </tr>
-
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.city.name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.org.name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.address)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.date)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.description)
-                    </td>
-                    <td>
-                        @Html.ActionLink("עריכה", "Edit", new { id = item.id }) |
-                        @Html.ActionLink("פרטים", "Details", new { id = item.id }) |
-                        @Html.ActionLink("מחיקה", "Delete", new { id = item.id })
-                    </td>
-                </tr>
-            }
-
-        </table>
-    }
-
-    <div class="SearchColumn divOpacity" style="border:solid; border-radius:10px; padding:10px; width:94%">
-        <!-- Search series -->
-        @using (Html.BeginForm("SearchActivities", "ActivityModels"))
+        @if (User.IsInRole(roleType.admin.ToString()))
         {
-            <div class="row" style="margin-left:auto; margin-right:auto">
-                <div class="col-md-1 text-right pull-right">
-                    @Html.Label("שם פעילות:", "שם פעילות:", new { style = "width:150px; height:30px; display:inline-block; " }) <br />
-                    @Html.Label("מיקום:", "מיקום:", new { style = "width:150px; height:30px; display:inline-block; " }) <br />
-                    @Html.Label("סוג פעילות:", "סוג פעילות:", new { style = "width:150px; height:30px; display:inline-block; " })
-                </div>
-                <div class="col-md-3 text-right pull-right">
-                    @Html.TextBox("txtActivityName", "", new { style = "width:100%" })
-                    @Html.DropDownList("cityId", null, "", htmlAttributes: new { @class = "form-control" })
-                    @Html.DropDownList("typeId", null, "", htmlAttributes: new { @class = "form-control" })
-                </div>
-                <div class="col-md-1 text-right pull-right">
-                    @Html.Label("שם ארגון:", "שם ארגון:", new { style = "width:150px; height:30px; display:inline-block; " }) <br />
-                    @Html.Label("מתאריך:", "מתאריך:", new { style = "width:150px; height:30px; display:inline-block; " }) <br />
-                    @Html.Label("עד תאריך:", "עד תאריך:", new { style = "width:150px; height:30px; display:inline-block; " }) <br />
-                </div>
-                <div class="col-md-3 text-right pull-right">
-                    @Html.DropDownList("organizationId", null, "", htmlAttributes: new { @class = "form-control" })
-                    @Html.TextBox("txtStartDate", null, DateTime.Today.ToString(), new { @class = "form-control datepicker", placeholder = "בחר תאריך התחלה" })
-                    @Html.TextBox("txtEndDate", null, DateTime.Today.ToString(), new { @class = "form-control datepicker", placeholder = "בחר תאריך סיום" })
-                </div>
+            <div style="width:95%; border:solid; border-radius:10px; border-color:orange; background: rgba(255, 255, 102, 0.6);">
+        <table border="0" cellpadding="0" cellspacing="0" dir="rtl" class="table">
+                <tr style="font-weight:bold; font-size:medium; border-style:hidden">
+                    <th>
+                        @Html.DisplayNameFor(model => model.city.name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.organizationId)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.address)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.date)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.description)
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr style="border-style:hidden">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.city.name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.org.name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.address)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.description)
+                        </td>
+                        <td>
+                            @Html.ActionLink("עריכה", "Edit", new { id = item.id }) |
+                            @Html.ActionLink("פרטים", "Details", new { id = item.id }) |
+                            @Html.ActionLink("מחיקה", "Delete", new { id = item.id })
+                        </td>
+                    </tr>
+                }
+
+                </table>
             </div>
-            <button>חפש</button>
         }
-    </div>
 
-    <!-- Marketing messaging and featurettes
-       ================================================== -->
-    <!-- Wrap the rest of the page in another container to center all the content. -->
-
-    
-    <div class="container marketing">
-@if (Model.Any())
-{
-        <div dir="rtl" class="row">
-            @foreach (var item in Model)
+        <div class="SearchColumn divOpacity" style="border:solid; border-radius:10px; padding:10px; width:94%">
+            <!-- Search series -->
+            @using (Html.BeginForm("SearchActivities", "ActivityModels"))
             {
-                <div class="col-xs-6 col-lg-4 pull-right" style="border:solid; border-radius:10px; margin:10px; width:30%; background: rgba(255, 255, 102, 0.7);">
-                    <p>
-                        @if (item.type.imagePath != String.Empty)
-                        {
-                            <img class="img-circle" style="width:60px; height:60px; margin:2px" src="~/Images/Types/@Html.DisplayFor(modelItem => item.type.imagePath)" />
-                        }
-                        <label style="font-size:30px; cursor:pointer; color: #cc3300;" onclick="showDetailsDialog(this)" id="linkto_@item.id">@Html.DisplayFor(modelItem => item.name)</label>
-                    </p>
-                    <p>מארגן: @Html.DisplayFor(modelItem => item.org.name)</p>
-                    <p>מיקום: @Html.DisplayFor(modelItem => item.city.name) @Html.DisplayFor(modelItem => item.address)</p>
-                    <p>תאריך: @Html.DisplayFor(modelItem => item.date)</p>
-                </div><!--/span-->
+                <div class="row" style="margin-left:auto; margin-right:auto">
+                    <div class="col-md-1 text-right pull-right">
+                        @Html.Label("שם פעילות:", "שם פעילות:", new { style = "width:150px; height:30px; display:inline-block; " }) <br />
+                        @Html.Label("מיקום:", "מיקום:", new { style = "width:150px; height:30px; display:inline-block; " }) <br />
+                        @Html.Label("סוג פעילות:", "סוג פעילות:", new { style = "width:150px; height:30px; display:inline-block; " })
+                    </div>
+                    <div class="col-md-3 text-right pull-right">
+                        @Html.TextBox("txtActivityName", "", new { style = "width:100%" })
+                        @Html.DropDownList("cityId", null, "", htmlAttributes: new { @class = "form-control" })
+                        @Html.DropDownList("typeId", null, "", htmlAttributes: new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-1 text-right pull-right">
+                        @Html.Label("שם ארגון:", "שם ארגון:", new { style = "width:150px; height:30px; display:inline-block; " }) <br />
+                        @Html.Label("מתאריך:", "מתאריך:", new { style = "width:150px; height:30px; display:inline-block; " }) <br />
+                        @Html.Label("עד תאריך:", "עד תאריך:", new { style = "width:150px; height:30px; display:inline-block; " }) <br />
+                    </div>
+                    <div class="col-md-3 text-right pull-right">
+                        @Html.DropDownList("organizationId", null, "", htmlAttributes: new { @class = "form-control" })
+                        @Html.TextBox("txtStartDate", null, DateTime.Today.ToString(), new { @class = "form-control datepicker", placeholder = "בחר תאריך התחלה" })
+                        @Html.TextBox("txtEndDate", null, DateTime.Today.ToString(), new { @class = "form-control datepicker", placeholder = "בחר תאריך סיום" })
+                    </div>
+                </div>
+                <button>חפש</button>
             }
+        </div>
 
-        </div><!--/row-->
-}
-else
-{
-    <center>
-        <span class="hovercolor">לא נמצאו פעילויות עבור חיפוש זה</span>
-    </center>
-}
+        <!-- Marketing messaging and featurettes
+           ================================================== -->
+        <!-- Wrap the rest of the page in another container to center all the content. -->
+
+
+        <div class="container marketing">
+            @if (Model.Any())
+            {
+                <div dir="rtl" class="row">
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-xs-6 col-lg-4 pull-right" style="border:solid; border-radius:10px; margin:10px; width:30%; background: rgba(255, 255, 102, 0.7);">
+                            <p>
+                                @if (item.type.imagePath != String.Empty)
+                                {
+                                    <img class="img-circle" style="width:60px; height:60px; margin:2px" src="~/Images/Types/@Html.DisplayFor(modelItem => item.type.imagePath)" />
+                                }
+                                <label style="font-size:30px; cursor:pointer; color: #cc3300;" onclick="showDetailsDialog(this)" id="linkto_@item.id">@Html.DisplayFor(modelItem => item.name)</label>
+                            </p>
+                            <p>מארגן: @Html.DisplayFor(modelItem => item.org.name)</p>
+                            <p>מיקום: @Html.DisplayFor(modelItem => item.city.name) @Html.DisplayFor(modelItem => item.address)</p>
+                            <p>תאריך: @Html.DisplayFor(modelItem => item.date)</p>
+                        </div><!--/span-->
+                    }
+
+                </div><!--/row-->
+            }
+            else
+            {
+                <center>
+                    <span class="hovercolor">לא נמצאו פעילויות עבור חיפוש זה</span>
+                </center>
+            }
+        </div>
+
+
+        <div id="myDialogContent" dir="rtl" title="פרטי פעילות"></div>
+
+        <!--
+        <table class="table table-striped">
+            <tr ng-repeat="activity in activityList">
+
+            </tr>
+        </table>
+            -->
+
     </div>
-    
-
-    <div id="myDialogContent" dir="rtl" title="פרטי פעילות"></div>
-
-    <!--
-    <table class="table table-striped">
-        <tr ng-repeat="activity in activityList">
-
-        </tr>
-    </table>
-        -->
-
-</div>
 @Scripts.Render("~/Scripts/angular.js")
 @Scripts.Render("~/Scripts/angular-route.js")
 @Scripts.Render("~/Scripts/angular-resource.js")

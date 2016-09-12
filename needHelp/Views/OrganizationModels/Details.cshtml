@@ -52,18 +52,30 @@
         <p>איש קשר: @Html.DisplayFor(model => Model.contactName)</p>
         <p>טלפון: @Html.DisplayFor(model => Model.contactPhone)</p>
         <p>דואר אלקטרוני: @Html.DisplayFor(model => Model.email)</p>
-        <p>אתר אינטרנט: @Html.DisplayFor(model => Model.website)</p>
-        <p dir="rtl">
-            @if(User.IsInRole(roleType.admin.ToString())) {
-                @Html.ActionLink("עריכה", "Edit", new { id = Model.id }) <text> | </text>
-                @Html.ActionLink("מחיקה", "Delete", new { id = Model.id })
-            }
-            else if (User.IsInRole(roleType.organization.ToString()) && User.Identity.Name.Equals(Model.email))
-            {
-                @Html.ActionLink("עריכה", "Edit", new { id = Model.id })
-            }
-        </p>
-    </div>
+            <p>
+                    אתר אינטרנט:
+                <a href="//@Model.website" target="_blank">
+                    @{
+                        int pathLen = Model.website.IndexOf("/");
+                        pathLen = pathLen > 0 ? pathLen : Model.website.Length;
+                        string path = Model.website.Substring(0, pathLen);
+                        @Html.DisplayFor(model => path);
+                    }
+                </a>
+            </p>
+        
+            <p dir="rtl">
+                @if (User.IsInRole(roleType.admin.ToString()))
+                {
+                    @Html.ActionLink("עריכה", "Edit", new { id = Model.id }) <text> | </text>
+                    @Html.ActionLink("מחיקה", "Delete", new { id = Model.id })
+                }
+                else if (User.IsInRole(roleType.organization.ToString()) && User.Identity.Name.Equals(Model.email))
+                {
+                    @Html.ActionLink("עריכה", "Edit", new { id = Model.id })
+                }
+            </p>
+</div>
 
     @*<p>
         @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |

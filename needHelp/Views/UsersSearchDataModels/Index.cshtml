@@ -6,59 +6,59 @@
 
 <div dir="rtl">
     <h2>רשימת פרופילי חיפוש:</h2>
-
-    <table class="table">
-        <tr dir="rtl">
-            <td>
-                שם מתנדב
-                @*@Html.DisplayNameFor(model => model.VolunteerId)*@
-            </td>
-            <td>
-                @Html.DisplayNameFor(model => model.cityId)
-            </td>
-            <td>
-                @Html.DisplayNameFor(model => model.searchDate)
-            </td>
-            <td>
-                @Html.DisplayNameFor(model => model.startDate)
-            </td>
-            <td>
-                @Html.DisplayNameFor(model => model.endDate)
-            </td>
-            <td>
-                @Html.DisplayNameFor(model => model.organizationId)
-            </td>
-            <td>
-                @Html.DisplayNameFor(model => model.typeId)
-            </td>
-        </tr>
-
-        @foreach (var item in Model)
-        {
-            <tr>
+    <div style="width:95%; border:solid; border-radius:10px; border-color:orange; background: rgba(255, 255, 102, 0.6);">
+        <table border="0" cellpadding="0" cellspacing="0" dir="rtl" class="table">
+            <tr dir="rtl" style="font-weight:bold; font-size:medium; border-style:hidden">
                 <td>
-                    @Html.DisplayFor(modelItem => item.volunteer.firstName) @Html.DisplayFor(modelItem => item.volunteer.lastName)
+                    שם מתנדב
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.city.name)
+                    @Html.DisplayNameFor(model => model.cityId)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.searchDate)
+                    @Html.DisplayNameFor(model => model.searchDate)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.startDate)
+                    @Html.DisplayNameFor(model => model.startDate)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.endDate)
+                    @Html.DisplayNameFor(model => model.endDate)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.org.name)
+                    @Html.DisplayNameFor(model => model.organizationId)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.type.typeName)
+                    @Html.DisplayNameFor(model => model.typeId)
                 </td>
             </tr>
-        }
 
-    </table>
-</div>
+            @foreach (var item in Model)
+            {
+                <tr style="border-style:hidden">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.volunteer.firstName) @Html.DisplayFor(modelItem => item.volunteer.lastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.city.name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.searchDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.startDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.endDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.org.name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.type.typeName)
+                    </td>
+                </tr>
+            }
+
+        </table>
+        </div>
+    </div>

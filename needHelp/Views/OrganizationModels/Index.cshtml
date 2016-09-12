@@ -19,7 +19,16 @@
                             @*<p>איש קשר: @Html.DisplayFor(modelItem => item.contactName)</p>*@
                             @*<p>טלפון: @Html.DisplayFor(modelItem => item.contactPhone)</p>*@
                             <p>דואר אלקטרוני: @Html.DisplayFor(modelItem => item.email)</p>
-                            <p>אתר אינטרנט: @Html.DisplayFor(modelItem => item.website)</p>
+                            <p>
+                                אתר אינטרנט:
+                                @{
+                        int pathLen = item.website.IndexOf("/");
+                        pathLen = pathLen > 0 ? pathLen : item.website.Length;
+                        string path = item.website.Substring(0, pathLen);
+                        @Html.DisplayFor(model => path);
+                                }
+                            </p>
+
                         </div>
                     }
 
